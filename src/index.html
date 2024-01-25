@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>RPN Calculator</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="RPN Calculator (Ver. 1.0.0)">
+    <meta name="keywords" content="calculator, reverse, polish, notation, postfix, burks, warren, wright, lukasiewicz, hp-10">
+    <meta name="author" content="Jonathan Feaster">
+    <meta name="theme-color" content="#f3f3f3">
+    <!-- Author : Jonathan Feaster -->
+    <link rel="manifest" href="manifest.json" type="application/manifest+json">
+    <link rel="stylesheet" href="assets/css/main.css" type="text/css">
+    <script src="assets/js/index.js" type="module"></script>
+  </head>
+  <body>
+    <x-app>
+      <p><strong>Loading&#8230;</strong></p>
+      <noscript><p><strong>JavaScript is required to access this resource.</strong></p></noscript>
+    </x-app>
+    <script>
+      window.addEventListener('load', () => {
+        registerSW();
+      });
+
+      async function registerSW() {
+        if ('serviceWorker' in navigator) {
+          try {
+            await navigator
+              .serviceWorker
+              .register('serviceworker.js');
+          }
+          catch (e) {
+            console.log('SW registration failed');
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

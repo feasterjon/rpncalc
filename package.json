@@ -1,0 +1,45 @@
+{
+  "name": "rpncalculator",
+  "version": "1.0.0",
+  "description": "A Reverse Polish Notation (RPN) calculator app produced with React",
+  "homepage": "https://gitlab.com/jonfeaster/rpncalc",
+  "author": "Jonathan Feaster (https://jonfeaster.com)",
+  "private": "true",
+  "scripts": {
+    "test": "jest",
+    "build": "webpack --config webpack.config.js"
+  },
+  "main": "webpack.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/jonfeaster/rpncalc-react.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/jonfeaster/rpncalc-react/issues"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.11",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.5.1",
+    "webpack": "^5.59.1",
+    "webpack-cli": "^4.9.1"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "jest": {
+    "testRegex": "./tests/.*\\.(js|jsx)$",
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    },
+    "testPathIgnorePatterns" : [
+      "tmp",
+      "acceptance.js",
+      "unit.js" 
+    ]
+  }
+}
