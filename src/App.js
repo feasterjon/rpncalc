@@ -86,17 +86,17 @@ function App() {
 
   return (
     <div className="container">
-      <div class="top">
-        <div class="row">
-          <div class="theme">
+      <div className="top">
+        <div className="row">
+          <div className="theme">
           </div>
-          <div class="history">
-            <p class="text">{formatNumbers()}</p>
-            <div class="separator"></div>
+          <div className="history">
+            <p className="text">{formatNumbers()}</p>
+            <div className="separator"></div>
           </div>
         </div>
       </div>
-      <p class="test">Tailwind test</p>
+      <p className="test">Tailwind test</p>
       {buttons.map((button) =>
         <div>
           <button onClick={() => handleInput(button.value)}>
