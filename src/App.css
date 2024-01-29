@@ -1,3 +1,4 @@
+/*
 .container {
   background-color: #f5f6f8;
   color: #6e6e6e;
@@ -94,11 +95,15 @@
   font-size: 32;
 }
 
+*/
+
 .test {
   @apply text-primary
 }
 
 /* Old Styles */
+
+/*
 
 .App {
   text-align: center;
@@ -138,3 +143,5 @@
     transform: rotate(360deg);
   }
 }
+
+*/
