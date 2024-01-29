@@ -76,13 +76,21 @@ function App() {
     }
   ];
 
-  const formatNumbers = (expression) => {
-    return expression || `999`
+  const formatNumbers = (expression = '999') => {
+    return expression
   };
 
-  const handleInput = (input) => {
-    alert(input || `Input handled`);
+  const handleInput = (input = 'Input handled') => {
+    vibrateBasic();
+    alert(input);
   };
+
+  const vibrateBasic = (pattern = [50]) => {
+    if (!pattern.length || !vibrateEnabled) return
+    window.navigator.vibrate(pattern);
+  };
+
+  const vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
 
   return (
     <div className="container">
