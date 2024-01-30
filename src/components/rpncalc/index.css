@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-accent: 192 9% 89%;
+    --color-accent-dark: 240 1% 44%;
+    --color-dark: 228 6% 17%;
+    --color-light: 220 18% 97%;
+    --color-primary: var(--color-primary-hs) 62%;
+    --color-primary-dark: var(--color-primary-hs) 38%;
+    --color-primary-hs: 207 73%;
+    --color-primary-light: var(--color-primary-hs) 86%;
+    --color-secondary: var(--color-secondary-hs) 64%;
+    --color-secondary-dark: var(--color-secondary-hs) 39%;
+    --color-secondary-hs: 12 72%;
+    --color-secondary-light: var(--color-secondary-hs) 89%;
+    --color-xdark: 220 5% 11%;
+    --color-xlight: 0 0% 98%;
+  }
+}
+
+.cursor {
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/*
+.container {
+  background-color: #f5f6f8;
+  color: #6e6e6e;
+  flex-direction: column;
+  flex: 1;
+}
+
+.top {
+  flex-direction: column;
+  flex: 1;
+}
+
+.separator {
+  margin-top: 5;
+}
+
+.row {
+  flex-direction: row;
+  flex: 1;
+}
+
+.theme {
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.history {
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex: 2;
+}
+
+.result {
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.resultText {
+  color: #59a7e5;
+  font-size: 35;
+  margin-right: 15;
+  margin-left: 15;
+  align-self: flex-end;
+  flex-wrap: wrap
+}
+
+.historyText {
+  color: #6e6e6e;
+  font-size: 20;
+  margin-right: 15;
+  margin-left: 15;
+  align-self: flex-end;
+  flex-wrap: wrap;
+}
+
+.themeButton {
+  background-color: #dfe4e8;
+  align-self: flex-start;
+  margin-top: 15;
+  margin-left: 15;
+  align-items: center;
+  justify-content: center;
+  width: 50;
+  height: 50;
+  border-radius: 25;
+}
+
+.keypad {
+  background-color: #d1e1f5;
+  flex: 2;
+}
+
+.buttons {
+  width: 100%;
+  height: 37%;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.button {
+  border-color: #dfe4e8;
+  border-width: 0.375;
+  align-items: center;
+  justify-content: center;
+  min-width: 24%;
+  min-height: 54%;
+  flex: 1;
+}
+
+.textButton {
+  color: #6e6e6e;
+  font-size: 32;
+}
+
+*/
+
+.test {
+  @apply text-primary
+}
