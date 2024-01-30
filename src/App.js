@@ -1,111 +1,180 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 
   const buttons = [
     {
       id: 1,
-      value: 'C'
+      label: 'AC',
+      type: 'del',
+      value: 'Delete'
     },
     {
       id: 2,
       label: '\u232B',
-      value: 'DEL'
+      type: 'operator',
+      value: 'Backspace'
     },
     {
       id: 3,
-      label: '\u00F7',
-      value: '/'
+      label: 'ANS',
+      type: 'operator',
+      value: 'a'
     },
     {
       id: 4,
-      label: '7',
-      value: 7
+      label: '\u00F7',
+      type: 'operator',
+      value: '/'
     },
     {
       id: 5,
-      label: '8',
-      value: 8
+      value: '7'
     },
     {
       id: 6,
-      label: '9',
-      value: 9
+      value: '8'
     },
     {
       id: 7,
-      label: '\u00D7',
-      value: '*'
+      value: '9'
     },
     {
       id: 8,
-      label: '4',
-      value: 4
+      label: '\u00D7',
+      type: 'operator',
+      value: '*'
     },
     {
       id: 9,
-      label: '5',
-      value: 5
+      value: '4'
     },
     {
       id: 10,
-      label: '6',
-      value: 6
+      value: '5'
     },
     {
       id: 11,
-      value: '-'
+      value: '6'
     },
     {
       id: 12,
-      label: '1',
-      value: 1
+      type: 'operator',
+      value: '-'
     },
     {
       id: 13,
-      label: '2',
-      value: 2
+      value: '1'
     },
     {
       id: 14,
-      label: '3',
-      value: 3
+      value: '2'
     },
     {
       id: 15,
-      value: '+'
+      value: '3'
     },
     {
       id: 16,
-      label: '0',
-      value: 0
+      type: 'operator',
+      value: '+'
     },
     {
       id: 17,
-      value: '.'
+      value: '0'
     },
     {
       id: 18,
-      label: '\u005F\u005F',
-      value: ' '
+      value: '.'
     },
     {
       id: 19,
-      value: '='
+      label: 'SPC',
+      value: ' '
+    },
+    {
+      id: 20,
+      label: 'ENTER',
+      type: 'enter',
+      value: 'Enter'
     }
   ];
 
+  const buttonStyles = {
+    del: {
+      active: 'bg-secondary',
+      main: ['bg-secondary-light']
+    },
+    enter: {
+      active: 'bg-primary',
+      main: ['bg-primary-light']
+    },
+    operand: {
+      active: 'bg-gray-400',
+      main: ['bg-gray-200']
+    },
+    operator: {
+      active: 'bg-primary',
+      main: [
+        'border-2',
+        'border-primary-light'
+      ]
+    }
+  }
+
   const [currentNumber, setCurrentNumber] = useState('');
+
+  const [dynamicClass, setDynamicClass] = useState('');
 
   let formatNumbers = (expression) => {
     return expression
   };
 
-  const handleInput = (input = 'Input handled') => {
-    vibrateBasic();
-    setCurrentNumber(currentNumber + input);
+  const getButtonActiveClass = (value) => {
+    const button = buttons.find(button => button.value === value);
+    const buttonType = button?.type || 'operand';
+    return buttonStyles[buttonType].active || ''
   };
+
+  const getButtonClass = (button) => {
+    const buttonStyle = buttonStyles[button.type] || buttonStyles.operand;
+    return [
+      `active:${buttonStyle.active}`,
+      'ease-in-out',
+      'm-2',
+      'p-2',
+      'rounded-full',
+      'text-center',
+      ...buttonStyle.main
+    ].join(' ')
+  };
+
+  const handleInput = (input) => {
+    vibrateBasic();
+    setCurrentNumber(`${currentNumber}${input.value}`);
+  };
+
+  const [pressedKey, setPressedKey] = useState('');
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const button = buttons.find(button => button.value === event.key);
+      if (button) {
+        let buttonActiveClass = getButtonActiveClass(event.key) || '';
+        setPressedKey(button.id);
+        setTimeout(() => {
+          setPressedKey(null);
+        }, 100);
+        setDynamicClass(buttonActiveClass);
+        setCurrentNumber((currentNumber) => `${currentNumber}${event.key}`);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, []);
 
   const vibrateBasic = (pattern = [50]) => {
     if (!pattern.length || !vibrateEnabled) return
@@ -121,28 +190,24 @@ function App() {
           <div className="theme">
           </div>
           <div className="history">
-            <p className="text">{formatNumbers(currentNumber)}</p>
+            <p className="text">{formatNumbers(currentNumber)}<span className="cursor">|</span></p>
             <div className="separator"></div>
           </div>
         </div>
       </div>
-      {buttons.map((button) =>
-        <div className="
-            bg-primary-light
-            ease-in-out
-            active:bg-primary
-            active:rounded-md
-            m-5
-            p-2
-            rounded-full
-            text-center
-            w-10
-          " key={`button-${button.id}`}>
-          <button onClick={() => handleInput(button.value)}>
+      <div className="grid grid-cols-4">
+        {buttons.map((button) =>
+          <div
+            className={`${getButtonClass(button)}
+              ${`button-${button.id}` === `button-${pressedKey}` ? dynamicClass : ''}
+            `}
+            key={`button-${button.id}`}
+            onClick={() => handleInput(button)}
+          >
             {button.label || button.value}
-          </button>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
