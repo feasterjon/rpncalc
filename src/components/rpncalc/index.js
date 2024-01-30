@@ -3,151 +3,141 @@ import { useEffect, useState } from 'react';
 
 function RPNCalc() {
 
+  const buttonStyles = {
+    del: {
+      active: 'bg-secondary',
+      main: 'bg-secondary-light border-2 border-secondary-light'
+    },
+    enter: {
+      active: 'bg-primary',
+      main: 'bg-primary-light border-2 border-primary-light'
+    },
+    operand: {
+      active: 'bg-gray-400',
+      main: 'bg-gray-200 border-2 border-gray-200'
+    },
+    operator: {
+      active: 'bg-primary',
+      main: 'border-primary-light border-2 border-primary-light'
+    }
+  }
+
   const buttons = [
     {
       id: 1,
       label: 'AC',
-      type: 'del',
+      styles: buttonStyles.del,
       value: 'Delete'
     },
     {
       id: 2,
       label: '\u232B',
-      type: 'operator',
+      styles: buttonStyles.operator,
       value: 'Backspace'
     },
     {
       id: 3,
       label: 'ANS',
-      type: 'operator',
+      styles: buttonStyles.operator,
       value: 'a'
     },
     {
       id: 4,
       label: '\u00F7',
-      type: 'operator',
+      styles: buttonStyles.operator,
       value: '/'
     },
     {
       id: 5,
+      styles: buttonStyles.operand,
       value: '7'
     },
     {
       id: 6,
+      styles: buttonStyles.operand,
       value: '8'
     },
     {
       id: 7,
+      styles: buttonStyles.operand,
       value: '9'
     },
     {
       id: 8,
       label: '\u00D7',
-      type: 'operator',
+      styles: buttonStyles.operator,
       value: '*'
     },
     {
       id: 9,
+      styles: buttonStyles.operand,
       value: '4'
     },
     {
       id: 10,
+      styles: buttonStyles.operand,
       value: '5'
     },
     {
       id: 11,
+      styles: buttonStyles.operand,
       value: '6'
     },
     {
       id: 12,
-      type: 'operator',
+      styles: buttonStyles.operator,
       value: '-'
     },
     {
       id: 13,
+      styles: buttonStyles.operand,
       value: '1'
     },
     {
       id: 14,
+      styles: buttonStyles.operand,
       value: '2'
     },
     {
       id: 15,
+      styles: buttonStyles.operand,
       value: '3'
     },
     {
       id: 16,
-      type: 'operator',
+      styles: buttonStyles.operator,
       value: '+'
     },
     {
       id: 17,
+      styles: buttonStyles.operand,
       value: '0'
     },
     {
       id: 18,
+      styles: buttonStyles.operand,
       value: '.'
     },
     {
       id: 19,
       label: 'SPC',
+      styles: buttonStyles.operand,
       value: ' '
     },
     {
       id: 20,
       label: 'ENTER',
-      type: 'enter',
+      styles: buttonStyles.enter,
       value: 'Enter'
     }
   ];
 
-  const buttonStyles = {
-    del: {
-      active: 'bg-secondary',
-      main: ['bg-secondary-light']
-    },
-    enter: {
-      active: 'bg-primary',
-      main: ['bg-primary-light']
-    },
-    operand: {
-      active: 'bg-gray-400',
-      main: ['bg-gray-200']
-    },
-    operator: {
-      active: 'bg-primary',
-      main: [
-        'border-2',
-        'border-primary-light'
-      ]
-    }
-  }
-
   const [currentNumber, setCurrentNumber] = useState('');
 
-  const [dynamicClass, setDynamicClass] = useState('');
+  const [dynamicStyles, setDynamicStyles] = useState('');
 
   let formatNumbers = (expression) => {
     return expression
-  };
-
-  const getButtonActiveClass = (value) => {
-    const button = buttons.find(button => button.value === value);
-    const buttonType = button?.type || 'operand';
-    return buttonStyles[buttonType].active || ''
-  };
-
-  const getButtonClass = (button) => {
-    const buttonStyle = buttonStyles[button.type] || buttonStyles.operand;
-    return [
-      `active:${buttonStyle.active}`,
-      'ease-in-out',
-      'm-2',
-      'p-2',
-      'rounded-full',
-      'text-center',
-      ...buttonStyle.main
-    ].join(' ')
   };
 
   const handleInput = (input) => {
@@ -161,12 +151,12 @@ function RPNCalc() {
     const handleKeyDown = (event) => {
       const button = buttons.find(button => button.value === event.key);
       if (button) {
-        let buttonActiveClass = getButtonActiveClass(event.key) || '';
+        let buttonStylesActive = button.styles?.active || '';
         setPressedKey(button.id);
         setTimeout(() => {
           setPressedKey(null);
         }, 100);
-        setDynamicClass(buttonActiveClass);
+        setDynamicStyles(buttonStylesActive);
         setCurrentNumber((currentNumber) => `${currentNumber}${event.key}`);
       }
     };
@@ -177,7 +167,7 @@ function RPNCalc() {
   }, []);
 
   const vibrateBasic = (pattern = [50]) => {
-    if (!pattern.length || !vibrateEnabled) return
+    if (!vibrateEnabled) return
     window.navigator.vibrate(pattern);
   };
 
@@ -198,8 +188,8 @@ function RPNCalc() {
       <div className="grid grid-cols-4">
         {buttons.map((button) =>
           <div
-            className={`${getButtonClass(button)}
-              ${`button-${button.id}` === `button-${pressedKey}` ? dynamicClass : ''}
+            className={`active:${button.styles?.active} ease-in-out m-2 p-2 rounded-full text-center
+              ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles?.main}
             `}
             key={`button-${button.id}`}
             onClick={() => handleInput(button)}
