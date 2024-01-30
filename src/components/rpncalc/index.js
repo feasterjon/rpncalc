@@ -188,7 +188,7 @@ function RPNCalc() {
       <div className="grid grid-cols-4">
         {buttons.map((button) =>
           <div
-            className={`active:${button.styles?.active} ease-in-out m-2 p-2 rounded-full text-center
+            className={`active:${button.styles?.active} cursor-default ease-in-out m-2 p-2 rounded-full text-center
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles?.main}
             `}
             key={`button-${button.id}`}
