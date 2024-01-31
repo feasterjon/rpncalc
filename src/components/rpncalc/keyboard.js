@@ -44,7 +44,7 @@ function Keyboard({ config = {} }) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
-  }, []);
+  }, [buttons, setCurrentInput]);
 
   const vibrateBasic = (pattern = [50]) => {
     if (!vibrateEnabled) return
