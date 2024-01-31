@@ -29,22 +29,35 @@ function RPNCalc() {
 
   return (
     <div className="container mx-auto">
+
       <div className="top">
         <div className="row">
           <div className="theme">
           </div>
-          <div className="history">
-            <p className="text">{formatNumbers(currentNumber)}<span className="cursor">|</span></p>
-            <div className="separator"></div>
-          </div>
         </div>
       </div>
-      <div className="flex flex-row">
-        <div className="basis-1/5 sm:basis-1/4">
-          <Keyboard config={keyboardConfigFn} />
+
+      <div className="flex flex-col h-screen">
+        <div className="basis-1/3 flex flex-col">
+          <div className="basis-1/12 bg-green-400" data-oldname="theme">
+            Theme
+          </div>
+          <div className="basis-1/12 bg-red-200" data-oldname="history">
+          <p className="text-xl">{formatNumbers(currentNumber)}</p>
+          </div>
+          <div className="basis-10/12 bg-orange-200" data-oldname="result">
+            <p className="text-4xl">{formatNumbers(currentNumber)}<span className="cursor">|</span></p>
+          </div>
         </div>
-        <div className="basis-4/5 sm:basis-3/4">
-          <Keyboard config={keyboardConfig} />
+        <div className="basis-2/3 bg-neutral-100">
+          <div className="flex flex-row">
+            <div className="basis-1/5 sm:basis-1/4">
+              <Keyboard config={keyboardConfigFn} />
+            </div>
+            <div className="basis-4/5 sm:basis-3/4">
+              <Keyboard config={keyboardConfig} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
