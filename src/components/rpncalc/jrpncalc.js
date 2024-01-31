@@ -6,7 +6,7 @@ Date: 2021-12-09
 
 // Reverse Polish Notation (RPN)
 
-function RPN(expression) {
+export function RPN(expression) {
 
   let i, tokens, x, y, z;
   let stack = [];
@@ -48,6 +48,3 @@ function RPN(expression) {
     }
   }
 }
-
-export default RPN;
-  
