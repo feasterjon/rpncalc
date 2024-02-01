@@ -1,11 +1,22 @@
 import './index.css';
 import Keyboard from './keyboard';
 // import { RPN } from './jrpncalc';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function RPNCalc() {
 
-  const [currentNumber, setCurrentNumber] = useState('');
+  const [currentNumber, setCurrentNumber] = useState(''),
+    [pasteEnabled, setPasteEnabled] = useState(false);
+
+  async function checkPasteEnabled() {
+    try {
+      await navigator.clipboard.readText();
+      setPasteEnabled(true);
+    } catch (error) {}
+  }
+  useEffect(() => {
+    checkPasteEnabled();
+  }, []);
 
   let formatNumbers = (expression) => {
     return expression
@@ -13,6 +24,11 @@ function RPNCalc() {
 
   const handleKeyboardInput = (data) => {
     setCurrentNumber(data);
+  };
+
+  const handlePaste = async () => {
+    const text = await navigator.clipboard.readText();
+    if (text) setCurrentNumber(`${currentNumber}${text}`);
   };
 
   const keyboardConfig = {
@@ -38,6 +54,17 @@ function RPNCalc() {
           <p className="text-xl">{formatNumbers(currentNumber)}</p>
           </div>
           <div className="basis-10/12 bg-orange-200" data-oldname="result">
+            {pasteEnabled && <p className="
+              bg-primary
+              cursor-default
+              m-2
+              p-2
+              rounded-full
+              select-none
+              text-xl
+              text-center
+              w-20
+            " onClick={handlePaste}>&#x2398;</p>}
             <p className="text-4xl">{formatNumbers(currentNumber)}<span className="cursor">|</span></p>
           </div>
         </div>
