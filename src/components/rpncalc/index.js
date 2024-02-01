@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 function RPNCalc() {
 
   const [currentNumber, setCurrentNumber] = useState(''),
-    [pasteEnabled, setPasteEnabled] = useState(false);
+    [pasteEnabled, setPasteEnabled] = useState(null);
 
   async function checkPasteEnabled() {
     try {
