@@ -29,14 +29,6 @@ function RPNCalc() {
 
   return (
     <div className="container mx-auto">
-
-      <div className="top">
-        <div className="row">
-          <div className="theme">
-          </div>
-        </div>
-      </div>
-
       <div className="flex flex-col h-screen">
         <div className="basis-1/3 flex flex-col">
           <div className="basis-1/12 bg-green-400" data-oldname="theme">
