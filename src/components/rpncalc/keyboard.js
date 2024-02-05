@@ -3,8 +3,7 @@ import { useEffect, useState } from 'react';
 
 function Keyboard({ config = {} }) {
 
-  const cols = config.cols,
-    currentInput = config.currentInput,
+  const currentInput = config.currentInput,
     [dynamicStyles, setDynamicStyles] = useState(''),
     idKeyboard = config.id || 'main',
     [pressedKey, setPressedKey] = useState(''),
@@ -13,7 +12,7 @@ function Keyboard({ config = {} }) {
 
   const configButtons = {
     data: {
-      fn: [
+      main: [
         {
           id: 1,
           label: '\u221a',
@@ -22,120 +21,118 @@ function Keyboard({ config = {} }) {
         },
         {
           id: 2,
-          type: 'fn',
-          value: '^'
-        },
-        {
-          id: 3,
-          label: '\u03C0',
-          type: 'fn',
-          value: 'p'
-        },
-        {
-          id: 4,
-          type: 'fn',
-          value: 'e'
-        },
-        {
-          id: 5,
-          label: '\u03C6',
-          type: 'fn',
-          value: 'f'
-        }
-      ],
-      main: [
-        {
-          id: 1,
           label: 'AC',
           type: 'del',
           value: 'Delete'
         },
         {
-          id: 2,
+          id: 3,
           label: '\u232B',
           type: 'operator',
           value: 'Backspace'
         },
         {
-          id: 3,
+          id: 4,
           label: 'ANS',
           type: 'operator',
           value: 'a'
         },
         {
-          id: 4,
+          id: 5,
           label: '\u00F7',
           type: 'operator',
           value: '/'
         },
         {
-          id: 5,
-          value: '7'
-        },
-        {
           id: 6,
-          value: '8'
+          type: 'fn',
+          value: '^'
         },
         {
           id: 7,
-          value: '9'
+          value: '7'
         },
         {
           id: 8,
+          value: '8'
+        },
+        {
+          id: 9,
+          value: '9'
+        },
+        {
+          id: 10,
           label: '\u00D7',
           type: 'operator',
           value: '*'
         },
         {
-          id: 9,
-          value: '4'
-        },
-        {
-          id: 10,
-          value: '5'
-        },
-        {
           id: 11,
-          value: '6'
+          label: '\u03C0',
+          type: 'fn',
+          value: 'p'
         },
         {
           id: 12,
+          value: '4'
+        },
+        {
+          id: 13,
+          value: '5'
+        },
+        {
+          id: 14,
+          value: '6'
+        },
+        {
+          id: 15,
           type: 'operator',
           value: '-'
         },
         {
-          id: 13,
+          id: 16,
+          type: 'fn',
+          value: 'e'
+        },
+        {
+          id: 17,
           value: '1'
         },
         {
-          id: 14,
+          id: 18,
           value: '2'
         },
         {
-          id: 15,
+          id: 19,
           value: '3'
         },
         {
-          id: 16,
+          id: 20,
           type: 'operator',
           value: '+'
         },
         {
-          id: 17,
+          id: 21,
+          label: '\u03C6',
+          type: 'fn',
+          value: 'f'
+        },
+        {
+          id: 22,
           value: '0'
         },
         {
-          id: 18,
+          id: 23,
           label: '\u00B7',
           value: '.'
         },
         {
-          id: 19,
+          id: 24,
           label: 'SPC',
           value: ' '
         },
         {
-          id: 20,
+          id: 25,
           label: '\u23ce',
           type: 'enter',
           value: 'Enter'
@@ -204,18 +201,17 @@ function Keyboard({ config = {} }) {
   };
 
   return (
-    <div className={`grid
-      ${cols ? `grid-cols-${cols}` : `grid-cols-4`}
-    `}>
+    <div className="flex flex-wrap">
       {buttons.map((button) =>
-        <div
-          className={`cursor-default font-bold m-2 p-2 rounded-full select-none text-center
-            ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles?.main}
-          `}
-          key={`button-${button.id}`}
-          onClick={() => handleInput(button)}
-        >
-          {button.label}
+        <div className="w-1/5" key={`button-${button.id}`}>
+          <div
+            className={`cursor-default font-bold m-2 p-2 rounded-full select-none text-center
+              ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles?.main}
+            `}
+            onClick={() => handleInput(button)}
+          >
+            {button.label}
+          </div>
         </div>
       )}
     </div>

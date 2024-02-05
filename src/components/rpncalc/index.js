@@ -36,13 +36,6 @@ function RPNCalc() {
     setCurrentInput: handleKeyboardInput
   };
 
-  const keyboardConfigFn = {
-    cols: 1,
-    currentInput: currentNumber,
-    id: 'fn',
-    setCurrentInput: handleKeyboardInput
-  };
-
   return (
     <div className="container mx-auto">
       <div className="flex flex-col h-screen">
@@ -69,14 +62,7 @@ function RPNCalc() {
           </div>
         </div>
         <div className="basis-2/3 bg-neutral-100">
-          <div className="flex flex-row">
-            <div className="basis-1/5 sm:basis-1/4">
-              <Keyboard config={keyboardConfigFn} />
-            </div>
-            <div className="basis-4/5 sm:basis-3/4">
-              <Keyboard config={keyboardConfig} />
-            </div>
-          </div>
+          <Keyboard config={keyboardConfig} />
         </div>
       </div>
     </div>
