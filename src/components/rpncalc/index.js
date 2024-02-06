@@ -1,12 +1,22 @@
 import './index.css';
 import Keyboard from './keyboard';
-// import { RPN } from './jrpncalc';
+import { RPN } from './jrpncalc';
 import { useEffect, useState } from 'react';
 
 function RPNCalc() {
 
   const [currentNumber, setCurrentNumber] = useState(''),
+    [lastNumber, setLastNumber] = useState(''),
     [pasteEnabled, setPasteEnabled] = useState(null);
+
+  function calc() {
+    let expression = currentNumber.toString();
+    let result = RPN(formatExpression(expression)).toString();
+    let resultTruncated = result.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
+    if (resultTruncated) result = resultTruncated.toString();
+    setCurrentNumber(result);
+    return
+  }
 
   async function checkPasteEnabled() {
     try {
@@ -18,11 +28,50 @@ function RPNCalc() {
     checkPasteEnabled();
   }, []);
 
-  let formatNumbers = (expression) => {
-    return expression
-  };
+  function formatExpression(expression) {
+    let output = expression.toString();
+    output = output.replace(new RegExp(',', 'g'), '');
+    output = output.replace(new RegExp('\u00D7', 'g'), '*');
+    output = output.replace(new RegExp('\u00F7', 'g'), '/');
+    return output
+  }
+
+  function formatNumbers(expression) {
+    let output = '';
+    expression = expression.toString();
+    let numbers = expression.split(' ');
+    numbers.forEach((number) => {
+      let numFragments = number.split('.');
+      numFragments[0] = numFragments[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      output = `${output} ${numFragments.join('.')}`;
+    });
+    return output
+  }
 
   const handleKeyboardInput = (data) => {
+    if(data  === '+' || data === '-' || data === '\u00D7' || data === '\u00F7') {
+      setCurrentNumber(currentNumber + data);
+      return
+    }
+    else if (data === 1 || data === 2 || data === 3 || data === 4 || data === 5 ||
+            data === 6 || data === 7 || data === 8 || data === 9 || data === 0 || data === '.' || data === ' ') {
+      if (data !== ' ' && validateNumbers(currentNumber + data) === false) {
+        return
+      }
+    }
+    switch(data) {
+      case 'Backspace':
+        setCurrentNumber(currentNumber.substring(0, (currentNumber.length - 1)));
+        return
+      case 'Delete':
+        setLastNumber('');
+        setCurrentNumber('');
+        return
+      case 'Enter':
+        setLastNumber(currentNumber);
+        calc();
+        return
+    }
     setCurrentNumber(`${currentNumber}${data}`);
   };
 
@@ -185,6 +234,24 @@ function RPNCalc() {
     setCurrentInput: handleKeyboardInput
   };
 
+  function validateNumbers(expression) {
+    let output = true;
+    expression = expression.toString();
+    let numbers = expression.split(' ');
+    numbers.forEach((number) => {
+      let numFragments = number.split('.');
+      if (numFragments?.[0]?.length > 15) {
+        alert('Maximum number of digits (15) exceeded.');
+        return false
+      }
+      if (numFragments?.[1]?.length > 10) {
+        alert('Maximum number of digits after decimal point (10) exceeded.');
+        return false
+      }
+    });
+    return output
+  }
+
   return (
     <div className="container mx-auto">
       <div className="flex flex-col h-screen">
@@ -193,7 +260,7 @@ function RPNCalc() {
             Theme
           </div>
           <div className="basis-1/12 bg-red-200" data-oldname="history">
-          <p className="text-xl">{formatNumbers(currentNumber)}</p>
+          <p className="text-xl">{formatNumbers(lastNumber)}</p>
           </div>
           <div className="basis-10/12 bg-orange-200" data-oldname="result">
             {pasteEnabled && <p className="
