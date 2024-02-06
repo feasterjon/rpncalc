@@ -1,50 +1,55 @@
 /*
 Title: (React) Reverse Polish Notation (RPN)
-Author: Jonathan Feaster, JonFeaster.com (Based on: RPN Calculator, boykobbatgmaildotcom)
-Date: 2021-12-09
+Author: Jonathan Feaster, JonFeaster.com
+Date: 2024-02-06
 */
 
 // Reverse Polish Notation (RPN)
 
-export function RPN(expression) {
-
-  let i, tokens, x, y, z;
-  let stack = [];
-  const numberPatt = /^[+-]?(\.\d+|\d+(\.\d*)?)$/; // Number Pattern
-  const operatorPatt = '+-*/'; // Operator Pattern
-  expression = expression.replace(/^\s*|\s*$/g, '');
-
-  if (expression.length > 0) {
-    expression = expression.split(/\s+/);
-  }
-  else {
-    expression = [];
-  }
-  let expressionLength = expression.length;
-  for (i = 0; i < expressionLength; ++i) {
-    tokens = expression[i];
-    if (numberPatt.test(tokens)) {
-      z = parseFloat(tokens);
+export function RPN(expression, msgError = 'error') {
+  const operators = '+-*/^s'; // Operators
+  expression = expression.replace(/^\s*|\s*$/g, ''); // remove leading and trailing whitespace
+  const tokens = expression.split(/\s+/); // split expression into tokens
+  const stack = [];
+  for (const token of tokens) {
+    if (!isNaN(token)) {
+      stack.push(parseFloat(token));
+      continue;
     }
-    else {
-      if (tokens.length > 1 || operatorPatt.indexOf(tokens) === -1 || stack.length < 2) { // token not number nor operator or no arguments in stack
+    if (operators.indexOf(token) === -1 || token.length > 1 || !stack.length) break; // token not valid operator or repeated, or no operands
+    let operandB = stack.pop(),
+      operandA = stack.pop(),
+      result;
+    if ((token === 's' && operandA) || (token === 's' && isNaN(operandB))) break; // square root without a single valid operand
+    switch (token) {
+      case '-':
+        result = operandA - operandB;
         break;
-      }
-      y = stack.pop();
-      x = stack.pop();
-      z = eval(x + tokens + ' ' + y);
+      case '*':
+        result = operandA * operandB;
+        break;
+      case '/':
+        if (operandB === 0) { // prevent zero in the denominator
+          result = msgError;
+          break;
+        }
+        result = operandA / operandB;
+        break;
+      case '^':
+        result = Math.pow(operandA, operandB);
+        break;
+      case 's':
+        if (operandB < 0) { // prevent negative numbers
+          result = msgError;
+          break;
+        }
+        result = Math.sqrt(operandB);
+        break;
+      default:
+        result = operandA + operandB;
     }
-    stack.push(z);
+    stack.push(result);
   }
-  if (i < expression.length || stack.length > 1) {
-    return 'error';
-  }
-  else {
-    if (stack.length === 1) {
-      return stack.pop();
-    }
-    else {
-      return '';
-    }
-  }
+  if (!stack.length || stack.length > 1) return msgError
+  return stack.pop()
 }
