@@ -6,52 +6,22 @@ import { useEffect, useState } from 'react';
 function RPNCalc() {
 
   const [currentExpression, setCurrentExpression] = useState(''),
+    [lastAnswer, setLastAnswer] = useState(''),
     [lastExpression, setLastExpression] = useState(''),
+    msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null);
-
-  function calc() {
-    let expression = currentExpression.toString();
-    let result = RPN(formatExpression(expression)).toString();
-    let resultTruncated = result.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
-    if (resultTruncated) result = resultTruncated.toString();
-    setCurrentExpression(result);
-    return
-  }
-
-  async function checkPasteEnabled() {
-    try {
-      await navigator.clipboard.readText();
-      setPasteEnabled(true);
-    } catch (error) {}
-  }
-  useEffect(() => {
-    checkPasteEnabled();
-  }, []);
-
-  function formatExpression(expression) {
-    let out = expression.toString();
-    out = out.replace(new RegExp(',', 'g'), '');
-    out = out.replace(new RegExp('\u00D7', 'g'), '*');
-    out = out.replace(new RegExp('\u00F7', 'g'), '/');
-    return out
-  }
-
-  function formatNumbers(expression) {
-    let out = '';
-    expression = expression.toString();
-    let numbers = expression.split(' ');
-    numbers.forEach((number) => {
-      let numFragments = number.split('.');
-      numFragments[0] = numFragments[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-      out = `${out} ${numFragments.join('.')}`;
-    });
-    return out
-  }
 
   const handleKeyboardInput = (data) => {
     if (!data) return
-    switch(data.value) {
+    switch (data.value) {
+      case 'a':
+        setCurrentExpression(`${currentExpression}${lastAnswer}`);
+        return
       case 'Backspace':
+        if (currentExpression === msgError) {
+          setCurrentExpression('');
+          return
+        }
         setCurrentExpression(currentExpression.substring(0, (currentExpression.length - 1)));
         return
       case 'Delete':
@@ -63,13 +33,8 @@ function RPNCalc() {
         calc();
         return
     }
-    const out = (data.value === ' ') ? data.value : data.label || data.value; // do not set the Space label
+    const out = (data.value === ' ' || data.value === '.') ? data.value : data.label || data.value; // do not set the Space or Period label
     setCurrentExpression(`${currentExpression}${out}`);
-  };
-
-  const handlePaste = async () => {
-    const text = await navigator.clipboard.readText();
-    if (text) setCurrentExpression(`${currentExpression}${text}`);
   };
 
   const keyboardConfig = {
@@ -131,8 +96,10 @@ function RPNCalc() {
         {
           id: 11,
           label: '\u03C0',
+          name: 'Archimedes\' Constant',
           type: 'fn',
-          value: 'p'
+          value: 'p',
+          valueMath: Math.PI
         },
         {
           id: 12,
@@ -153,8 +120,10 @@ function RPNCalc() {
         },
         {
           id: 16,
+          name: 'Euler\'s Number',
           type: 'fn',
-          value: 'e'
+          value: 'e',
+          valueMath: Math.E
         },
         {
           id: 17,
@@ -176,8 +145,10 @@ function RPNCalc() {
         {
           id: 21,
           label: '\u03C6',
+          name: 'The Golden Ratio',
           type: 'fn',
-          value: 'f'
+          value: 'f',
+          valueMath: (1 + Math.sqrt(5)) / 2
         },
         {
           id: 22,
@@ -224,6 +195,57 @@ function RPNCalc() {
       }
     },
     setCurrentInput: handleKeyboardInput
+  };
+
+  function calc() {
+    let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
+    let outTruncated = out.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
+    if (outTruncated) out = outTruncated.toString();
+    setCurrentExpression(out);
+    if (out !== msgError) setLastAnswer(out);
+  }
+
+  async function checkPasteEnabled() {
+    try {
+      await navigator.clipboard.readText();
+      setPasteEnabled(true);
+    } catch (error) {}
+  }
+  useEffect(() => {
+    checkPasteEnabled();
+  }, []);
+
+  function formatExpression(expression) {
+    if (!expression) return
+    const buttonsFormat = keyboardConfig.buttons?.data?.filter(button =>
+      button.type === 'fn' || button.type === 'operator'
+    );
+    let out = expression.toString();
+    out = out.replace(new RegExp(',', 'g'), ''); // remove commas
+    if (buttonsFormat.length) {
+      buttonsFormat.forEach(button => {
+        out = out.replace(new RegExp(`${button.label}`, 'g'), button.valueMath || button.value);
+        // out = out.replaceAll(button.label, button.valueMath || button.value); // 2024-02-07: eventually do this (too new)
+      });
+    }
+    return out
+  }
+
+  function formatNumbers(expression) {
+    let out = '';
+    expression = expression.toString();
+    let numbers = expression.split(' ');
+    numbers.forEach((number) => {
+      let numFragments = number.split('.');
+      numFragments[0] = numFragments[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+      out = `${out} ${numFragments.join('.')}`;
+    });
+    return out
+  }
+
+  const handlePaste = async () => {
+    const text = await navigator.clipboard.readText();
+    if (text) setCurrentExpression(`${currentExpression}${text}`);
   };
 
   function validateNumbers(expression) {
