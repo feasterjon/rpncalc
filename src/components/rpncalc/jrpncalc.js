@@ -7,10 +7,11 @@ Date: 2024-02-07
 // Reverse Polish Notation (RPN)
 
 export function RPN(expression, msgError = 'error') {
-  const operators = '+-*/^s'; // Operators
-  expression = expression.replace(/^\s*|\s*$/g, ''); // remove leading and trailing whitespace
-  const tokens = expression.split(/\s+/), // split expression into tokens
+  if (!expression) return ''
+  const operators = '+-*/^s', // Operators
     stack = [];
+  expression = expression.replace(/^\s*|\s*$/g, ''); // remove leading and trailing whitespace
+  const tokens = expression.split(/\s+/); // split expression into tokens
   for (const token of tokens) {
     if (isNaN(token) && token.length > 1) return msgError // token is malformed (e.g. operator without a preceding space)
     if (!isNaN(token)) {
