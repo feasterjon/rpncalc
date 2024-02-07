@@ -6,7 +6,6 @@ function Keyboard({ config = {} }) {
   const configButtons = config.buttons?.data || [],
     configButtonsStyles = config.buttons?.styles || {},
     [dynamicStyles, setDynamicStyles] = useState(''),
-    idKeyboard = config.id || 'main',
     [pressedKey, setPressedKey] = useState(''),
     setCurrentInput = config.setCurrentInput,
     vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;

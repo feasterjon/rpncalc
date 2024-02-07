@@ -16,26 +16,28 @@ function RPNCalc() {
     switch (data.value) {
       case 'a':
         setCurrentExpression(`${currentExpression}${lastAnswer}`);
-        return
+        break;
       case 'Backspace':
         if (currentExpression === msgError) {
           setCurrentExpression('');
-          return
+          break;
         }
         setCurrentExpression(currentExpression.substring(0, (currentExpression.length - 1)));
-        return
+        break;
       case 'Delete':
         setLastExpression('');
         setCurrentExpression('');
-        return
+        break;
       case 'Enter':
         setLastExpression(currentExpression);
         calc();
-        return
+        break;
+      default:
+        let out = (data.value === ' ' || data.value === '.') ? data.value : data.label || data.value; // do not set the Space or Period label
+        out = `${currentExpression}${out}`;
+        if (validateNumbers(out)) setCurrentExpression(out);
+        break;
     }
-    let out = (data.value === ' ' || data.value === '.') ? data.value : data.label || data.value; // do not set the Space or Period label
-    out = `${currentExpression}${out}`;
-    if (validateNumbers(out)) setCurrentExpression(out);
   };
 
   const keyboardConfig = {
