@@ -198,9 +198,8 @@ function RPNCalc() {
     setCurrentInput: handleKeyboardInput
   };
 
-  function calc(maxDecimals = 10) {
+  function calc() {
     let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
-    if (!isNaN(out)) out = Number(out).toFixed(maxDecimals); // truncate decimal to maxDecimals
     setCurrentExpression(out);
     if (out !== msgError) setLastAnswer(out);
   }
