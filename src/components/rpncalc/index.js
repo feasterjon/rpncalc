@@ -5,16 +5,16 @@ import { useEffect, useState } from 'react';
 
 function RPNCalc() {
 
-  const [currentNumber, setCurrentNumber] = useState(''),
-    [lastNumber, setLastNumber] = useState(''),
+  const [currentExpression, setCurrentExpression] = useState(''),
+    [lastExpression, setLastExpression] = useState(''),
     [pasteEnabled, setPasteEnabled] = useState(null);
 
   function calc() {
-    let expression = currentNumber.toString();
+    let expression = currentExpression.toString();
     let result = RPN(formatExpression(expression)).toString();
     let resultTruncated = result.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
     if (resultTruncated) result = resultTruncated.toString();
-    setCurrentNumber(result);
+    setCurrentExpression(result);
     return
   }
 
@@ -49,35 +49,27 @@ function RPNCalc() {
   }
 
   const handleKeyboardInput = (data) => {
-    if(data  === '+' || data === '-' || data === '\u00D7' || data === '\u00F7') {
-      setCurrentNumber(currentNumber + data);
-      return
-    }
-    else if (data === 1 || data === 2 || data === 3 || data === 4 || data === 5 ||
-            data === 6 || data === 7 || data === 8 || data === 9 || data === 0 || data === '.' || data === ' ') {
-      if (data !== ' ' && validateNumbers(currentNumber + data) === false) {
-        return
-      }
-    }
-    switch(data) {
+    if (!data) return
+    switch(data.value) {
       case 'Backspace':
-        setCurrentNumber(currentNumber.substring(0, (currentNumber.length - 1)));
+        setCurrentExpression(currentExpression.substring(0, (currentExpression.length - 1)));
         return
       case 'Delete':
-        setLastNumber('');
-        setCurrentNumber('');
+        setLastExpression('');
+        setCurrentExpression('');
         return
       case 'Enter':
-        setLastNumber(currentNumber);
+        setLastExpression(currentExpression);
         calc();
         return
     }
-    setCurrentNumber(`${currentNumber}${data}`);
+    const out = (data.value === ' ') ? data.value : data.label || data.value;
+    setCurrentExpression(`${currentExpression}${out}`);
   };
 
   const handlePaste = async () => {
     const text = await navigator.clipboard.readText();
-    if (text) setCurrentNumber(`${currentNumber}${text}`);
+    if (text) setCurrentExpression(`${currentExpression}${text}`);
   };
 
   const keyboardConfig = {
@@ -260,7 +252,7 @@ function RPNCalc() {
             Theme
           </div>
           <div className="basis-1/12 bg-red-200" data-oldname="history">
-          <p className="text-xl">{formatNumbers(lastNumber)}</p>
+          <p className="text-xl">{formatNumbers(lastExpression)}</p>
           </div>
           <div className="basis-10/12 bg-orange-200" data-oldname="result">
             {pasteEnabled && <p className="
@@ -274,7 +266,7 @@ function RPNCalc() {
               text-center
               w-20
             " onClick={handlePaste}>&#x2398;</p>}
-            <p className="text-4xl">{formatNumbers(currentNumber)}<span className="cursor">|</span></p>
+            <p className="text-4xl">{formatNumbers(currentExpression)}<span className="cursor">|</span></p>
           </div>
         </div>
         <div className="basis-2/3 bg-neutral-100">

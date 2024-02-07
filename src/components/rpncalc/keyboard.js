@@ -21,7 +21,7 @@ function Keyboard({ config = {} }) {
 
   const handleInput = (input) => {
     vibrateBasic();
-    setCurrentInput(input.value);
+    setCurrentInput(input);
   };
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function Keyboard({ config = {} }) {
           setPressedKey(null);
           setDynamicStyles('');
         }, 100);
-        setCurrentInput(event.key);
+        setCurrentInput(button);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
