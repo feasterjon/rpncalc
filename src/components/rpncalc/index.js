@@ -276,6 +276,7 @@ export default function RPNCalc() {
           </div>
           <div className="basis-1/12 bg-red-200" data-oldname="history">
           <p className="text-xl">{formatNumbers(lastExpression)}</p>
+          <p className="text-xl">{formatNumbers(lastAnswer)}</p>
           </div>
           <div className="basis-10/12 bg-orange-200" data-oldname="result">
             {pasteEnabled && <p className="
