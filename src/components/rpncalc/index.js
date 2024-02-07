@@ -1,9 +1,9 @@
 import './index.css';
-import Keyboard from './keyboard';
+import { Keyboard } from './keyboard';
 import { RPN } from './jrpncalc';
 import { useEffect, useState } from 'react';
 
-function RPNCalc() {
+export default function RPNCalc() {
 
   const [currentExpression, setCurrentExpression] = useState(''),
     [lastAnswer, setLastAnswer] = useState(''),
@@ -299,5 +299,3 @@ function RPNCalc() {
     </div>
   );
 }
-
-export default RPNCalc;

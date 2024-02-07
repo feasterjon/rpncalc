@@ -1,7 +1,7 @@
 import './index.css';
 import { useEffect, useState } from 'react';
 
-function Keyboard({ config = {} }) {
+export function Keyboard({ config = {} }) {
 
   const configButtons = config.buttons?.data || [],
     configButtonsStyles = config.buttons?.styles || {},
@@ -64,5 +64,3 @@ function Keyboard({ config = {} }) {
     </div>
   );
 }
-
-export default Keyboard;
