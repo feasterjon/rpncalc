@@ -29,23 +29,23 @@ function RPNCalc() {
   }, []);
 
   function formatExpression(expression) {
-    let output = expression.toString();
-    output = output.replace(new RegExp(',', 'g'), '');
-    output = output.replace(new RegExp('\u00D7', 'g'), '*');
-    output = output.replace(new RegExp('\u00F7', 'g'), '/');
-    return output
+    let out = expression.toString();
+    out = out.replace(new RegExp(',', 'g'), '');
+    out = out.replace(new RegExp('\u00D7', 'g'), '*');
+    out = out.replace(new RegExp('\u00F7', 'g'), '/');
+    return out
   }
 
   function formatNumbers(expression) {
-    let output = '';
+    let out = '';
     expression = expression.toString();
     let numbers = expression.split(' ');
     numbers.forEach((number) => {
       let numFragments = number.split('.');
       numFragments[0] = numFragments[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
-      output = `${output} ${numFragments.join('.')}`;
+      out = `${out} ${numFragments.join('.')}`;
     });
-    return output
+    return out
   }
 
   const handleKeyboardInput = (data) => {
@@ -63,7 +63,7 @@ function RPNCalc() {
         calc();
         return
     }
-    const out = (data.value === ' ') ? data.value : data.label || data.value;
+    const out = (data.value === ' ') ? data.value : data.label || data.value; // do not set the Space label
     setCurrentExpression(`${currentExpression}${out}`);
   };
 
@@ -227,7 +227,7 @@ function RPNCalc() {
   };
 
   function validateNumbers(expression) {
-    let output = true;
+    let out = true;
     expression = expression.toString();
     let numbers = expression.split(' ');
     numbers.forEach((number) => {
@@ -241,7 +241,7 @@ function RPNCalc() {
         return false
       }
     });
-    return output
+    return out
   }
 
   return (
