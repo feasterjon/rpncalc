@@ -33,8 +33,9 @@ function RPNCalc() {
         calc();
         return
     }
-    const out = (data.value === ' ' || data.value === '.') ? data.value : data.label || data.value; // do not set the Space or Period label
-    setCurrentExpression(`${currentExpression}${out}`);
+    let out = (data.value === ' ' || data.value === '.') ? data.value : data.label || data.value; // do not set the Space or Period label
+    out = `${currentExpression}${out}`;
+    if (validateNumbers(out)) setCurrentExpression(out);
   };
 
   const keyboardConfig = {
@@ -197,10 +198,9 @@ function RPNCalc() {
     setCurrentInput: handleKeyboardInput
   };
 
-  function calc() {
+  function calc(maxDecimals = 10) {
     let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
-    let outTruncated = out.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
-    if (outTruncated) out = outTruncated.toString();
+    if (!isNaN(out)) out = Number(out).toFixed(maxDecimals); // truncate decimal to maxDecimals
     setCurrentExpression(out);
     if (out !== msgError) setLastAnswer(out);
   }
@@ -235,7 +235,7 @@ function RPNCalc() {
     let out = '';
     expression = expression.toString();
     let numbers = expression.split(' ');
-    numbers.forEach((number) => {
+    numbers.forEach(number => {
       let numFragments = number.split('.');
       numFragments[0] = numFragments[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
       out = `${out} ${numFragments.join('.')}`;
@@ -248,22 +248,22 @@ function RPNCalc() {
     if (text) setCurrentExpression(`${currentExpression}${text}`);
   };
 
-  function validateNumbers(expression) {
-    let out = true;
+  function validateNumbers(expression, maxDecimals = 10, maxDigits = 15) {
+    if (!expression) return true
     expression = expression.toString();
     let numbers = expression.split(' ');
-    numbers.forEach((number) => {
+    for (const number of numbers) {
       let numFragments = number.split('.');
-      if (numFragments?.[0]?.length > 15) {
-        alert('Maximum number of digits (15) exceeded.');
+      if (numFragments?.[0]?.length > maxDigits) {
+        alert(`Maximum number of digits (${maxDigits}) exceeded.`);
         return false
       }
-      if (numFragments?.[1]?.length > 10) {
-        alert('Maximum number of digits after decimal point (10) exceeded.');
+      if (numFragments?.[1]?.length > maxDecimals) {
+        alert(`Maximum number of digits after decimal point (${maxDecimals}) exceeded.`);
         return false
       }
-    });
-    return out
+    }
+    return true
   }
 
   return (
