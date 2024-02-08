@@ -11,11 +11,8 @@ export default function RPNCalc() {
     [lastExpression, setLastExpression] = useState(''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
-    [historyState, setHistoryState] = useState([]),
     [themeDark, setThemeDark] = useState(false),
     vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
-
-  let historyApp = [];
 
   const handleKeyboardInput = (data) => {
     if (!data) return
@@ -109,15 +106,6 @@ export default function RPNCalc() {
     if (!validateNumbers(text)) return
     setCurrentExpression(`${currentExpression}${text} `);
   };
-
-  function setHistory(data) {
-    if (!data) {
-      historyApp.length = 0;
-      setHistoryState(historyApp);
-      return
-    }
-    historyApp.push({data});
-  }
 
   const toggleTheme = () => {
     vibrateBasic();
