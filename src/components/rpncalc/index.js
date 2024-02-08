@@ -11,7 +11,11 @@ export default function RPNCalc() {
     [lastExpression, setLastExpression] = useState(''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
-    [themeDark, setThemeDark] = useState(false);
+    [historyState, setHistoryState] = useState([]),
+    [themeDark, setThemeDark] = useState(false),
+    vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
+
+  let historyApp = [];
 
   const handleKeyboardInput = (data) => {
     if (!data) return
@@ -99,13 +103,24 @@ export default function RPNCalc() {
   }
 
   const handlePaste = async () => {
+    vibrateBasic();
     const text = await navigator.clipboard.readText();
     if (!text) return
     if (!validateNumbers(text)) return
     setCurrentExpression(`${currentExpression}${text} `);
   };
 
+  function setHistory(data) {
+    if (!data) {
+      historyApp.length = 0;
+      setHistoryState(historyApp);
+      return
+    }
+    historyApp.push({data});
+  }
+
   const toggleTheme = () => {
+    vibrateBasic();
     setThemeDark(!themeDark);
   };
 
@@ -127,6 +142,11 @@ export default function RPNCalc() {
     return true
   }
 
+  const vibrateBasic = (pattern = [50]) => {
+    if (!vibrateEnabled) return
+    window.navigator.vibrate(pattern);
+  };
+
   return (
     <div className="flex flex-col h-screen mx-auto" data-oldname="container">
       <div className="basis-1/3 bg-light flex flex-col" data-oldname="top">
@@ -137,12 +157,12 @@ export default function RPNCalc() {
             </div>
           </div>
           <div className="basis-11/12 flex items-end justify-end text-dark p-4" data-oldname="history">
-            <div className="text-xl">{formatNumbers(lastExpression)} {formatNumbers(lastAnswer)}</div>
+            <div className="text-xl">{formatNumbers(lastExpression)}<br />{formatNumbers(lastAnswer)}</div>
           </div>
         </div>
-        <div className="basis-1/4 flex items-end justify-end p-4" data-oldname="result">
-            <div className="text-4xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></div>
-            {pasteEnabled && <div className="
+        <div className="basis-3/5 flex items-end justify-end p-4" data-oldname="result">
+            <span className="text-4xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
+            {pasteEnabled && <span className="
               bg-primary-light
               cursor-default
               ml-1
@@ -152,7 +172,7 @@ export default function RPNCalc() {
               text-dark
               text-xl
               w-20
-            " onClick={handlePaste}>&#x2398;</div>}
+            " onClick={handlePaste}>&#x2398;</span>}
         </div>
       </div>
       <div className="basis-2/3 pt-2" data-oldname="keypad">
