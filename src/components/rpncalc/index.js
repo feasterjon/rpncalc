@@ -26,8 +26,9 @@ export default function RPNCalc() {
         setCurrentExpression(currentExpression.substring(0, (currentExpression.length - 1)));
         break;
       case 'Delete':
-        setLastExpression('');
         setCurrentExpression('');
+        setLastAnswer('')
+        setLastExpression('');
         break;
       case 'Enter':
         setLastExpression(currentExpression);
