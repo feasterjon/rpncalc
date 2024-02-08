@@ -97,7 +97,9 @@ export default function RPNCalc() {
 
   const handlePaste = async () => {
     const text = await navigator.clipboard.readText();
-    if (text && validateNumbers(text)) setCurrentExpression(`${currentExpression}${text}`);
+    if (!text) return
+    if (!validateNumbers(text)) return
+    setCurrentExpression(`${currentExpression}${text}`);
   };
 
   const toggleTheme = () => {
