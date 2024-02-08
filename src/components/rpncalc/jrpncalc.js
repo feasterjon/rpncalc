@@ -1,7 +1,7 @@
 /*
 Title: (React) Reverse Polish Notation (RPN)
 Author: Jonathan Feaster, JonFeaster.com
-Date: 2024-02-07
+Date: 2024-02-08
 */
 
 // Reverse Polish Notation (RPN)
@@ -22,6 +22,7 @@ export function RPN(expression, msgError = 'error') {
     let operandB = stack.pop(),
       operandA = stack.pop(),
       result;
+    if (token !== 's' && (isNaN(operandA) || isNaN(operandB))) break; // non-square root without valid operands
     if ((token === 's' && operandA) || (token === 's' && isNaN(operandB))) break; // square root without a single valid operand
     switch (token) {
       case '-':
