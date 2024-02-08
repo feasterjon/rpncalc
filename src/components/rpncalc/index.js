@@ -149,7 +149,7 @@ export default function RPNCalc() {
           </div>
         </div>
         <div className="basis-3/5 flex items-end justify-end p-4" data-oldname="result">
-            <span className="text-4xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
+            <span className="text-5xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
             {pasteEnabled && <span className="
               bg-primary-light
               cursor-default
