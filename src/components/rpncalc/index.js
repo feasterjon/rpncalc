@@ -42,7 +42,7 @@ export default function RPNCalc() {
     }
   };
 
-  const keyboardConfig = {
+  const inputConfig = {
     buttons: {
       data: [
         {
@@ -205,6 +205,8 @@ export default function RPNCalc() {
 
   function calc() {
     let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
+    const outTruncated = out.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
+    if (outTruncated) out = outTruncated.toString();
     setCurrentExpression(out);
     if (out !== msgError) setLastAnswer(out);
   }
@@ -221,15 +223,16 @@ export default function RPNCalc() {
 
   function formatExpression(expression) {
     if (!expression) return
-    const buttonsFormat = keyboardConfig.buttons?.data?.filter(button =>
+    const buttonsFormat = inputConfig.buttons?.data?.filter(button =>
       button.type === 'fn' || button.type === 'operator'
     );
     let out = expression.toString();
     out = out.replace(new RegExp(',', 'g'), ''); // remove commas
     if (buttonsFormat.length) {
       buttonsFormat.forEach(button => {
-        out = out.replace(new RegExp(`${button.label}`, 'g'), button.valueMath || button.value);
-        // out = out.replaceAll(button.label, button.valueMath || button.value); // 2024-02-07: eventually do this (too new)
+        let buttonValue = button.valueMath || button.value;
+        out = out.replace(new RegExp(`${button.label}`, 'g'), buttonValue);
+        // out = out.replaceAll(button.label, buttonValue); // 2024-02-07: eventually do this (too new)
       });
     }
     return out
@@ -303,7 +306,7 @@ export default function RPNCalc() {
           </div>
         </div>
         <div className="basis-2/3">
-          <Keyboard config={keyboardConfig} />
+          <Keyboard config={inputConfig} />
         </div>
       </div>
     </div>
