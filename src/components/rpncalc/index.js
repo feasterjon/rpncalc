@@ -149,18 +149,18 @@ export default function RPNCalc() {
           </div>
         </div>
         <div className="basis-3/5 flex items-end justify-end p-4" data-oldname="result">
-            <span className="text-5xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
-            {pasteEnabled && <span className="
-              bg-primary-light
-              cursor-default
-              ml-1
-              rounded-full
-              select-none
-              text-center
-              text-dark
-              text-xl
-              w-20
-            " onClick={handlePaste}>&#x2398;</span>}
+          <span className="text-5xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
+          {pasteEnabled && <span className="
+            bg-primary-light
+            cursor-default
+            ml-1
+            rounded-full
+            select-none
+            text-center
+            text-dark
+            text-xl
+            w-20
+          " onClick={handlePaste}>&#x2398;</span>}
         </div>
       </div>
       <div className="basis-2/3 pt-2" data-oldname="keypad">
