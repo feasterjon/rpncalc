@@ -125,20 +125,19 @@ export default function RPNCalc() {
   }
 
   return (
-    <div className="container mx-auto">
-      <div className="flex flex-col h-screen">
-        <div className="basis-1/3 flex flex-col">
-          <div className="basis-1/12 bg-light" data-oldname="theme">
-            <p className="cursor-default select-none" onClick={toggleTheme}>
-              {themeDark ? <span className="text-4xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
-            </p>
-          </div>
-          <div className="basis-1/12 bg-light text-dark" data-oldname="history">
-            <p className="text-xl">{formatNumbers(lastExpression)}</p>
-            <p className="text-xl">{formatNumbers(lastAnswer)}</p>
-          </div>
-          <div className="basis-10/12 bg-light p-4" data-oldname="result">
-            {pasteEnabled && <p className="
+    <div className="container flex flex-col h-screen mx-auto" data-oldname="container">
+      <div className="basis-1/3 flex flex-col" data-oldname="top">
+        <div className="basis-1/12 bg-light" data-oldname="theme">
+          <p className="cursor-default select-none" onClick={toggleTheme}>
+            {themeDark ? <span className="text-4xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
+          </p>
+        </div>
+        <div className="basis-1/12 bg-light text-dark" data-oldname="history">
+          <p className="text-xl">{formatNumbers(lastExpression)}</p>
+          <p className="text-xl">{formatNumbers(lastAnswer)}</p>
+        </div>
+        <div className="basis-10/12 bg-light p-4" data-oldname="result">
+          {pasteEnabled && <p className="
               bg-primary-light
               cursor-default
               p-2
@@ -149,12 +148,11 @@ export default function RPNCalc() {
               text-xl
               w-20
             " onClick={handlePaste}>&#x2398;</p>}
-            <p className="text-4xl text-primary place-self-end">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></p>
-          </div>
+          <p className="text-4xl text-primary place-self-end">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></p>
         </div>
-        <div className="basis-2/3">
-          <Keyboard config={inputConfig} />
-        </div>
+      </div>
+      <div className="basis-2/3" data-oldname="keypad">
+        <Keyboard config={inputConfig} />
       </div>
     </div>
   );
