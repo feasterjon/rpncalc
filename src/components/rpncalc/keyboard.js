@@ -52,7 +52,7 @@ export function Keyboard({ config = {} }) {
       {buttons.map((button) =>
         <div className="w-1/5" key={`button-${button.id}`}>
           <div
-            className={`cursor-default font-bold m-2 p-2 rounded-full select-none text-center
+            className={`cursor-default font-bold m-2 p-2 rounded-full select-none text-center text-dark
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles?.main}
             `}
             onClick={() => handleInput(button)}

@@ -9,7 +9,8 @@ export default function RPNCalc() {
     [lastAnswer, setLastAnswer] = useState(''),
     [lastExpression, setLastExpression] = useState(''),
     msgError = 'error',
-    [pasteEnabled, setPasteEnabled] = useState(null);
+    [pasteEnabled, setPasteEnabled] = useState(null),
+    [themeDark, setThemeDark] = useState(false);
 
   const handleKeyboardInput = (data) => {
     if (!data) return
@@ -249,6 +250,10 @@ export default function RPNCalc() {
     if (text) setCurrentExpression(`${currentExpression}${text}`);
   };
 
+  const toggleTheme = () => {
+    setThemeDark(!themeDark);
+  };
+
   function validateNumbers(expression, maxDecimals = 10, maxDigits = 15) {
     if (!expression) return true
     expression = expression.toString();
@@ -271,29 +276,31 @@ export default function RPNCalc() {
     <div className="container mx-auto">
       <div className="flex flex-col h-screen">
         <div className="basis-1/3 flex flex-col">
-          <div className="basis-1/12 bg-green-400" data-oldname="theme">
-            Theme
+          <div className="basis-1/12 bg-light" data-oldname="theme">
+            <p className="cursor-default select-none" onClick={toggleTheme}>
+              {themeDark ? <span className="text-4xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
+            </p>
           </div>
-          <div className="basis-1/12 bg-red-200" data-oldname="history">
-          <p className="text-xl">{formatNumbers(lastExpression)}</p>
-          <p className="text-xl">{formatNumbers(lastAnswer)}</p>
+          <div className="basis-1/12 bg-light text-dark" data-oldname="history">
+            <p className="text-xl">{formatNumbers(lastExpression)}</p>
+            <p className="text-xl">{formatNumbers(lastAnswer)}</p>
           </div>
-          <div className="basis-10/12 bg-orange-200" data-oldname="result">
+          <div className="basis-10/12 bg-light p-4" data-oldname="result">
             {pasteEnabled && <p className="
-              bg-primary
+              bg-primary-light
               cursor-default
-              m-2
               p-2
               rounded-full
               select-none
-              text-xl
               text-center
+              text-dark
+              text-xl
               w-20
             " onClick={handlePaste}>&#x2398;</p>}
-            <p className="text-4xl">{formatNumbers(currentExpression)}<span className="cursor">|</span></p>
+            <p className="text-4xl text-primary place-self-end">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></p>
           </div>
         </div>
-        <div className="basis-2/3 bg-neutral-100">
+        <div className="basis-2/3">
           <Keyboard config={keyboardConfig} />
         </div>
       </div>
