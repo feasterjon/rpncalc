@@ -125,6 +125,7 @@ export default function RPNCalc() {
         },
         {
           id: 16,
+          label: '\u2107',
           name: 'Euler\'s Number',
           type: 'fn',
           value: 'e',
