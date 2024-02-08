@@ -17,7 +17,7 @@ export default function RPNCalc() {
     if (!data) return
     switch (data.value) {
       case 'a':
-        setCurrentExpression(`${currentExpression}${lastAnswer}`);
+        setCurrentExpression(`${currentExpression}${lastAnswer} `);
         break;
       case 'Backspace':
         if (currentExpression === msgError) {
@@ -52,8 +52,11 @@ export default function RPNCalc() {
     let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
     const outTruncated = out.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
     if (outTruncated) out = outTruncated.toString();
+    if (out !== msgError) {
+      setLastAnswer(out);
+      out = `${out} `;
+    }
     setCurrentExpression(out);
-    if (out !== msgError) setLastAnswer(out);
   }
 
   async function checkPasteEnabled() {
@@ -99,7 +102,7 @@ export default function RPNCalc() {
     const text = await navigator.clipboard.readText();
     if (!text) return
     if (!validateNumbers(text)) return
-    setCurrentExpression(`${currentExpression}${text}`);
+    setCurrentExpression(`${currentExpression}${text} `);
   };
 
   const toggleTheme = () => {
@@ -125,33 +128,34 @@ export default function RPNCalc() {
   }
 
   return (
-    <div className="container flex flex-col h-screen mx-auto" data-oldname="container">
-      <div className="basis-1/3 flex flex-col" data-oldname="top">
-        <div className="basis-1/12 bg-light" data-oldname="theme">
-          <p className="cursor-default select-none" onClick={toggleTheme}>
-            {themeDark ? <span className="text-4xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
-          </p>
+    <div className="flex flex-col h-screen mx-auto" data-oldname="container">
+      <div className="basis-1/3 bg-light flex flex-col" data-oldname="top">
+        <div className="flex flex-row h-full" data-oldname="row">
+          <div className="basis-1/12 flex items-start justify-start p-4" data-oldname="theme">
+            <div className="cursor-default select-none" onClick={toggleTheme}>
+              {themeDark ? <span className="text-4xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
+            </div>
+          </div>
+          <div className="basis-11/12 flex items-end justify-end text-dark p-4" data-oldname="history">
+            <div className="text-xl">{formatNumbers(lastExpression)} {formatNumbers(lastAnswer)}</div>
+          </div>
         </div>
-        <div className="basis-1/12 bg-light text-dark" data-oldname="history">
-          <p className="text-xl">{formatNumbers(lastExpression)}</p>
-          <p className="text-xl">{formatNumbers(lastAnswer)}</p>
-        </div>
-        <div className="basis-10/12 bg-light p-4" data-oldname="result">
-          {pasteEnabled && <p className="
+        <div className="basis-1/4 flex items-end justify-end p-4" data-oldname="result">
+            <div className="text-4xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></div>
+            {pasteEnabled && <div className="
               bg-primary-light
               cursor-default
-              p-2
+              ml-1
               rounded-full
               select-none
               text-center
               text-dark
               text-xl
               w-20
-            " onClick={handlePaste}>&#x2398;</p>}
-          <p className="text-4xl text-primary place-self-end">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></p>
+            " onClick={handlePaste}>&#x2398;</div>}
         </div>
       </div>
-      <div className="basis-2/3" data-oldname="keypad">
+      <div className="basis-2/3 pt-2" data-oldname="keypad">
         <Keyboard config={inputConfig} />
       </div>
     </div>
