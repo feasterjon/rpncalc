@@ -161,7 +161,7 @@ export default function RPNCalc() {
   };
 
   return (
-    <div className="flex flex-col h-screen mx-auto" data-theme={theme} data-oldname="container">
+    <div className="flex flex-col h-screen mx-auto" data-mode={theme} data-oldname="container">
       <div className="basis-1/3 bg-light flex flex-col" data-oldname="top">
         <div className="flex flex-row h-full" data-oldname="row">
           <div className="basis-1/12 flex items-start justify-start p-4" data-oldname="theme">
