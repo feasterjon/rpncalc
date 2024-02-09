@@ -12,10 +12,29 @@ export default function RPNCalc() {
     [lastExpression, setLastExpression] = useState(''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
+    prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
     themes = config.themes,
     vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
 
-  let [themeIndex, setThemeIndex] = useState(0);
+  function configTheme(selectedName, defaultName = 'os-default') {
+    let defaultIndex = themes.findIndex(theme => theme.name === defaultName) || 0,
+      out = {},
+      selectedTheme = selectedName ? selectedName
+        : localStorage.getItem('theme') || defaultName;
+    let selectedIndex = themes.findIndex(theme => theme.name === selectedTheme);
+    if (selectedIndex < 0) selectedIndex = defaultIndex;
+    out.index = selectedIndex;
+    if (selectedIndex === defaultIndex) {
+      const osTheme = prefersDark ? 'dark' : 'light';
+      out.theme = themes.find(theme => theme.name === osTheme);
+      return out
+    }
+    out.theme = themes[selectedIndex];
+    return out
+  }
+
+  let [themeIndex, setThemeIndex] = useState(configTheme().index);
+  let [theme, setTheme] = useState(configTheme().theme.name);
 
   const handleKeyboardInput = (data) => {
     if (!data) return
@@ -112,7 +131,10 @@ export default function RPNCalc() {
 
   const toggleTheme = () => {
     vibrateBasic();
-    setThemeIndex((themeIndex) => (themeIndex + 1) % config.themes.length);
+    setThemeIndex((themeIndex) => (themeIndex + 1) % themes.length);
+    let selectedTheme = themes[(themeIndex + 1) % themes.length].name;
+    localStorage.setItem('theme', selectedTheme);
+    setTheme(configTheme(selectedTheme).theme.name);
   };
 
   function validateNumbers(expression, maxDecimals = 10, maxDigits = 15) {
@@ -139,7 +161,7 @@ export default function RPNCalc() {
   };
 
   return (
-    <div className="flex flex-col h-screen mx-auto" data-oldname="container">
+    <div className="flex flex-col h-screen mx-auto" data-theme={theme} data-oldname="container">
       <div className="basis-1/3 bg-light flex flex-col" data-oldname="top">
         <div className="flex flex-row h-full" data-oldname="row">
           <div className="basis-1/12 flex items-start justify-start p-4" data-oldname="theme">

@@ -163,7 +163,7 @@ export const config = {
       icon: 'computerDesktop',
       id: 1,
       label: 'System',
-      name: "system"
+      name: "os-default"
     },
     {
       icon: 'sun',
