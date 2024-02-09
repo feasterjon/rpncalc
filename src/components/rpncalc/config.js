@@ -157,5 +157,25 @@ export const config = {
         }
       }
     }
-  }
+  },
+  themes: [
+    {
+      icon: 'computerDesktop',
+      id: 1,
+      label: 'System',
+      name: "system"
+    },
+    {
+      icon: 'sun',
+      id: 2,
+      label: 'Light',
+      name: "light"
+    },
+    {
+      icon: 'moon',
+      id: 3,
+      label: 'Dark',
+      name: "dark"
+    }
+  ]
 };

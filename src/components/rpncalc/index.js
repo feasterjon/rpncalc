@@ -12,8 +12,9 @@ export default function RPNCalc() {
     [lastExpression, setLastExpression] = useState(''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
-    [themeDark, setThemeDark] = useState(false),
     vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
+
+  let [themeIndex, setThemeIndex] = useState(0);
 
   const handleKeyboardInput = (data) => {
     if (!data) return
@@ -108,9 +109,9 @@ export default function RPNCalc() {
     setCurrentExpression(`${currentExpression}${text} `);
   };
 
-  const toggleTheme = () => {
+  const setTheme = () => {
     vibrateBasic();
-    setThemeDark(!themeDark);
+    setThemeIndex((themeIndex) => (themeIndex + 1) % config.themes.length);
   };
 
   function validateNumbers(expression, maxDecimals = 10, maxDigits = 15) {
@@ -147,8 +148,8 @@ export default function RPNCalc() {
               p-2
               rounded-full
               select-none
-            " onClick={toggleTheme}>
-              {themeDark ? <Icon id="moon" /> : <Icon id="sun" />}
+            " onClick={setTheme}>
+              <Icon id={config.themes[themeIndex].icon} />
             </div>
           </div>
           <div className="basis-11/12 flex items-end justify-end text-dark p-4" data-oldname="history">
