@@ -12,6 +12,7 @@ export default function RPNCalc() {
     [lastExpression, setLastExpression] = useState(''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
+    themes = config.themes,
     vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
 
   let [themeIndex, setThemeIndex] = useState(0);
@@ -109,7 +110,7 @@ export default function RPNCalc() {
     setCurrentExpression(`${currentExpression}${text} `);
   };
 
-  const setTheme = () => {
+  const toggleTheme = () => {
     vibrateBasic();
     setThemeIndex((themeIndex) => (themeIndex + 1) % config.themes.length);
   };
@@ -148,8 +149,8 @@ export default function RPNCalc() {
               p-2
               rounded-full
               select-none
-            " onClick={setTheme}>
-              <Icon id={config.themes[themeIndex].icon} />
+            " onClick={toggleTheme}>
+              <Icon id={themes[themeIndex].icon} />
             </div>
           </div>
           <div className="basis-11/12 flex items-end justify-end text-dark p-4" data-oldname="history">
