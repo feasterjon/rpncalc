@@ -1,5 +1,6 @@
 import './index.css';
 import { config } from './config';
+import { Icon } from './icon';
 import { Keyboard } from './keyboard';
 import { RPN } from './jrpncalc';
 import { useEffect, useState } from 'react';
@@ -140,8 +141,14 @@ export default function RPNCalc() {
       <div className="basis-1/3 bg-light flex flex-col" data-oldname="top">
         <div className="flex flex-row h-full" data-oldname="row">
           <div className="basis-1/12 flex items-start justify-start p-4" data-oldname="theme">
-            <div className="cursor-default select-none" onClick={toggleTheme}>
-              {themeDark ? <span className="text-2xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
+            <div className="
+              bg-primary-light
+              cursor-default
+              p-2
+              rounded-full
+              select-none
+            " onClick={toggleTheme}>
+              {themeDark ? <Icon id="moon" /> : <Icon id="sun" />}
             </div>
           </div>
           <div className="basis-11/12 flex items-end justify-end text-dark p-4" data-oldname="history">
@@ -149,18 +156,15 @@ export default function RPNCalc() {
           </div>
         </div>
         <div className="basis-3/5 flex items-end justify-end p-4" data-oldname="result">
-          <span className="text-5xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
+          <span className="text-4xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
           {pasteEnabled && <span className="
             bg-primary-light
             cursor-default
-            ml-1
+            ml-2
+            p-2
             rounded-full
             select-none
-            text-center
-            text-dark
-            text-xl
-            w-20
-          " onClick={handlePaste}>&#x2398;</span>}
+          " onClick={handlePaste}><Icon id="clipboard" /></span>}
         </div>
       </div>
       <div className="basis-2/3 pt-2" data-oldname="keypad">
