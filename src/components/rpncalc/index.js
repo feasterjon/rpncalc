@@ -141,7 +141,7 @@ export default function RPNCalc() {
         <div className="flex flex-row h-full" data-oldname="row">
           <div className="basis-1/12 flex items-start justify-start p-4" data-oldname="theme">
             <div className="cursor-default select-none" onClick={toggleTheme}>
-              {themeDark ? <span className="text-4xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
+              {themeDark ? <span className="text-2xl">&#9789;</span> : <span className="text-4xl">&#9788;</span>}
             </div>
           </div>
           <div className="basis-11/12 flex items-end justify-end text-dark p-4" data-oldname="history">
