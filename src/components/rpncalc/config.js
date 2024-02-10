@@ -137,23 +137,23 @@ export const config = {
       styles: { // active is repeated in main to ensure active styles are applied onClick
         del: {
           active: 'bg-secondary',
-          main: 'active:bg-secondary bg-secondary-light border-2 border-secondary-light'
+          main: 'active:bg-secondary bg-secondary-light border-2 border-secondary-light dark:active:bg-secondary-dark dark:active:border-secondary-dark dark:bg-secondary dark:border-secondary'
         },
         enter: {
           active: 'bg-primary',
-          main: 'active:bg-primary bg-primary-light border-2 border-primary-light'
+          main: 'active:bg-primary bg-primary-light border-2 border-primary-light dark:active:bg-primary-dark dark:active:border-primary-dark dark:bg-primary dark:border-primary'
         },
         fn: {
-          active: 'bg-gray-400',
-          main: 'active:bg-gray-400 border-2 border-gray-300'
+          active: 'bg-slate-200',
+          main: 'active:bg-slate-300 border-2 border-slate-200 dark:active:bg-slate-600 dark:border-slate-700'
         },
         main: {
-          active: 'bg-gray-400',
-          main: 'active:bg-gray-400 bg-gray-300 border-2 border-gray-300'
+          active: 'bg-slate-200',
+          main: 'active:bg-slate-300 bg-slate-200 border-2 border-slate-200 dark:active:bg-slate-600 dark:bg-slate-700 dark:border-slate-700'
         },
         operator: {
           active: 'bg-primary',
-          main: 'active:bg-primary border-2 border-primary-light'
+          main: 'active:bg-primary border-2 border-primary-light dark:border-primary'
         }
       }
     }

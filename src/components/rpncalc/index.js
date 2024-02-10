@@ -162,36 +162,46 @@ export default function RPNCalc() {
 
   return (
     <div className="flex flex-col h-screen mx-auto" data-mode={theme} data-oldname="container">
-      <div className="basis-1/3 bg-light flex flex-col" data-oldname="top">
+      <div className="basis-1/3 bg-slate-100 dark:bg-dark flex flex-col" data-oldname="top">
         <div className="flex flex-row h-full" data-oldname="row">
           <div className="basis-1/12 flex items-start justify-start p-4" data-oldname="theme">
             <div className="
-              bg-primary-light
+              active:bg-slate-400
+              bg-slate-300
               cursor-default
+              dark:active:bg-slate-600
+              dark:bg-slate-700
+              dark:text-slate-100
               p-2
               rounded-full
               select-none
+              text-slate-900
             " onClick={toggleTheme}>
               <Icon id={themes[themeIndex].icon} />
             </div>
           </div>
-          <div className="basis-11/12 flex items-end justify-end text-dark p-4" data-oldname="history">
+          <div className="basis-11/12 dark:text-slate-100 flex items-end justify-end text-slate-900 p-4" data-oldname="history">
             <div className="text-xl">{formatNumbers(lastExpression)}<br />{formatNumbers(lastAnswer)}</div>
           </div>
         </div>
         <div className="basis-3/5 flex items-end justify-end p-4" data-oldname="result">
-          <span className="text-4xl text-primary">{formatNumbers(currentExpression)}<span className="cursor text-dark">|</span></span>
+          <span className="text-4xl text-primary dark:text-primary-light">{formatNumbers(currentExpression)}<span className="cursor dark:text-slate-100 text-slate-900">|</span></span>
           {pasteEnabled && <span className="
-            bg-primary-light
+            active:bg-slate-400
+            bg-slate-300
             cursor-default
+            dark:active:bg-slate-600
+            dark:bg-slate-700
+            dark:text-slate-100
             ml-2
             p-2
             rounded-full
             select-none
+            text-slate-900
           " onClick={handlePaste}><Icon id="clipboard" /></span>}
         </div>
       </div>
-      <div className="basis-2/3 pt-2" data-oldname="keypad">
+      <div className="dark:bg-xdark basis-2/3 pt-2" data-oldname="keypad">
         <Keyboard config={inputConfig} />
       </div>
     </div>
