@@ -20,7 +20,8 @@ export default function RPNCalc() {
     let defaultIndex = themes.findIndex(theme => theme.name === defaultName) || 0,
       out = {},
       selectedTheme = selectedName ? selectedName
-        : localStorage.getItem('theme') || defaultName;
+        : localStorage.getItem('theme') ? localStorage.getItem('theme')
+        : defaultName;
     let selectedIndex = themes.findIndex(theme => theme.name === selectedTheme);
     if (selectedIndex < 0) selectedIndex = defaultIndex;
     out.index = selectedIndex;
