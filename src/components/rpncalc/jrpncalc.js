@@ -1,7 +1,7 @@
 /*
 Title: (React) Reverse Polish Notation (RPN)
 Author: Jonathan Feaster, JonFeaster.com
-Date: 2024-02-08
+Date: 2024-02-12
 */
 
 // Reverse Polish Notation (RPN)
@@ -11,6 +11,7 @@ export function RPN(expression, msgError = 'error') {
   const operators = '+-*/^s', // Operators
     stack = [];
   expression = expression.replace(/^\s*|\s*$/g, ''); // remove leading and trailing whitespace
+  if (!expression) return '' // nothing left after removing white space
   const tokens = expression.split(/\s+/); // split expression into tokens
   for (const token of tokens) {
     if (isNaN(token) && token.length > 1) return msgError // token is malformed (e.g. operator without a preceding space)
