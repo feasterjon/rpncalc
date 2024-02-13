@@ -13,7 +13,9 @@ export function Keyboard({ config = {} }) {
   const buttons = configButtons.map((button) => ({
     id: button.id,
     label: button.label || button.value,
+    order: button.order,
     styles: configButtonsStyles[button.type] || configButtonsStyles.main,
+    size: button.size,
     type: button.type,
     value: button.value
   }));
@@ -48,11 +50,33 @@ export function Keyboard({ config = {} }) {
   };
 
   return (
-    <div className="flex flex-wrap">
+    <div className="flex flex-wrap items-center justify-center">
       {buttons.map((button) =>
-        <div className="w-1/5" key={`button-${button.id}`}>
+        <div
+          className={`
+            ${button.type === 'fn' ? 'basis-1/5' : 'basis-1/4'}
+            ${button.order}
+            sm:basis-1/5
+          `}
+          key={`button-${button.id}`}
+        >
           <div
-            className={`cursor-default dark:text-slate-100 font-bold m-2 p-2 rounded-full select-none text-center text-slate-900
+            className={`
+              aspect-square
+              cursor-default
+              dark:text-slate-100
+              flex
+              items-center
+              justify-center
+              min-[992px]:aspect-square
+              mx-auto
+              rounded-full
+              select-none
+              size-3/4
+              sm:aspect-auto
+              text-center
+              text-slate-900
+              text-2xl
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles?.main}
             `}
             onClick={() => handleInput(button)}

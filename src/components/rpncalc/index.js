@@ -202,7 +202,7 @@ export default function RPNCalc() {
           " onClick={handlePaste}><Icon id="clipboard" /></span>}
         </div>
       </div>
-      <div className="dark:bg-xdark basis-2/3 pt-2" data-oldname="keypad">
+      <div className="dark:bg-xdark basis-2/3 flex justify-center" data-oldname="keypad">
         <Keyboard config={inputConfig} />
       </div>
     </div>

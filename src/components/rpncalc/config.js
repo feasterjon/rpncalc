@@ -5,131 +5,156 @@ export const config = {
         {
           id: 1,
           label: '\u221a',
+          order: 'sm:order-[1]',
           type: 'fn',
           value: 's'
         },
         {
           id: 2,
-          label: 'AC',
-          type: 'del',
-          value: 'Delete'
-        },
-        {
-          id: 3,
-          label: '\u232B',
-          type: 'operator',
-          value: 'Backspace'
-        },
-        {
-          id: 4,
-          label: 'ANS',
-          type: 'operator',
-          value: 'a'
-        },
-        {
-          id: 5,
-          label: '\u00F7',
-          type: 'operator',
-          value: '/'
-        },
-        {
-          id: 6,
+          order: 'sm:order-[6]',
           type: 'fn',
           value: '^'
         },
         {
-          id: 7,
-          value: '7'
-        },
-        {
-          id: 8,
-          value: '8'
-        },
-        {
-          id: 9,
-          value: '9'
-        },
-        {
-          id: 10,
-          label: '\u00D7',
-          type: 'operator',
-          value: '*'
-        },
-        {
-          id: 11,
+          id: 3,
           label: '\u03C0',
           name: 'Archimedes\' Constant',
+          order: 'sm:order-[11]',
           type: 'fn',
           value: 'p',
           valueMath: Math.PI
         },
         {
-          id: 12,
-          value: '4'
-        },
-        {
-          id: 13,
-          value: '5'
-        },
-        {
-          id: 14,
-          value: '6'
-        },
-        {
-          id: 15,
-          type: 'operator',
-          value: '-'
-        },
-        {
-          id: 16,
+          id: 4,
           label: '\u2107',
           name: 'Euler\'s Number',
+          order: 'sm:order-[16]',
           type: 'fn',
           value: 'e',
           valueMath: Math.E
         },
         {
-          id: 17,
-          value: '1'
-        },
-        {
-          id: 18,
-          value: '2'
-        },
-        {
-          id: 19,
-          value: '3'
-        },
-        {
-          id: 20,
-          type: 'operator',
-          value: '+'
-        },
-        {
-          id: 21,
+          id: 5,
           label: '\u03C6',
           name: 'The Golden Ratio',
+          order: 'sm:order-[21]',
           type: 'fn',
           value: 'f',
           valueMath: (1 + Math.sqrt(5)) / 2
         },
         {
+          id: 6,
+          label: 'AC',
+          order: 'sm:order-[2]',
+          type: 'del',
+          value: 'Delete'
+        },
+        {
+          id: 7,
+          label: '\u232B',
+          order: 'sm:order-[3]',
+          type: 'operator',
+          value: 'Backspace'
+        },
+        {
+          id: 8,
+          label: 'ANS',
+          order: 'sm:order-[4]',
+          type: 'operator',
+          value: 'a'
+        },
+        {
+          id: 9,
+          label: '\u00F7',
+          order: 'sm:order-[5]',
+          type: 'operator',
+          value: '/'
+        },
+        {
+          id: 10,
+          order: 'sm:order-[7]',
+          value: '7'
+        },
+        {
+          id: 11,
+          order: 'sm:order-[8]',
+          value: '8'
+        },
+        {
+          id: 12,
+          order: 'sm:order-[9]',
+          value: '9'
+        },
+        {
+          id: 13,
+          label: '\u00D7',
+          order: 'sm:order-[10]',
+          type: 'operator',
+          value: '*'
+        },
+        {
+          id: 14,
+          order: 'sm:order-[12]',
+          value: '4'
+        },
+        {
+          id: 15,
+          order: 'sm:order-[13]',
+          value: '5'
+        },
+        {
+          id: 16,
+          order: 'sm:order-[14]',
+          value: '6'
+        },
+        {
+          id: 17,
+          order: 'sm:order-[15]',
+          type: 'operator',
+          value: '-'
+        },
+        {
+          id: 18,
+          order: 'sm:order-[17]',
+          value: '1'
+        },
+        {
+          id: 19,
+          order: 'sm:order-[18]',
+          value: '2'
+        },
+        {
+          id: 20,
+          order: 'sm:order-[19]',
+          value: '3'
+        },
+        {
+          id: 21,
+          order: 'sm:order-[20]',
+          type: 'operator',
+          value: '+'
+        },
+        {
           id: 22,
+          order: 'sm:order-[22]',
           value: '0'
         },
         {
           id: 23,
           label: '\u00B7',
+          order: 'sm:order-[23]',
           value: '.'
         },
         {
           id: 24,
           label: 'SPC',
+          order: 'sm:order-[24]',
           value: ' '
         },
         {
           id: 25,
           label: '\u23ce',
+          order: 'sm:order-[25]',
           type: 'enter',
           value: 'Enter'
         }
