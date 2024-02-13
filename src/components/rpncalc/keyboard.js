@@ -69,10 +69,11 @@ export function Keyboard({ config = {} }) {
               items-center
               justify-center
               min-[992px]:aspect-square
+              min-[992px]:size-3/4
               mx-auto
               rounded-full
               select-none
-              size-3/4
+              size-2/3
               sm:aspect-auto
               text-center
               text-slate-900
