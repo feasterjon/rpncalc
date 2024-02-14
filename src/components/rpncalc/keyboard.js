@@ -56,7 +56,7 @@ export function Keyboard({ config = {} }) {
           className={`
             ${button.type === 'fn' ? 'basis-1/5' : 'basis-1/4'}
             ${button.order}
-            sm:basis-1/5
+            lg:basis-1/5
           `}
           key={`button-${button.id}`}
         >
@@ -68,16 +68,17 @@ export function Keyboard({ config = {} }) {
               flex
               items-center
               justify-center
-              min-[992px]:aspect-square
-              min-[992px]:size-3/4
+              lg:aspect-square
+              lg:size-3/4
               mx-auto
               rounded-full
               select-none
               size-2/3
               sm:aspect-auto
+              sm:text-base
               text-center
               text-slate-900
-              text-2xl
+              text-xl
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles?.main}
             `}
             onClick={() => handleInput(button)}
