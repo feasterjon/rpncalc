@@ -163,7 +163,7 @@ export default function RPNCalc() {
 
   return (
     <div className="flex flex-col h-screen mx-auto" data-mode={theme}>
-      <div className="basis-1/3 bg-slate-100 dark:bg-dark flex flex-col">
+      <div className="basis-1/3 bg-slate-100 dark:bg-dark flex flex-col overflow-y-auto">
         <div className="flex flex-row h-full">
           <div className="basis-1/12 flex items-start justify-start p-4">
             <div className="
