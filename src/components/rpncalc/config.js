@@ -159,26 +159,29 @@ export const config = {
           value: 'Enter'
         }
       ],
-      styles: { // active is repeated in main to ensure active styles are applied onClick
+      styles: { // active is repeated in etc to ensure active styles are applied onClick
         del: {
           active: 'bg-secondary dark:bg-secondary-dark',
-          main: 'active:bg-secondary bg-secondary-light border-2 border-secondary-light dark:active:bg-secondary-dark dark:active:border-secondary-dark dark:bg-secondary dark:border-secondary'
+          etc: 'active:bg-secondary border-2 border-secondary-light dark:active:bg-secondary-dark dark:active:border-secondary-dark dark:border-secondary',
+          main: 'bg-secondary-light dark:bg-secondary'
         },
         enter: {
           active: 'bg-primary dark:bg-primary-dark',
-          main: 'active:bg-primary bg-primary-light border-2 border-primary-light dark:active:bg-primary-dark dark:active:border-primary-dark dark:bg-primary dark:border-primary'
+          etc: 'active:bg-primary border-2 border-primary-light dark:active:bg-primary-dark dark:active:border-primary-dark dark:border-primary',
+          main: 'bg-primary-light dark:bg-primary'
         },
         fn: {
           active: 'bg-slate-300 dark:bg-slate-600',
-          main: 'active:bg-slate-300 border-2 border-slate-200 dark:active:bg-slate-600 dark:border-slate-700'
+          etc: 'active:bg-slate-300 border-2 border-slate-200 dark:active:bg-slate-600 dark:border-slate-700'
         },
         main: {
           active: 'bg-slate-300 dark:bg-slate-600',
-          main: 'active:bg-slate-300 bg-slate-200 border-2 border-slate-200 dark:active:bg-slate-600 dark:bg-slate-700 dark:border-slate-700'
+          etc: 'active:bg-slate-300 border-2 border-slate-200 dark:active:bg-slate-600 dark:border-slate-700',
+          main: 'bg-slate-200 dark:bg-slate-700'
         },
         operator: {
           active: 'bg-primary',
-          main: 'active:bg-primary border-2 border-primary-light dark:border-primary'
+          etc: 'active:bg-primary border-2 border-primary-light dark:border-primary'
         }
       }
     }
