@@ -182,7 +182,17 @@ export default function RPNCalc() {
             </div>
           </div>
           <div className="basis-11/12 dark:text-slate-100 flex items-end justify-end text-slate-900 p-4">
-            <div className="text-xl">{formatNumbers(lastExpression)}<br />{formatNumbers(lastAnswer)}</div>
+            <div className="text-xl">
+              {lastExpression ? (
+                <>
+                  {formatNumbers(lastExpression)}<br />{formatNumbers(lastAnswer)}
+                </>
+              ) : (
+                <>
+                  &nbsp;<br />&nbsp;
+                </>
+              )}
+            </div>
           </div>
         </div>
         <div className="basis-3/5 flex items-end justify-end p-4">
