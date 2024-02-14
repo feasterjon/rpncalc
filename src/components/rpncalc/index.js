@@ -163,7 +163,7 @@ export default function RPNCalc() {
 
   return (
     <div className="flex flex-col h-screen mx-auto" data-mode={theme}>
-      <div className="basis-1/3 bg-slate-100 dark:bg-dark flex flex-col overflow-y-auto">
+      <div className="basis-1/3 bg-slate-100 dark:bg-dark flex flex-col lg:basis-1/3 sm:basis-1/2 overflow-y-auto">
         <div className="flex flex-row h-full">
           <div className="basis-1/12 flex items-start justify-start p-4">
             <div className="
@@ -182,7 +182,7 @@ export default function RPNCalc() {
             </div>
           </div>
           <div className="basis-11/12 dark:text-slate-100 flex items-end justify-end text-slate-900 p-4">
-            <div className="text-xl">
+            <div className="text-xl text-right">
               {lastExpression ? (
                 <>
                   {formatNumbers(lastExpression)}<br />{formatNumbers(lastAnswer)}
@@ -212,7 +212,7 @@ export default function RPNCalc() {
           " onClick={handlePaste}><Icon id="clipboard" /></span>}
         </div>
       </div>
-      <div className="dark:bg-xdark basis-2/3 flex justify-center">
+      <div className="dark:bg-xdark basis-2/3 flex justify-center lg:basis-2/3 sm:basis-1/2">
         <Keyboard config={inputConfig} />
       </div>
     </div>
