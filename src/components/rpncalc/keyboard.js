@@ -50,7 +50,7 @@ export function Keyboard({ config = {} }) {
   };
 
   return (
-    <div className="flex flex-wrap items-center justify-center">
+    <div className="flex flex-wrap items-center justify-center lg:w-auto sm:w-11/12">
       {buttons.map((button) =>
         <div
           className={`
@@ -70,11 +70,13 @@ export function Keyboard({ config = {} }) {
               justify-center
               lg:aspect-square
               lg:size-3/4
+              lg:text-2xl
               mx-auto
               rounded-full
               select-none
               size-2/3
               sm:aspect-auto
+              sm:size-11/12
               sm:text-base
               text-center
               text-slate-900
