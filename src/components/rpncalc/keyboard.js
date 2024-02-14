@@ -56,7 +56,7 @@ export function Keyboard({ config = {} }) {
           className={`
             ${button.type === 'fn' ? 'basis-1/5' : 'basis-1/4'}
             ${button.order}
-            lg:basis-1/5
+            sm:basis-1/5
           `}
           key={`button-${button.id}`}
         >
