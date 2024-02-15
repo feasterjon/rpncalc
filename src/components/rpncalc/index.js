@@ -13,7 +13,6 @@ export default function RPNCalc() {
     [appHistory, setAppHistory] = useState(sessionHistory),
     [currentExpression, setCurrentExpression] = useState(sessionHistory.length ? `${sessionHistory[sessionHistory.length - 1]?.answer} ` : ''),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
-    [lastExpression, setLastExpression] = useState(sessionHistory[sessionHistory.length - 1]?.expression || ''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
     prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
@@ -55,12 +54,13 @@ export default function RPNCalc() {
         setCurrentExpression(currentExpression.substring(0, (currentExpression.length - 1)));
         break;
       case 'Delete':
+        updateHistory();
+        setLastAnswer(
+          sessionHistory.length ? sessionHistory[sessionHistory.length - 1]?.answer : ''
+        );
         setCurrentExpression('');
-        setLastAnswer('')
-        setLastExpression('');
         break;
       case 'Enter':
-        setLastExpression(currentExpression);
         calc();
         break;
       default:
@@ -143,12 +143,26 @@ export default function RPNCalc() {
     setTheme(configTheme(selectedTheme).theme.name);
   };
 
-  const updateHistory = (expression, answer) => {
+  const updateHistory = (expression, answer, remove = 1) => {
+    if (!expression && !answer) {
+      if (!remove) {
+        sessionHistory.length = 0;
+        localStorage.removeItem('history');
+        setAppHistory(sessionHistory);
+        return
+      }
+      if (!sessionHistory.length) return
+      sessionHistory.length = sessionHistory.length - Math.abs(remove);
+      localStorage.setItem('history', JSON.stringify(sessionHistory));
+      setAppHistory(sessionHistory);
+      return
+    }
     if (!expression || !answer) return
     sessionHistory.push({
       answer: answer,
       date: Date.now(),
-      expression: expression
+      expression: expression,
+      id: sessionHistory.length + 1
     });
     localStorage.setItem('history', JSON.stringify(sessionHistory));
     setAppHistory(sessionHistory);
@@ -199,15 +213,11 @@ export default function RPNCalc() {
           </div>
           <div className="basis-11/12 dark:text-slate-100 flex items-end justify-end text-slate-900 p-4">
             <div className="text-xl text-right">
-              {lastExpression ? (
-                <>
-                  {formatNumbers(lastExpression)}<br />{formatNumbers(lastAnswer)}
-                </>
-              ) : (
-                <>
-                  &nbsp;<br />&nbsp;
-                </>
-              )}
+              <ol className="list-none">
+                {appHistory.map((item, index) =>
+                  <li key={`history-${item.id}`}>{item.expression}<br /><span className="text-primary dark:text-primary-light">{item.answer}</span></li>
+                )}
+              </ol>
             </div>
           </div>
         </div>
