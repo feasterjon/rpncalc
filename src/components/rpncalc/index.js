@@ -7,9 +7,13 @@ import { useEffect, useState } from 'react';
 
 export default function RPNCalc() {
 
-  const [currentExpression, setCurrentExpression] = useState(''),
-    [lastAnswer, setLastAnswer] = useState(''),
-    [lastExpression, setLastExpression] = useState(''),
+  const sessionHistory = JSON.parse(localStorage.getItem('history')) || [];
+
+  const
+    [appHistory, setAppHistory] = useState(sessionHistory),
+    [currentExpression, setCurrentExpression] = useState(sessionHistory.length ? `${sessionHistory[sessionHistory.length - 1]?.answer} ` : ''),
+    [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
+    [lastExpression, setLastExpression] = useState(sessionHistory[sessionHistory.length - 1]?.expression || ''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
     prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
@@ -78,6 +82,7 @@ export default function RPNCalc() {
     if (outTruncated) out = outTruncated.toString();
     if (out !== msgError) {
       setLastAnswer(out);
+      updateHistory(currentExpression, out);
       out = `${out} `;
     }
     setCurrentExpression(out);
@@ -136,6 +141,17 @@ export default function RPNCalc() {
     let selectedTheme = themes[(themeIndex + 1) % themes.length].name;
     localStorage.setItem('theme', selectedTheme);
     setTheme(configTheme(selectedTheme).theme.name);
+  };
+
+  const updateHistory = (expression, answer) => {
+    if (!expression || !answer) return
+    sessionHistory.push({
+      answer: answer,
+      date: Date.now(),
+      expression: expression
+    });
+    localStorage.setItem('history', JSON.stringify(sessionHistory));
+    setAppHistory(sessionHistory);
   };
 
   function validateNumbers(expression, maxDecimals = 10, maxDigits = 15) {
