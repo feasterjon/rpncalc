@@ -11,6 +11,7 @@ export default function RPNCalc() {
 
   const
     [appHistory, setAppHistory] = useState(sessionHistory),
+    [appHistoryVisible, setAppHistoryVisible] = useState(false),
     [currentExpression, setCurrentExpression] = useState(sessionHistory.length ? `${sessionHistory[sessionHistory.length - 1]?.answer} ` : ''),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
     msgError = 'error',
@@ -135,6 +136,11 @@ export default function RPNCalc() {
     setCurrentExpression(`${currentExpression}${text} `);
   };
 
+  const toggleHistory = () => {
+    vibrateBasic();
+    setAppHistoryVisible(!appHistoryVisible);
+  };
+
   const toggleTheme = () => {
     vibrateBasic();
     setThemeIndex((themeIndex) => (themeIndex + 1) % themes.length);
@@ -210,12 +216,31 @@ export default function RPNCalc() {
             " onClick={toggleTheme}>
               <Icon id={themes[themeIndex].icon} />
             </div>
+            <div className="
+              active:bg-slate-400
+              bg-slate-300
+              cursor-default
+              dark:active:bg-slate-600
+              dark:bg-slate-700
+              dark:text-slate-100
+              ml-2
+              p-2
+              rounded-full
+              select-none
+              text-slate-900
+            " onClick={toggleHistory}>
+              <Icon id="clock" />
+            </div>
           </div>
           <div className="basis-11/12 dark:text-slate-100 flex items-end justify-end text-slate-900 p-4">
             <div className="text-xl text-right">
               <ol className="list-none">
                 {appHistory.map((item, index) =>
-                  <li key={`history-${item.id}`}>{item.expression}<br /><span className="text-primary dark:text-primary-light">{item.answer}</span></li>
+                  <li className={`
+                    ${(index + 1 !== appHistory.length && !appHistoryVisible) && 'hidden'}
+                  `} key={`history-${item.id}`}>
+                    {item.expression}<br /><span className="text-primary dark:text-primary-light">{item.answer}</span>
+                  </li>
                 )}
               </ol>
             </div>
