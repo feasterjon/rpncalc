@@ -6,7 +6,7 @@ import { Keyboard } from './keyboard';
 import { RPN } from './jrpncalc';
 import { useEffect, useState } from 'react';
 
-export default function RPNCalc() {
+export function RPNCalc() {
 
   const sessionHistory = JSON.parse(localStorage.getItem('history')) || [];
 

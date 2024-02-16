@@ -1,5 +1,5 @@
 import './App.css';
-import RPNCalc from './components/rpncalc';
+import { RPNCalc } from './components/rpncalc';
 
 function App() {
 
