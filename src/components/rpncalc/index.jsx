@@ -13,7 +13,7 @@ export default function RPNCalc() {
   const
     [appHistory, setAppHistory] = useState(sessionHistory),
     [appHistoryVisible, setAppHistoryVisible] = useState(false),
-    [currentExpression, setCurrentExpression] = useState(sessionHistory.length ? `${sessionHistory[sessionHistory.length - 1]?.answer} ` : ''),
+    [currentExpression, setCurrentExpression] = useState(''),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
@@ -56,10 +56,6 @@ export default function RPNCalc() {
         setCurrentExpression(currentExpression.substring(0, (currentExpression.length - 1)));
         break;
       case 'Delete':
-        updateHistory();
-        setLastAnswer(
-          sessionHistory.length ? sessionHistory[sessionHistory.length - 1]?.answer : ''
-        );
         setCurrentExpression('');
         break;
       case 'Enter':
@@ -150,26 +146,16 @@ export default function RPNCalc() {
     setTheme(configTheme(selectedTheme).theme.name);
   };
 
-  const updateHistory = (expression, answer, remove = 1) => {
-    if (!expression && !answer) {
-      if (!remove) {
-        sessionHistory.length = 0;
-        localStorage.removeItem('history');
-        setAppHistory(sessionHistory);
-        return
-      }
-      if (!sessionHistory.length) return
-      sessionHistory.length = sessionHistory.length - Math.abs(remove);
-      localStorage.setItem('history', JSON.stringify(sessionHistory));
-      setAppHistory(sessionHistory);
-      return
-    }
+  const updateHistory = (expression, answer, lengthMax = 5) => {
     if (!expression || !answer) return
+    if (sessionHistory.length >= lengthMax) sessionHistory.splice(0, sessionHistory.length - lengthMax + 1);
     sessionHistory.push({
       answer: answer,
       date: Date.now(),
       expression: expression,
-      id: sessionHistory.length + 1
+      id: (sessionHistory.length === lengthMax - 1)
+        ? sessionHistory[sessionHistory.length - 1].id + 1
+        : sessionHistory.length + 1
     });
     localStorage.setItem('history', JSON.stringify(sessionHistory));
     setAppHistory(sessionHistory);
