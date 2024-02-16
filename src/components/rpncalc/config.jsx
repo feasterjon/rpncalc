@@ -50,6 +50,7 @@ export const config = {
           value: 'Delete'
         },
         {
+          icon: 'backspace',
           id: 7,
           label: '\u232B',
           order: 'sm:order-[3]',

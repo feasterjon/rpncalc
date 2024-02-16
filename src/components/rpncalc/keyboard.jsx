@@ -1,3 +1,4 @@
+import { Icon } from './icon';
 import { useEffect, useState } from 'react';
 
 export function Keyboard({ config = {} }) {
@@ -10,6 +11,7 @@ export function Keyboard({ config = {} }) {
     vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
 
   const buttons = configButtons.map((button) => ({
+    icon: button.icon,
     id: button.id,
     label: button.label || button.value,
     order: button.order,
@@ -65,6 +67,7 @@ export function Keyboard({ config = {} }) {
               cursor-default
               dark:text-slate-100
               flex
+              font-bold
               items-center
               justify-center
               lg:aspect-square
@@ -85,7 +88,7 @@ export function Keyboard({ config = {} }) {
             `}
             onClick={() => handleInput(button)}
           >
-            {button.label}
+            {button.icon ? <Icon id={button.icon} /> : button.label}
           </div>
         </div>
       )}
