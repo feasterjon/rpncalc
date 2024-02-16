@@ -74,6 +74,7 @@ export function Keyboard({ config = {} }) {
               lg:size-3/4
               lg:text-2xl
               mx-auto
+              my-1
               rounded-full
               select-none
               size-2/3

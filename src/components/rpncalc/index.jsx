@@ -1,14 +1,15 @@
 import './index.css';
 import styles from './index.module.css';
-import { config } from './config';
+import { config as comConfig } from './config';
 import { Icon } from './icon';
 import { Keyboard } from './keyboard';
 import { RPN } from './jrpncalc';
 import { useEffect, useState } from 'react';
 
-export function RPNCalc() {
+export function RPNCalc(props) {
 
-  const sessionHistory = JSON.parse(localStorage.getItem('history')) || [];
+  const config = props.config ? Object.assign(comConfig, props.config) : comConfig,
+    sessionHistory = JSON.parse(localStorage.getItem('history')) || [];
 
   const
     [appHistory, setAppHistory] = useState(sessionHistory),
@@ -185,7 +186,13 @@ export function RPNCalc() {
   };
 
   return (
-    <div className="flex flex-col h-screen mx-auto" data-mode={theme}>
+    <div className={`
+      flex
+      flex-col
+      h-full
+      w-full
+      ${config.hScreen !== false && `h-screen`}
+    `} data-mode={theme}>
       <div className="basis-1/3 bg-slate-100 dark:bg-dark flex flex-col lg:basis-1/3 sm:basis-1/2 overflow-y-auto">
         <div className="flex flex-row h-full">
           <div className="basis-1/12 flex items-start justify-start p-4">
