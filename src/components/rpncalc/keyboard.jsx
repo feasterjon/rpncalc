@@ -1,4 +1,3 @@
-import './index.css';
 import { useEffect, useState } from 'react';
 
 export function Keyboard({ config = {} }) {

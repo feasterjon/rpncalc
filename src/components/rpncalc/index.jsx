@@ -1,4 +1,5 @@
 import './index.css';
+import styles from './index.module.css';
 import { config } from './config';
 import { Icon } from './icon';
 import { Keyboard } from './keyboard';
@@ -247,7 +248,7 @@ export default function RPNCalc() {
           </div>
         </div>
         <div className="basis-3/5 flex items-end justify-end p-4">
-          <span className="text-4xl text-primary dark:text-primary-light">{formatNumbers(currentExpression)}<span className="cursor dark:text-slate-100 text-slate-900">|</span></span>
+          <span className="text-4xl text-primary dark:text-primary-light">{formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-slate-100 text-slate-900`}>|</span></span>
           {pasteEnabled && <span className="
             active:bg-slate-400
             bg-slate-300
