@@ -126,6 +126,10 @@ export function RPNCalc(props) {
     return out
   }
 
+  const getId = () => {
+    return Math.floor(Math.random() * (10 ** 10 - 10 ** 9 + 1)) + (10 ** 9) // random 10-digit positive integer
+  };
+
   const handlePaste = async () => {
     vibrateBasic();
     const text = await navigator.clipboard.readText();
@@ -147,16 +151,14 @@ export function RPNCalc(props) {
     setTheme(configTheme(selectedTheme).theme.name);
   };
 
-  const updateHistory = (expression, answer, lengthMax = 5) => {
+  const updateHistory = (expression, answer, lengthMax = 25) => {
     if (!expression || !answer) return
     if (sessionHistory.length >= lengthMax) sessionHistory.splice(0, sessionHistory.length - lengthMax + 1);
     sessionHistory.push({
       answer: answer,
       date: Date.now(),
       expression: expression,
-      id: (sessionHistory.length === lengthMax - 1)
-        ? sessionHistory[sessionHistory.length - 1].id + 1
-        : sessionHistory.length + 1
+      id: getId()
     });
     localStorage.setItem('history', JSON.stringify(sessionHistory));
     setAppHistory(sessionHistory);
@@ -193,55 +195,56 @@ export function RPNCalc(props) {
       w-full
       ${config.hScreen !== false && `h-screen`}
     `} data-mode={theme}>
-      <div className="basis-1/3 bg-slate-100 dark:bg-dark flex flex-col lg:basis-1/3 sm:basis-1/2 overflow-y-auto">
-        <div className="flex flex-row h-full">
-          <div className="basis-1/12 flex items-start justify-start p-4">
-            <div className="
-              active:bg-slate-400
-              bg-slate-300
-              cursor-default
-              dark:active:bg-slate-600
-              dark:bg-slate-700
-              dark:text-slate-100
-              p-2
-              rounded-full
-              select-none
-              text-slate-900
-            " onClick={toggleTheme}>
-              <Icon id={themes[themeIndex].icon} />
-            </div>
-            <div className="
-              active:bg-slate-400
-              bg-slate-300
-              cursor-default
-              dark:active:bg-slate-600
-              dark:bg-slate-700
-              dark:text-slate-100
-              ml-2
-              p-2
-              rounded-full
-              select-none
-              text-slate-900
-            " onClick={toggleHistory}>
-              <Icon id="clock" />
-            </div>
+      <div className="bg-slate-100 dark:bg-dark overflow-y-auto">
+        <div className="flex items-end justify-end p-4">
+          <div className="
+            active:bg-slate-400
+            g-slate-300
+            cursor-default
+            dark:active:bg-slate-600
+            dark:bg-slate-700
+            dark:text-slate-100
+            p-2
+            rounded-full
+            select-none
+            text-slate-900
+          " onClick={toggleTheme}>
+            <Icon id={themes[themeIndex].icon} styles="h-5 lg:h-6 lg:w-6 w-5" />
           </div>
-          <div className="basis-11/12 dark:text-slate-100 flex items-end justify-end text-slate-900 p-4">
-            <div className="text-xl text-right">
-              <ol className="list-none">
-                {appHistory.map((item, index) =>
-                  <li className={`
-                    ${(index + 1 !== appHistory.length && !appHistoryVisible) && 'hidden'}
-                  `} key={`history-${item.id}`}>
-                    {item.expression}<br /><span className="text-primary dark:text-primary-light">{item.answer}</span>
-                  </li>
-                )}
-              </ol>
-            </div>
+          <div className="
+            active:bg-slate-400
+            bg-slate-300
+            cursor-default
+            dark:active:bg-slate-600
+            dark:bg-slate-700
+            dark:text-slate-100
+            ml-2
+            p-2
+            rounded-full
+            select-none
+            text-slate-900
+          " onClick={toggleHistory}>
+            <Icon id="clock" styles="h-5 lg:h-6 lg:w-6 w-5" />
           </div>
         </div>
-        <div className="basis-3/5 flex items-end justify-end p-4">
-          <span className="text-4xl text-primary dark:text-primary-light">{formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-slate-100 text-slate-900`}>|</span></span>
+        <div className="dark:text-slate-100 flex items-end justify-end px-4 shrink text-slate-900">
+          <div className="lg:text-2xl text-lg text-right xl:text-3xl">
+            <ol className="list-none">
+              {!appHistory.length && <li>&nbsp;<br />&nbsp;</li>}
+              {appHistory.map((item, index) =>
+                <li className={`
+                      ${(index + 1 !== appHistory.length && !appHistoryVisible) && 'hidden'}
+                    `} key={`history-${item.id}`}>
+                  {item.expression}<br /><span className="text-primary dark:text-primary-light">{item.answer}</span>
+                </li>
+              )}
+            </ol>
+          </div>
+        </div>
+        <div className="flex items-end justify-end p-4">
+          <span className="dark:text-primary-light lg:text-5xl text-3xl text-primary xl:text-6xl">
+            {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-slate-100 text-slate-900`}>|</span>
+          </span>
           {pasteEnabled && <span className="
             active:bg-slate-400
             bg-slate-300
@@ -254,10 +257,10 @@ export function RPNCalc(props) {
             rounded-full
             select-none
             text-slate-900
-          " onClick={handlePaste}><Icon id="clipboard" /></span>}
+          " onClick={handlePaste}><Icon id="clipboard" styles="w-5 lg:h-6 lg:w-6 h-5" /></span>}
         </div>
       </div>
-      <div className="dark:bg-xdark basis-2/3 flex justify-center lg:basis-2/3 sm:basis-1/2">
+      <div className="dark:bg-xdark flex grow justify-center">
         <Keyboard config={inputConfig} />
       </div>
     </div>

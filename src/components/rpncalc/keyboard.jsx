@@ -71,13 +71,12 @@ export function Keyboard({ config = {} }) {
               items-center
               justify-center
               lg:aspect-square
-              lg:size-3/4
               lg:text-2xl
               mx-auto
               my-1
               rounded-full
               select-none
-              size-2/3
+              size-3/4
               sm:aspect-auto
               sm:size-11/12
               sm:text-base
