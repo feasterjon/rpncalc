@@ -162,14 +162,14 @@ export const config = {
       ],
       styles: { // active is repeated in etc to ensure active styles are applied onClick
         del: {
-          active: 'bg-secondary dark:bg-secondary-dark',
-          etc: 'active:bg-secondary border-2 border-secondary-light dark:active:bg-secondary-dark dark:active:border-secondary-dark dark:border-secondary',
-          main: 'bg-secondary-light dark:bg-secondary'
+          active: 'bg-rpncalc-secondary dark:bg-rpncalc-secondary-dark',
+          etc: 'active:bg-rpncalc-secondary border-2 border-rpncalc-secondary-light dark:active:bg-rpncalc-secondary-dark dark:active:border-rpncalc-secondary-dark dark:border-rpncalc-secondary',
+          main: 'bg-rpncalc-secondary-light dark:bg-rpncalc-secondary'
         },
         enter: {
-          active: 'bg-primary dark:bg-primary-dark',
-          etc: 'active:bg-primary border-2 border-primary-light dark:active:bg-primary-dark dark:active:border-primary-dark dark:border-primary',
-          main: 'bg-primary-light dark:bg-primary'
+          active: 'bg-rpncalc-primary dark:bg-rpncalc-primary-dark',
+          etc: 'active:bg-rpncalc-primary border-2 border-rpncalc-primary-light dark:active:bg-rpncalc-primary-dark dark:active:border-rpncalc-primary-dark dark:border-rpncalc-primary',
+          main: 'bg-rpncalc-primary-light dark:bg-rpncalc-primary'
         },
         fn: {
           active: 'bg-neutral-300 dark:bg-neutral-700',
@@ -181,8 +181,8 @@ export const config = {
           main: 'bg-neutral-200 dark:bg-neutral-800'
         },
         operator: {
-          active: 'bg-primary',
-          etc: 'active:bg-primary border-2 border-primary-light dark:border-primary'
+          active: 'bg-rpncalc-primary',
+          etc: 'active:bg-rpncalc-primary border-2 border-rpncalc-primary-light dark:border-rpncalc-primary'
         }
       }
     }

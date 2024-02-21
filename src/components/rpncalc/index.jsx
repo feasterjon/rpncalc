@@ -1,6 +1,5 @@
-import './index.css';
 import styles from './index.module.css';
-import { config as comConfig } from './config';
+import { config as configCom } from './config';
 import { Icon } from './icon';
 import { Keyboard } from './keyboard';
 import { RPN } from './jrpncalc';
@@ -8,7 +7,7 @@ import { useEffect, useState } from 'react';
 
 export function RPNCalc(props) {
 
-  const config = props.config ? Object.assign(comConfig, props.config) : comConfig,
+  const config = props.config ? Object.assign(configCom, props.config) : configCom,
     sessionHistory = JSON.parse(localStorage.getItem('history')) || [];
 
   const
@@ -253,7 +252,7 @@ export function RPNCalc(props) {
             {appHistory.map((item) =>
               <li key={`history-${item.id}`}>
                 {formatNumbers(item.expression)}<br />
-                <span className="dark:text-primary-light text-primary">{formatNumbers(item.answer)}</span>
+                <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(item.answer)}</span>
               </li>
             )}
           </ol>
@@ -292,7 +291,7 @@ export function RPNCalc(props) {
           </div>
         </div>
         <div className="flex items-end justify-end p-4">
-          <span className="dark:text-primary-light lg:text-5xl text-5xl text-primary xl:text-6xl">
+          <span className="dark:text-rpncalc-primary-light lg:text-5xl text-4xl text-rpncalc-primary xl:text-6xl">
             {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`}>|</span>
           </span>
           {pasteEnabled && <span className="

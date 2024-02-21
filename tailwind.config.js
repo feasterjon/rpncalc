@@ -8,15 +8,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: 'hsl(var(--color-primary))',
-          dark: 'hsl(var(--color-primary-dark))',
-          light: 'hsl(var(--color-primary-light))'
-        },
-        secondary: {
-          DEFAULT: 'hsl(var(--color-secondary))',
-          dark: 'hsl(var(--color-secondary-dark))',
-          light: 'hsl(var(--color-secondary-light))'
+        rpncalc: {
+          primary: {
+            DEFAULT: 'hsl(var(--rpncalc-color-primary))',
+            dark: 'hsl(var(--rpncalc-color-primary-dark))',
+            light: 'hsl(var(--rpncalc-color-primary-light))'
+          },
+          secondary: {
+            DEFAULT: 'hsl(var(--rpncalc-color-secondary))',
+            dark: 'hsl(var(--rpncalc-color-secondary-dark))',
+            light: 'hsl(var(--rpncalc-color-secondary-light))'
+          }
         }
       }
     },
