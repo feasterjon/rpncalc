@@ -172,13 +172,13 @@ export const config = {
           main: 'bg-primary-light dark:bg-primary'
         },
         fn: {
-          active: 'bg-slate-300 dark:bg-slate-600',
-          etc: 'active:bg-slate-300 border-2 border-slate-200 dark:active:bg-slate-600 dark:border-slate-700'
+          active: 'bg-neutral-300 dark:bg-neutral-700',
+          etc: 'active:bg-neutral-300 border-2 border-neutral-200 dark:active:bg-neutral-700 dark:border-neutral-800'
         },
         main: {
-          active: 'bg-slate-300 dark:bg-slate-600',
-          etc: 'active:bg-slate-300 border-2 border-slate-200 dark:active:bg-slate-600 dark:border-slate-700',
-          main: 'bg-slate-200 dark:bg-slate-700'
+          active: 'bg-neutral-300 dark:bg-neutral-700',
+          etc: 'active:bg-neutral-300 border-2 border-neutral-200 dark:active:bg-neutral-700 dark:border-neutral-800',
+          main: 'bg-neutral-200 dark:bg-neutral-800'
         },
         operator: {
           active: 'bg-primary',

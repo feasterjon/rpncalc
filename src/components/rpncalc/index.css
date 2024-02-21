@@ -4,10 +4,6 @@
 
 @layer base {
   :root {
-    --color-accent: 192 9% 89%;
-    --color-accent-dark: 240 1% 44%;
-    --color-dark: 228 6% 17%;
-    --color-light: 220 18% 97%;
     --color-primary: var(--color-primary-hs) 62%;
     --color-primary-dark: var(--color-primary-hs) 38%;
     --color-primary-hs: 207 73%;
@@ -16,7 +12,5 @@
     --color-secondary-dark: var(--color-secondary-hs) 39%;
     --color-secondary-hs: 12 72%;
     --color-secondary-light: var(--color-secondary-hs) 89%;
-    --color-xdark: 220 5% 11%;
-    --color-xlight: 0 0% 98%;
   }
 }

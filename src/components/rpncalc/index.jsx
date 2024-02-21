@@ -202,115 +202,115 @@ export function RPNCalc(props) {
       ${config.hScreen !== false && `h-screen`}
     `} data-mode={theme}>
       <div className={`
-        bg-slate-200
+        bg-neutral-300
         dark:bg-neutral-700
         ${!appHistoryVisible && 'hidden'}
       `}>
         <div className="flex items-end justify-end p-4">
           <div className="
-            active:bg-slate-400
-            bg-slate-300
+            active:bg-neutral-500
+            bg-neutral-400
             cursor-default
-            dark:active:bg-slate-600
-            dark:bg-slate-700
-            dark:text-slate-100
+            dark:active:bg-neutral-500
+            dark:bg-neutral-600
+            dark:text-neutral-100
             ml-2
             p-2
             rounded-full
             select-none
-            text-slate-900
+            text-neutral-900
           " onClick={() => { updateHistory(); toggleHistory();}}>
             <Icon id="trash" />
           </div>
           <div className="
-            active:bg-slate-400
-            bg-slate-300
+            active:bg-neutral-500
+            bg-neutral-400
             cursor-default
-            dark:active:bg-slate-600
-            dark:bg-slate-700
-            dark:text-slate-100
+            dark:active:bg-neutral-500
+            dark:bg-neutral-600
+            dark:text-neutral-100
             ml-2
             p-2
             rounded-full
             select-none
-            text-slate-900
+            text-neutral-900
           " onClick={toggleHistory}>
             <Icon id="x-circle" />
           </div>
         </div>
         <div className="
-          dark:text-slate-100
+          dark:text-neutral-100
           items-end
           justify-end
           lg:text-2xl
           p-4
           text-lg
           text-right
-          text-slate-900
+          text-neutral-900
           xl:text-3xl
         ">
           <ol className="list-none">
             {appHistory.map((item) =>
               <li key={`history-${item.id}`}>
-                {item.expression}<br /><span className="dark:text-primary-light text-primary">{item.answer}</span>
+                {formatNumbers(item.expression)}<br />
+                <span className="dark:text-primary-light text-primary">{formatNumbers(item.answer)}</span>
               </li>
             )}
           </ol>
         </div>
       </div>
-      <div className="bg-slate-100 dark:bg-dark">
+      <div className="bg-neutral-200 dark:bg-neutral-800">
         <div className="flex items-end justify-end p-4">
           <div className="
-            active:bg-slate-400
-            bg-slate-300
-            g-slate-300
+            active:bg-neutral-400
+            bg-neutral-300
             cursor-default
-            dark:active:bg-slate-600
-            dark:bg-slate-700
-            dark:text-slate-100
+            dark:active:bg-neutral-600
+            dark:bg-neutral-700
+            dark:text-neutral-100
             p-2
             rounded-full
             select-none
-            text-slate-900
+            text-neutral-900
           " onClick={toggleTheme}>
             <Icon id={themes[themeIndex].icon} />
           </div>
           <div className="
-            active:bg-slate-400
-            bg-slate-300
+            active:bg-neutral-400
+            bg-neutral-300
             cursor-default
-            dark:active:bg-slate-600
-            dark:bg-slate-700
-            dark:text-slate-100
+            dark:active:bg-neutral-600
+            dark:bg-neutral-700
+            dark:text-neutral-100
             ml-2
             p-2
             rounded-full
             select-none
-            text-slate-900
+            text-neutral-900
           " onClick={toggleHistory}>
             <Icon id="clock" />
           </div>
         </div>
         <div className="flex items-end justify-end p-4">
           <span className="dark:text-primary-light lg:text-5xl text-5xl text-primary xl:text-6xl">
-            {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-slate-100 text-slate-900`}>|</span>
+            {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`}>|</span>
           </span>
           {pasteEnabled && <span className="
-            active:bg-slate-400
-            bg-slate-300
+            active:bg-neutral-400
+            bg-neutral-300
             cursor-default
-            dark:active:bg-slate-600
-            dark:bg-slate-700
-            dark:text-slate-100
+            dark:active:bg-neutral-600
+            dark:bg-neutral-700
+            dark:text-neutral-100
             ml-2
             p-2
             rounded-full
             select-none
-            text-slate-900
+            text-neutral-900
           " onClick={handlePaste}><Icon id="clipboard" /></span>}
         </div>
       </div>
-      <div className="dark:bg-xdark flex grow justify-center">
+      <div className="bg-neutral-100 dark:bg-neutral-900 flex grow justify-center">
         <Keyboard config={inputConfig} />
       </div>
     </div>

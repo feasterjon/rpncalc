@@ -65,7 +65,7 @@ export function Keyboard({ config = {} }) {
             className={`
               aspect-square
               cursor-default
-              dark:text-slate-100
+              dark:text-neutral-100
               flex
               font-bold
               items-center
@@ -81,7 +81,7 @@ export function Keyboard({ config = {} }) {
               sm:size-11/12
               sm:text-base
               text-center
-              text-slate-900
+              text-neutral-900
               text-xl
               ${button.styles.etc}
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles.main}

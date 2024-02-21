@@ -8,12 +8,6 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        accent: {
-          DEFAULT: 'hsl(var(--color-accent))',
-          dark: 'hsl(var(--color-accent-dark))',
-        },
-        dark: 'hsl(var(--color-dark))',
-        light: 'hsl(var(--color-light))',
         primary: {
           DEFAULT: 'hsl(var(--color-primary))',
           dark: 'hsl(var(--color-primary-dark))',
@@ -23,9 +17,7 @@ module.exports = {
           DEFAULT: 'hsl(var(--color-secondary))',
           dark: 'hsl(var(--color-secondary-dark))',
           light: 'hsl(var(--color-secondary-light))'
-        },
-        xdark: 'hsl(var(--color-xdark))',
-        xlight: 'hsl(var(--color-xlight))'
+        }
       }
     },
   },
