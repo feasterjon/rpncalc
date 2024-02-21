@@ -151,7 +151,13 @@ export function RPNCalc(props) {
     setTheme(configTheme(selectedTheme).theme.name);
   };
 
-  const updateHistory = (expression, answer, lengthMax = 25) => {
+  const updateHistory = (expression, answer, lengthMax = 100) => {
+    if (!expression && !answer) {
+      sessionHistory.length = 0;
+      localStorage.removeItem('history');
+      setAppHistory(sessionHistory);
+      return
+    }
     if (!expression || !answer) return
     if (sessionHistory.length >= lengthMax) sessionHistory.splice(0, sessionHistory.length - lengthMax + 1);
     sessionHistory.push({
@@ -195,21 +201,26 @@ export function RPNCalc(props) {
       w-full
       ${config.hScreen !== false && `h-screen`}
     `} data-mode={theme}>
-      <div className="bg-slate-100 dark:bg-dark overflow-y-auto">
+      <div className={`
+        bg-slate-200
+        dark:bg-neutral-700
+        ${!appHistoryVisible && 'hidden'}
+      `}>
         <div className="flex items-end justify-end p-4">
           <div className="
             active:bg-slate-400
-            g-slate-300
+            bg-slate-300
             cursor-default
             dark:active:bg-slate-600
             dark:bg-slate-700
             dark:text-slate-100
+            ml-2
             p-2
             rounded-full
             select-none
             text-slate-900
-          " onClick={toggleTheme}>
-            <Icon id={themes[themeIndex].icon} styles="h-5 lg:h-6 lg:w-6 w-5" />
+          " onClick={() => { updateHistory(); toggleHistory();}}>
+            <Icon id="trash" />
           </div>
           <div className="
             active:bg-slate-400
@@ -224,25 +235,64 @@ export function RPNCalc(props) {
             select-none
             text-slate-900
           " onClick={toggleHistory}>
-            <Icon id="clock" styles="h-5 lg:h-6 lg:w-6 w-5" />
+            <Icon id="x-circle" />
           </div>
         </div>
-        <div className="dark:text-slate-100 flex items-end justify-end px-4 shrink text-slate-900">
-          <div className="lg:text-2xl text-lg text-right xl:text-3xl">
-            <ol className="list-none">
-              {!appHistory.length && <li>&nbsp;<br />&nbsp;</li>}
-              {appHistory.map((item, index) =>
-                <li className={`
-                      ${(index + 1 !== appHistory.length && !appHistoryVisible) && 'hidden'}
-                    `} key={`history-${item.id}`}>
-                  {item.expression}<br /><span className="text-primary dark:text-primary-light">{item.answer}</span>
-                </li>
-              )}
-            </ol>
+        <div className="
+          dark:text-slate-100
+          items-end
+          justify-end
+          lg:text-2xl
+          p-4
+          text-lg
+          text-right
+          text-slate-900
+          xl:text-3xl
+        ">
+          <ol className="list-none">
+            {appHistory.map((item) =>
+              <li key={`history-${item.id}`}>
+                {item.expression}<br /><span className="dark:text-primary-light text-primary">{item.answer}</span>
+              </li>
+            )}
+          </ol>
+        </div>
+      </div>
+      <div className="bg-slate-100 dark:bg-dark">
+        <div className="flex items-end justify-end p-4">
+          <div className="
+            active:bg-slate-400
+            bg-slate-300
+            g-slate-300
+            cursor-default
+            dark:active:bg-slate-600
+            dark:bg-slate-700
+            dark:text-slate-100
+            p-2
+            rounded-full
+            select-none
+            text-slate-900
+          " onClick={toggleTheme}>
+            <Icon id={themes[themeIndex].icon} />
+          </div>
+          <div className="
+            active:bg-slate-400
+            bg-slate-300
+            cursor-default
+            dark:active:bg-slate-600
+            dark:bg-slate-700
+            dark:text-slate-100
+            ml-2
+            p-2
+            rounded-full
+            select-none
+            text-slate-900
+          " onClick={toggleHistory}>
+            <Icon id="clock" />
           </div>
         </div>
         <div className="flex items-end justify-end p-4">
-          <span className="dark:text-primary-light lg:text-5xl text-3xl text-primary xl:text-6xl">
+          <span className="dark:text-primary-light lg:text-5xl text-5xl text-primary xl:text-6xl">
             {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-slate-100 text-slate-900`}>|</span>
           </span>
           {pasteEnabled && <span className="
@@ -257,7 +307,7 @@ export function RPNCalc(props) {
             rounded-full
             select-none
             text-slate-900
-          " onClick={handlePaste}><Icon id="clipboard" styles="w-5 lg:h-6 lg:w-6 h-5" /></span>}
+          " onClick={handlePaste}><Icon id="clipboard" /></span>}
         </div>
       </div>
       <div className="dark:bg-xdark flex grow justify-center">
