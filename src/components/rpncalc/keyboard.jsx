@@ -64,7 +64,7 @@ export function Keyboard({ config = {} }) {
           <div
             className={`
               aspect-square
-              cursor-default
+              cursor-pointer
               dark:text-neutral-100
               flex
               font-bold

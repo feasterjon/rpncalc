@@ -189,7 +189,7 @@ export const config = {
   },
   themes: [
     {
-      icon: 'computerDesktop',
+      icon: 'computer-desktop',
       id: 1,
       label: 'System',
       name: "os-default"
