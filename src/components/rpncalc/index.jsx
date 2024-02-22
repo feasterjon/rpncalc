@@ -292,6 +292,12 @@ export function RPNCalc(props) {
                   label: 'Keypad',
                   onClick: toggleKeypad,
                   styles: 'hidden lg:flex'
+                },
+                {
+                  icon: 'question-mark-circle',
+                  id: 4,
+                  label: 'Help',
+                  onClick: () => { alert('Help!') }
                 }
               ],
               icon: 'ellipsis-vertical',
