@@ -340,9 +340,10 @@ export function RPNCalc(props) {
                     dark:active:bg-neutral-600
                     dark:hover:bg-neutral-600
                     dark:text-neutral-100
-                    flex
+                    hidden
                     hover:bg-neutral-400
                     items-center
+                    lg:flex
                     p-2
                     select-none
                     text-neutral-900
