@@ -1,5 +1,6 @@
 import styles from './index.module.css';
 import { config as configCom } from './config';
+import { Dropdown } from './dropdown';
 import { Icon } from './icon';
 import { Keyboard } from '../keyboard';
 import { RPN } from './jrpncalc';
@@ -14,7 +15,6 @@ export function RPNCalc(props) {
     [appHistory, setAppHistory] = useState(sessionHistory),
     [appHistoryVisible, setAppHistoryVisible] = useState(false),
     [currentExpression, setCurrentExpression] = useState(''),
-    [isOpen, setIsOpen] = useState(false),
     [keypadVisible, setKeypadVisible] = useState(true),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
     msgError = 'error',
@@ -139,12 +139,6 @@ export function RPNCalc(props) {
     setCurrentExpression(`${currentExpression}${text} `);
   };
 
-  const toggleDropdown = (dropdown) => {
-    vibrateBasic();
-    if (dropdown.length < 2) return
-    dropdown[1](!dropdown[0]);
-  };
-
   const toggleHistory = () => {
     vibrateBasic();
     setAppHistoryVisible(!appHistoryVisible);
@@ -220,12 +214,12 @@ export function RPNCalc(props) {
       `} data-name="history">
         <div className="flex items-end justify-end p-4">
           <div className="
-            active:bg-neutral-500
             bg-neutral-400
-            cursor-default
-            dark:active:bg-neutral-500
+            cursor-pointer
             dark:bg-neutral-600
+            dark:hover:bg-neutral-500
             dark:text-neutral-100
+            hover:bg-neutral-500
             ml-2
             p-2
             rounded-full
@@ -235,12 +229,12 @@ export function RPNCalc(props) {
             <Icon id="trash" />
           </div>
           <div className="
-            active:bg-neutral-500
             bg-neutral-400
-            cursor-default
-            dark:active:bg-neutral-500
+            cursor-pointer
             dark:bg-neutral-600
+            dark:hover:bg-neutral-500
             dark:text-neutral-100
+            hover:bg-neutral-500
             ml-2
             p-2
             rounded-full
@@ -277,95 +271,49 @@ export function RPNCalc(props) {
         ${!keypadVisible && `grow`}
       `} data-name="terminal">
         <div className="flex items-end justify-end p-4">
-          <div className="inline-block relative">
-            <div className="
-              bg-neutral-300
-              cursor-pointer
-              dark:bg-neutral-700
-              dark:hover:bg-neutral-600
-              dark:text-neutral-100
-              hover:bg-neutral-400
-              ml-2
-              p-2
-              rounded-full
-              select-none
-              text-neutral-900
-            " onClick={() => toggleDropdown([isOpen, setIsOpen])}>
-              <Icon id="ellipsis-vertical" />
-            </div>
-            {isOpen && (
-              <div className="
-                absolute
-                bg-neutral-300
-                dark:bg-neutral-700
-                focus:outline-none
-                mt-2
-                origin-top
-                right-0
-                rounded-md
-                shadow-md
-                z-10
-              ">
-                <ul className="py-1">
-                  <li className="
-                    cursor-pointer
-                    dark:active:bg-neutral-600
-                    dark:hover:bg-neutral-600
-                    dark:text-neutral-100
-                    flex
-                    hover:bg-neutral-400
-                    items-center
-                    p-2
-                    select-none
-                    text-neutral-900
-                  " onClick={toggleTheme}>
-                    <Icon id={themes[themeIndex].icon} /><span className="pl-2">Theme</span>
-                  </li>
-                  <li className="
-                    cursor-pointer
-                    dark:active:bg-neutral-600
-                    dark:hover:bg-neutral-600
-                    dark:text-neutral-100
-                    flex
-                    hover:bg-neutral-400
-                    items-center
-                    p-2
-                    select-none
-                    text-neutral-900
-                  " onClick={() => {toggleDropdown([isOpen, setIsOpen]); toggleHistory();}}>
-                    <Icon id="clock" /><span className="pl-2">History</span>
-                  </li>
-                  <li className="
-                    cursor-pointer
-                    dark:active:bg-neutral-600
-                    dark:hover:bg-neutral-600
-                    dark:text-neutral-100
-                    hidden
-                    hover:bg-neutral-400
-                    items-center
-                    lg:flex
-                    p-2
-                    select-none
-                    text-neutral-900
-                  " onClick={toggleKeypad}>
-                    <Icon id={keypadVisible ? 'eye' : 'eye-slash'} /><span className="pl-2">Keypad</span>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
+          <Dropdown config={
+            {
+              data: [
+                {
+                  icon: themes[themeIndex].icon,
+                  id: 1,
+                  label: 'Theme',
+                  onClick: toggleTheme
+                },
+                {
+                  icon: 'clock',
+                  id: 2,
+                  label: 'History',
+                  onClick: toggleHistory
+                },
+                {
+                  icon: keypadVisible ? 'eye' : 'eye-slash',
+                  id: 3,
+                  label: 'Keypad',
+                  onClick: toggleKeypad,
+                  styles: 'hidden lg:flex'
+                }
+              ],
+              icon: 'ellipsis-vertical',
+              styles: {
+                data: 'dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 text-neutral-900',
+                main: 'bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 ml-2 p-2 rounded-full text-neutral-900',
+                menu: 'bg-neutral-300 dark:bg-neutral-700'
+              }
+            }
+          } />
         </div>
         <div className="flex items-end justify-end p-4">
           <span className="dark:text-rpncalc-primary-light lg:text-5xl text-4xl text-rpncalc-primary xl:text-6xl">
             {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`}>|</span>
           </span>
           {pasteEnabled && <span className="
-            active:bg-neutral-400
             bg-neutral-300
             cursor-pointer
-            dark:active:bg-neutral-600
             dark:bg-neutral-700
+            dark:hover:bg-neutral-600
             dark:text-neutral-100
+            hover:bg-neutral-400
             ml-2
             p-2
             rounded-full

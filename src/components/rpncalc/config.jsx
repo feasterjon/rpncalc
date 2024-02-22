@@ -163,26 +163,26 @@ export const config = {
       styles: { // active is repeated in etc to ensure active styles are applied onClick
         del: {
           active: 'bg-rpncalc-secondary dark:bg-rpncalc-secondary-dark',
-          etc: 'active:bg-rpncalc-secondary border-2 border-rpncalc-secondary-light dark:active:bg-rpncalc-secondary-dark dark:active:border-rpncalc-secondary-dark dark:border-rpncalc-secondary',
+          etc: 'border-2 border-rpncalc-secondary-light dark:hover:bg-rpncalc-secondary-dark dark:hover:border-rpncalc-secondary-dark dark:border-rpncalc-secondary hover:bg-rpncalc-secondary',
           main: 'bg-rpncalc-secondary-light dark:bg-rpncalc-secondary'
         },
         enter: {
           active: 'bg-rpncalc-primary dark:bg-rpncalc-primary-dark',
-          etc: 'active:bg-rpncalc-primary border-2 border-rpncalc-primary-light dark:active:bg-rpncalc-primary-dark dark:active:border-rpncalc-primary-dark dark:border-rpncalc-primary',
+          etc: 'border-2 border-rpncalc-primary-light dark:hover:bg-rpncalc-primary-dark dark:hover:border-rpncalc-primary-dark dark:border-rpncalc-primary hover:bg-rpncalc-primary',
           main: 'bg-rpncalc-primary-light dark:bg-rpncalc-primary'
         },
         fn: {
           active: 'bg-neutral-300 dark:bg-neutral-700',
-          etc: 'active:bg-neutral-300 border-2 border-neutral-200 dark:active:bg-neutral-700 dark:border-neutral-800'
+          etc: 'border-2 border-neutral-200 dark:hover:bg-neutral-700 dark:border-neutral-800 hover:bg-neutral-300'
         },
         main: {
           active: 'bg-neutral-300 dark:bg-neutral-700',
-          etc: 'active:bg-neutral-300 border-2 border-neutral-200 dark:active:bg-neutral-700 dark:border-neutral-800',
+          etc: 'border-2 border-neutral-200 dark:hover:bg-neutral-700 dark:border-neutral-800 hover:bg-neutral-300',
           main: 'bg-neutral-200 dark:bg-neutral-800'
         },
         operator: {
           active: 'bg-rpncalc-primary',
-          etc: 'active:bg-rpncalc-primary border-2 border-rpncalc-primary-light dark:border-rpncalc-primary'
+          etc: 'border-2 border-rpncalc-primary-light dark:border-rpncalc-primary hover:bg-rpncalc-primary'
         }
       }
     }
