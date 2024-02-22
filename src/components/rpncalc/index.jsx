@@ -231,7 +231,7 @@ export function RPNCalc(props) {
             rounded-full
             select-none
             text-neutral-900
-          " onClick={() => { updateHistory(); toggleHistory();}}>
+          " onClick={() => {updateHistory(); toggleHistory();}}>
             <Icon id="trash" />
           </div>
           <div className="
@@ -332,7 +332,7 @@ export function RPNCalc(props) {
                     p-2
                     select-none
                     text-neutral-900
-                  " onClick={toggleHistory}>
+                  " onClick={() => {toggleDropdown([isOpen, setIsOpen]); toggleHistory();}}>
                     <Icon id="clock" /><span className="pl-2">History</span>
                   </li>
                   <li className="
