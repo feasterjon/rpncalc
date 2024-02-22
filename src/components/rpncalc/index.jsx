@@ -1,7 +1,7 @@
 import styles from './index.module.css';
 import { config as configCom } from './config';
 import { Icon } from './icon';
-import { Keyboard } from './keyboard';
+import { Keyboard } from '../keyboard';
 import { RPN } from './jrpncalc';
 import { useEffect, useState } from 'react';
 
@@ -247,7 +247,7 @@ export function RPNCalc(props) {
             select-none
             text-neutral-900
           " onClick={toggleHistory}>
-            <Icon id="x-circle" />
+            <Icon id="x-mark" />
           </div>
         </div>
         <div className="
