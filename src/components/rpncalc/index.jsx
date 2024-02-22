@@ -207,8 +207,6 @@ export function RPNCalc(props) {
 
   return (
     <div className={`
-      bg-neutral-200
-      dark:bg-neutral-800
       flex
       flex-col
       h-full
