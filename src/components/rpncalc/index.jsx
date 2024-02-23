@@ -1,9 +1,10 @@
-import styles from './index.module.css';
 import { config as configCom } from './config';
 import { Dropdown } from './dropdown';
+import { vibrate } from './helpers';
 import { Icon } from './icon';
-import { Keyboard } from '../keyboard';
+import styles from './index.module.css';
 import { RPN } from './jrpncalc';
+import { Keyboard } from '../keyboard';
 import { useEffect, useState } from 'react';
 
 export function RPNCalc(props) {
@@ -20,8 +21,7 @@ export function RPNCalc(props) {
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
     prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
-    themes = config.themes,
-    vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
+    themes = config.themes;
 
   function configTheme(selectedName, defaultName = 'os-default') {
     let defaultIndex = themes.findIndex(theme => theme.name === defaultName) || 0,
@@ -132,7 +132,7 @@ export function RPNCalc(props) {
   };
 
   const handlePaste = async () => {
-    vibrateBasic();
+    vibrate();
     const text = await navigator.clipboard.readText();
     if (!text) return
     if (!validateNumbers(text)) return
@@ -140,17 +140,17 @@ export function RPNCalc(props) {
   };
 
   const toggleHistory = () => {
-    vibrateBasic();
+    vibrate();
     setAppHistoryVisible(!appHistoryVisible);
   };
 
   const toggleKeypad = () => {
-    vibrateBasic();
+    vibrate();
     setKeypadVisible(!keypadVisible);
   };
 
   const toggleTheme = () => {
-    vibrateBasic();
+    vibrate();
     setThemeIndex((themeIndex) => (themeIndex + 1) % themes.length);
     let selectedTheme = themes[(themeIndex + 1) % themes.length].name;
     localStorage.setItem('theme', selectedTheme);
@@ -193,11 +193,6 @@ export function RPNCalc(props) {
     }
     return true
   }
-
-  const vibrateBasic = (pattern = [50]) => {
-    if (!vibrateEnabled) return
-    window.navigator.vibrate(pattern);
-  };
 
   return (
     <div className={`

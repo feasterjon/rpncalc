@@ -1,3 +1,4 @@
+import { vibrate } from './helpers';
 import { Icon } from './icon';
 import { useEffect, useState } from 'react';
 
@@ -7,8 +8,7 @@ export function Keyboard({ config = {} }) {
     configButtonsStyles = config.buttons?.styles || {},
     [dynamicStyles, setDynamicStyles] = useState(''),
     [pressedKey, setPressedKey] = useState(''),
-    setCurrentInput = config.setCurrentInput,
-    vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
+    setCurrentInput = config.setCurrentInput;
 
   const buttons = configButtons.map((button) => ({
     icon: button.icon,
@@ -22,7 +22,7 @@ export function Keyboard({ config = {} }) {
   }));
 
   const handleInput = (input) => {
-    vibrateBasic();
+    vibrate();
     setCurrentInput(input);
   };
 
@@ -44,11 +44,6 @@ export function Keyboard({ config = {} }) {
       window.removeEventListener('keydown', handleKeyDown);
     }
   }, [buttons, setCurrentInput]);
-
-  const vibrateBasic = (pattern = [50]) => {
-    if (!vibrateEnabled) return
-    window.navigator.vibrate(pattern);
-  };
 
   return (
     <div className="flex flex-wrap items-center justify-center lg:w-auto sm:w-11/12">

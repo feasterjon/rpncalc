@@ -1,3 +1,4 @@
+import { vibrate } from './helpers';
 import { Icon } from './icon';
 import { useEffect, useState } from 'react';
 
@@ -8,8 +9,7 @@ export function Dropdown(props) {
   const data = config.data || [],
     icon = config.icon,
     [isOpen, setIsOpen] = useState(false),
-    styles = config.styles || {},
-    vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
+    styles = config.styles || {};
 
   const handleClickOutside = (event) => {
     if (event.target.closest('.dropdown')) return
@@ -21,11 +21,6 @@ export function Dropdown(props) {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const vibrateBasic = (pattern = [50]) => {
-    if (!vibrateEnabled) return
-    window.navigator.vibrate(pattern);
-  };
-
   return (
     <div className="inline-block relative">
       <div className={`
@@ -33,7 +28,7 @@ export function Dropdown(props) {
         dropdown
         select-none
         ${styles.main && styles.main}
-      `} onClick={() => {vibrateBasic(); setIsOpen(!isOpen);}}>
+      `} onClick={() => {vibrate(); setIsOpen(!isOpen);}}>
         <Icon id={icon} />
       </div>
       {isOpen && (
