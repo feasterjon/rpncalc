@@ -5,6 +5,7 @@ import { Icon } from './icon';
 import styles from './index.module.css';
 import { RPN } from './jrpncalc';
 import { Keyboard } from '../keyboard';
+import { Modal } from '../modal';
 import { useEffect, useState } from 'react';
 
 export function RPNCalc(props) {
@@ -18,6 +19,7 @@ export function RPNCalc(props) {
     [currentExpression, setCurrentExpression] = useState(''),
     [keypadVisible, setKeypadVisible] = useState(true),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
+    [modalVisible, setModalVisible] = useState(false),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
     prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
@@ -298,7 +300,7 @@ export function RPNCalc(props) {
                   icon: 'question-mark-circle',
                   id: 4,
                   label: 'Help',
-                  onClick: () => { alert('Help!') }
+                  onClick: () => { setModalVisible(true) }
                 }
               ],
               icon: 'ellipsis-vertical',
@@ -339,6 +341,19 @@ export function RPNCalc(props) {
       `} data-name="interface">
         <Keyboard config={inputConfig} visible={keypadVisible} />
       </div>
+      {modalVisible && (
+        <Modal
+          body={
+            <p>
+              Reverse Polish Notation (RPN) is a mathematical notation in which every operator follows all of its operands. It is also known as postfix notation. The description <q>Polish</q> refers to the nationality of logician Jan Lukasiewicz, who invented (prefix) Polish notation in the 1920's.
+            </p>
+          }
+          footerzz={
+            <p>RPN Calculator (Ver. 7.0.0) - Jonathan Feaster</p>
+          }
+          header="Help"
+        close={() => setModalVisible(false)} darkMode={(theme === 'dark') ? true : false}/>
+      )}
     </div>
   );
 }
