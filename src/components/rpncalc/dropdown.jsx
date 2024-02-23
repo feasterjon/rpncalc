@@ -11,6 +11,16 @@ export function Dropdown(props) {
     styles = config.styles || {},
     vibrateEnabled = (typeof window.navigator.vibrate === 'function') ? true : false;
 
+  const handleClickOutside = (event) => {
+    if (event.target.closest('.dropdown')) return
+    setIsOpen(false);
+  };
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   const vibrateBasic = (pattern = [50]) => {
     if (!vibrateEnabled) return
     window.navigator.vibrate(pattern);
@@ -20,6 +30,7 @@ export function Dropdown(props) {
     <div className="inline-block relative">
       <div className={`
         cursor-pointer
+        dropdown
         select-none
         ${styles.main && styles.main}
       `} onClick={() => {vibrateBasic(); setIsOpen(!isOpen);}}>

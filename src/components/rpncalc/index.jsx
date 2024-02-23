@@ -278,7 +278,8 @@ export function RPNCalc(props) {
                   icon: themes[themeIndex].icon,
                   id: 1,
                   label: 'Theme',
-                  onClick: toggleTheme
+                  onClick: toggleTheme,
+                  styles: 'dropdown'
                 },
                 {
                   icon: 'clock',
@@ -291,7 +292,7 @@ export function RPNCalc(props) {
                   id: 3,
                   label: 'Keypad',
                   onClick: toggleKeypad,
-                  styles: 'hidden lg:flex'
+                  styles: 'dropdown hidden lg:flex'
                 },
                 {
                   icon: 'question-mark-circle',
