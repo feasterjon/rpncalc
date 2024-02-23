@@ -58,7 +58,7 @@ export function Dropdown(props) {
                 ${styles.data && styles.data}
                 ${item.styles && item.styles}
               `} key={`dropdown-${item.id}`} onClick={item.onClick}>
-                <Icon id={item.icon} /><span className="pl-2">{item.label}</span>
+                <Icon id={item.icon} /><span className="ml-2">{item.label}</span>
               </li>
             )}
           </ul>

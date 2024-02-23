@@ -212,36 +212,41 @@ export function RPNCalc(props) {
         dark:bg-neutral-700
         ${!appHistoryVisible && 'hidden'}
       `} data-name="history">
-        <div className="flex items-end justify-end p-4">
-          <div className="
-            bg-neutral-400
-            cursor-pointer
-            dark:bg-neutral-600
-            dark:hover:bg-neutral-500
-            dark:text-neutral-100
-            hover:bg-neutral-500
-            ml-2
-            p-2
-            rounded-full
-            select-none
-            text-neutral-900
-          " onClick={() => {updateHistory(); toggleHistory();}}>
-            <Icon id="trash" />
+        <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
+          <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
+            <span className="cursor-pointer my-auto" onClick={toggleHistory}><Icon id="arrow-left" styles="h-8 w-8" /></span><span className="ml-2">History</span>
           </div>
-          <div className="
-            bg-neutral-400
-            cursor-pointer
-            dark:bg-neutral-600
-            dark:hover:bg-neutral-500
-            dark:text-neutral-100
-            hover:bg-neutral-500
-            ml-2
-            p-2
-            rounded-full
-            select-none
-            text-neutral-900
-          " onClick={toggleHistory}>
-            <Icon id="x-mark" />
+          <div className="flex grow items-end justify-end">
+            <div className="
+              bg-neutral-400
+              cursor-pointer
+              dark:bg-neutral-600
+              dark:hover:bg-neutral-500
+              dark:text-neutral-100
+              hover:bg-neutral-500
+              ml-2
+              p-2
+              rounded-full
+              select-none
+              text-neutral-900
+            " onClick={() => {updateHistory(); toggleHistory();}}>
+              <Icon id="trash" />
+            </div>
+            <div className="
+              bg-neutral-400
+              cursor-pointer
+              dark:bg-neutral-600
+              dark:hover:bg-neutral-500
+              dark:text-neutral-100
+              hover:bg-neutral-500
+              ml-2
+              p-2
+              rounded-full
+              select-none
+              text-neutral-900
+            " onClick={toggleHistory}>
+              <Icon id="x-mark" />
+            </div>
           </div>
         </div>
         <div className="
