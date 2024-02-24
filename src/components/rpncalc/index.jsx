@@ -348,11 +348,7 @@ export function RPNCalc(props) {
               Reverse Polish Notation (RPN) is a mathematical notation in which every operator follows all of its operands. It is also known as postfix notation. The description <q>Polish</q> refers to the nationality of logician Jan Lukasiewicz, who invented (prefix) Polish notation in the 1920's.
             </p>
           }
-          footerzz={
-            <p>RPN Calculator (Ver. 7.0.0) - Jonathan Feaster</p>
-          }
-          header="Help"
-        close={() => setModalVisible(false)} darkMode={(theme === 'dark') ? true : false}/>
+        close={() => setModalVisible(false)} darkMode={(theme === 'dark') ? true : false} header="Help" />
       )}
     </div>
   );

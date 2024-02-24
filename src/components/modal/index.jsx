@@ -1,23 +1,18 @@
 import styles from './index.module.css';
 import { vibrate } from './helpers';
-import { useEffect, useState } from 'react';
 
 export function Modal(props) {
 
-  /*
+  const cancelable = (props.cancelable !== false) ? true : false;
+
   const handleClickOutside = (event) => {
-    if (event.target.closest('.mask')) return
-    props.close();
+    if (cancelable && !event.target.closest(`.${styles.container}`)) {
+      props.close();
+    }
   };
 
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
-  */
-
   return (
-    <div className={styles.mask}>
+    <div className={styles.mask} onClick={handleClickOutside}>
       <div className={styles.wrapper}>
         <div className={`
           ${styles.container}

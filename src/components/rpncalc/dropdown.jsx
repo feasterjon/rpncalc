@@ -8,12 +8,12 @@ export function Dropdown(props) {
 
   const data = config.data || [],
     icon = config.icon,
-    [isOpen, setIsOpen] = useState(false),
+    [visible, setVisible] = useState(false),
     styles = config.styles || {};
 
   const handleClickOutside = (event) => {
     if (event.target.closest('.dropdown')) return
-    setIsOpen(false);
+    setVisible(false);
   };
 
   useEffect(() => {
@@ -28,10 +28,10 @@ export function Dropdown(props) {
         dropdown
         select-none
         ${styles.main && styles.main}
-      `} onClick={() => {vibrate(); setIsOpen(!isOpen);}}>
+      `} onClick={() => {vibrate(); setVisible(!visible);}}>
         <Icon id={icon} />
       </div>
-      {isOpen && (
+      {visible && (
         <div className={`
           absolute
           mt-2
