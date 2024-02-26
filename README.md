@@ -1,4 +1,4 @@
-# RPNCalc React
+# RPNCalc
 
 
 
