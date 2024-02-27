@@ -1,8 +1,6 @@
-.container {
-  border-radius: 0.25rem;
-  margin: 0 auto;
-  max-width: 80%;
-  padding: 2rem;
+.body p, .body table {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 }
 
 .containerDark {
@@ -45,17 +43,21 @@
 }
 
 .mask {
+  align-items: center;
   background-color: hsl(0 0% 5% / 0.60);
-  display: table;
+  display: flex;
   height: 100%;
+  justify-content: center;
   left: 0;
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 9999;
 }
 
-.wrapper {
-  display: table-cell;
-  vertical-align: middle;
+.modal {
+  border-radius: 0.25rem;
+  max-height: 90%;
+  max-width: 80%;
+  overflow: auto;
+  padding: 2rem;
 }

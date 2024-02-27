@@ -1,0 +1,136 @@
+:local(.table) {
+  --table-xx-dark: hsl(0 0% 0% / 0.98);
+  --table-x-dark: hsl(0 0% 0% / 0.15);
+  --tableDark: hsl(0 0% 0% / 0.25);
+  --table-light: hsl(0 0% 100% / 0.98);
+  --tableBorder-width: 0.0625em;
+}
+
+.table {
+  background-color: hsl(0 0% 100% / 0.10);
+  border-collapse: collapse;
+  border-color: var(--tableDark);
+  border-style: solid;
+  border-width: var(--tableBorder-width);
+  padding: 0.25rem;
+  text-align: left;
+}
+
+.table caption, .table th, .table td {
+  padding: 0.5em;
+}
+
+.table caption, .table th {
+  font-weight: bold;
+}
+
+.table th {
+  background-color: var(--table-x-dark);
+}
+
+.table tr {
+  user-select: all;
+}
+
+.table tr:hover {
+  background-color: var(--table-x-dark);
+}
+
+.table th, .table td {
+  border-color: var(--tableDark);
+  border-style: solid;
+  border-width: var(--tableBorder-width);
+}
+
+.tableA {
+  border: var(--tableBorder-width) solid var(--table-light);
+}
+
+.tableA thead th, .tableA thead td {
+  border: none;
+}
+
+.tableA th {
+  background-color: var(--tableDark);
+}
+
+.tableA td {
+  background-color: var(--table-x-dark);
+}
+
+.tableA th, .tableA td {
+  border: var(--tableBorder-width) solid var(--table-light);
+}
+
+.tableB {
+  border: none;
+}
+
+.tableB th, .tableB td {
+  border: none;
+}
+
+.tableB th {
+  background-color: var(--tableDark);
+}
+
+.tableB td {
+  background-color: var(--table-x-dark);
+}
+
+.tableB th, .tableB td {
+  border-bottom: var(--tableBorder-width) solid var(--table-light);
+}
+
+.tableC {
+  border: none;
+}
+
+.tableC th, .tableC td {
+  border: none;
+}
+
+.tableC th {
+  border-bottom: 0.125em solid var(--table-xx-dark);
+  background-color: transparent;
+}
+
+.tableC td {
+  border-bottom-color: var(--tableDark);
+  border-bottom-style: solid;
+  border-bottom-width: var(--tableBorder-width);
+}
+
+.tableD {
+  border: var(--tableBorder-width) solid var(--table-xx-dark);
+}
+
+.tableD th, .tableD td {
+  border: none;
+}
+
+.tableD th {
+  border-bottom: var(--tableBorder-width) dashed var(--table-xx-dark);
+  background-color: transparent;
+}
+
+.tableE {
+  border: var(--tableBorder-width) solid var(--table-xx-dark);
+}
+
+.tableE th, .tableE td {
+  border: none;
+}
+
+.tableE th {
+  background-color: transparent;
+}
+
+.tableE td {
+  border-bottom: var(--tableBorder-width) dashed var(--table-light);
+  background-color: var(--table-x-dark);
+}
+
+.title {
+  font-weight: bold;
+}

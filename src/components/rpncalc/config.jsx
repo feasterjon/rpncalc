@@ -1,4 +1,141 @@
 export const config = {
+  help: {
+    sections: [
+      {
+        data: [
+          {
+            data: 'Reverse Polish Notation (RPN) is a mathematical notation in which every operator follows all of its operands. It is also known as postfix notation. The description "Polish" refers to the nationality of logician Jan Lukasiewicz, who invented (prefix) Polish notation in the 1920\'s.',
+            type: 'text',
+          }
+        ],
+        id: 1
+      },
+      {
+        data: [
+          {
+            data: {
+              data: [
+                {
+                  data: [
+                    '1+2',
+                    '1 2 +'
+                  ],
+                  id: 1
+                },
+                {
+                  data: [
+                    '1+2+3',
+                    '1 2 + 3 +'
+                  ],
+                  id: 2
+                },
+                {
+                  data: [
+                    '5(1+2+3)',
+                    '5 1 2 + 3 + \u00D7'
+                  ],
+                  id: 3
+                },
+                {
+                  data: [
+                    '(5(1+2+3))-8',
+                    '5 1 2 + 3 + \u00D7 8 -'
+                  ],
+                  id: 4
+                },
+                {
+                  data: [
+                    '((5(1+2+3))-8)\u00F713',
+                    '5 1 2 + 3 + \u00D7 8 - 13 \u00F7'
+                  ],
+                  id: 5
+                }
+              ],
+              headings: [
+                {
+                  id: 1,
+                  name: 'Infix Notation'
+                },
+                {
+                  id: 2,
+                  name: 'Reverse Polish Notation'
+                }
+              ]
+            },
+            type: 'table'
+          }
+        ],
+        heading: 'Examples',
+        id: 2
+      },
+      {
+        data: [
+          {
+            data: {
+              data: [
+                {
+                  data: [
+                    'a',
+                    'ANS'
+                  ],
+                  id: 1
+                },
+                {
+                  data: [
+                    's',
+                    'Square Root: 4 \u221a'
+                  ],
+                  id: 2
+                },
+                {
+                  data: [
+                    '^',
+                    'Exponentiation: 2 3 ^'
+                  ],
+                  id: 3
+                },
+                {
+                  data: [
+                    'p',
+                    'Archimedes\' Constant: \u03C0'
+                  ],
+                  id: 4
+                },
+                {
+                  data: [
+                    'e',
+                    'Euler\'s Number: \u2107'
+                  ],
+                  id: 5
+                },
+                {
+                  data: [
+                    'f',
+                    'The Golden Ratio: \u03C6'
+                  ],
+                  id: 6
+                }
+              ],
+              headings: [
+                {
+                  id: 1,
+                  name: 'Key'
+                },
+                {
+                  id: 2,
+                  name: 'Value-Example'
+                }
+              ],
+            },
+            type: 'table'
+          }
+        ],
+        heading: 'Keys',
+        id: 3
+      }
+    ],
+    title: 'Help'
+  },
   input: {
     buttons: {
       data: [

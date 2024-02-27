@@ -1,5 +1,6 @@
 import { config as configCom } from './config';
 import { Dropdown } from './dropdown';
+import { Help } from '../help';
 import { vibrate } from './helpers';
 import { Icon } from './icon';
 import styles from './index.module.css';
@@ -17,6 +18,7 @@ export function RPNCalc(props) {
     [appHistory, setAppHistory] = useState(sessionHistory),
     [appHistoryVisible, setAppHistoryVisible] = useState(false),
     [currentExpression, setCurrentExpression] = useState(''),
+    help = config.help,
     [keypadVisible, setKeypadVisible] = useState(true),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
     [modalVisible, setModalVisible] = useState(false),
@@ -344,11 +346,9 @@ export function RPNCalc(props) {
       {modalVisible && (
         <Modal
           body={
-            <p>
-              Reverse Polish Notation (RPN) is a mathematical notation in which every operator follows all of its operands. It is also known as postfix notation. The description <q>Polish</q> refers to the nationality of logician Jan Lukasiewicz, who invented (prefix) Polish notation in the 1920's.
-            </p>
+            <Help config={help} />
           }
-        close={() => setModalVisible(false)} darkMode={(theme === 'dark') ? true : false} header="Help" />
+        close={() => setModalVisible(false)} darkMode={(theme === 'dark') ? true : false} header={help.title} />
       )}
     </div>
   );
