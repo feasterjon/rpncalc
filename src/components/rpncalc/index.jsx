@@ -19,7 +19,7 @@ export function RPNCalc(props) {
     [appHistoryVisible, setAppHistoryVisible] = useState(false),
     [currentExpression, setCurrentExpression] = useState(''),
     help = config.help,
-    [keypadVisible, setKeypadVisible] = useState(true),
+    [keyboardVisible, setKeyboardVisible] = useState(true),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
     [modalVisible, setModalVisible] = useState(false),
     msgError = 'error',
@@ -150,7 +150,7 @@ export function RPNCalc(props) {
 
   const toggleKeypad = () => {
     vibrate();
-    setKeypadVisible(!keypadVisible);
+    setKeyboardVisible(!keyboardVisible);
   };
 
   const toggleTheme = () => {
@@ -272,7 +272,7 @@ export function RPNCalc(props) {
       <div className={`
         bg-neutral-200
         dark:bg-neutral-800
-        ${!keypadVisible && `grow`}
+        ${!keyboardVisible && `grow`}
       `} data-name="terminal">
         <div className="flex items-end justify-end p-4">
           <Dropdown config={
@@ -292,7 +292,7 @@ export function RPNCalc(props) {
                   onClick: toggleHistory
                 },
                 {
-                  icon: keypadVisible ? 'eye' : 'eye-slash',
+                  icon: keyboardVisible ? 'eye' : 'eye-slash',
                   id: 3,
                   label: 'Keypad',
                   onClick: toggleKeypad,
@@ -338,10 +338,10 @@ export function RPNCalc(props) {
         dark:bg-neutral-900
         flex
         justify-center
-        ${keypadVisible && `grow`}
-        ${!keypadVisible && `hidden`}
+        ${keyboardVisible && `grow`}
+        ${!keyboardVisible && `hidden`}
       `} data-name="interface">
-        <Keyboard config={inputConfig} visible={keypadVisible} />
+        <Keyboard config={inputConfig} visible={keyboardVisible} />
       </div>
       {modalVisible && (
         <Modal
