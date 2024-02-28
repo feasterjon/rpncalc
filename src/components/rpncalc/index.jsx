@@ -148,12 +148,15 @@ export function RPNCalc(props) {
       if ((event.ctrlKey && event.key === '/') || event.key === '?') {
         setModalVisibleHelp(!modalVisibleHelp);
       }
+      if (!event.ctrlKey && event.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
+        setAppHistoryVisible(!appHistoryVisible);
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [setModalVisibleHelp]);
+  }, [appHistoryVisible, modalVisibleHelp, setAppHistoryVisible, setModalVisibleHelp]);
 
   const toggleHistory = () => {
     vibrate();
@@ -361,7 +364,7 @@ export function RPNCalc(props) {
           body={
             <Help config={help} />
           }
-        close={() => setModalVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} header={help.title} />
+        close={() => setModalVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} title={help.title} />
       )}
     </div>
   );

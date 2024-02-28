@@ -1,3 +1,4 @@
+import { Icon } from './icon';
 import styles from './index.module.css';
 import { vibrate } from './helpers';
 
@@ -17,25 +18,32 @@ export function Modal(props) {
           ${styles.modal}
           ${props.darkMode ? styles.containerDark : styles.containerLight}
         `}>
-        {props.header && (
-          <div className={styles.header}>
-            {props.header}
+        <div className={styles.header}>
+          {props.title && (
+            <div className={styles.title}>
+              {props.title}
+            </div>
+          )}
+          <div className={styles.controls}>
+            <button className={`${styles.button} ${styles.rounded}`} onClick={() => { vibrate(); props.close(); }}>
+              <Icon id="x-mark" />
+            </button>
           </div>
-        )}
+        </div>
         {props.body && (
           <div className={styles.body}>
             {props.body}
           </div>
         )}
-        {props.footer && (
-          <div className={styles.footer}>
-            {props.footer}
+        <div className={styles.footer}>
+          {props.footer && (
+            <div className={styles.content}>{props.footer}</div>
+          )}
+          <div className={styles.controls}>
+            <button className={styles.button} onClick={() => { vibrate(); props.close(); }}>
+              Close
+            </button>
           </div>
-        )}
-        <div className={styles.controls}>
-          <button onClick={() => { vibrate(); props.close(); }}>
-            Close
-          </button>
         </div>
       </div>
     </div>

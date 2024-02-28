@@ -125,10 +125,17 @@ export const config = {
                 },
                 {
                   data: [
+                    'Access History',
+                    'h'
+                  ],
+                  id: 8
+                },
+                {
+                  data: [
                     'Access Help',
                     '?, Ctrl + /'
                   ],
-                  id: 8
+                  id: 9
                 }
               ],
               headings: [
