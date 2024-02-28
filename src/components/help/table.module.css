@@ -1,17 +1,23 @@
 :local(.table) {
-  --table-xx-dark: hsl(0 0% 0% / 0.98);
-  --table-x-dark: hsl(0 0% 0% / 0.15);
-  --tableDark: hsl(0 0% 0% / 0.25);
-  --table-light: hsl(0 0% 100% / 0.98);
-  --tableBorder-width: 0.0625em;
+
+  --dark-hsl: 0 0% 5%;
+  --light-hsl: 0 0% 95%;
+
+  --border-width: 0.125rem;
+  --dark: hsl(var(--dark-hsl) / 0.10);
+  --light: hsl(var(--light-hsl) / 0.10);
+  --xdark: hsl(var(--dark-hsl) / 0.20);
+  --xlight: hsl(var(--light-hsl) / 0.20);
+  --xxdark: hsl(var(--dark-hsl) / 0.50);
+  --xxlight: hsl(var(--light-hsl) / 0.50);
 }
 
 .table {
-  background-color: hsl(0 0% 100% / 0.10);
+  background-color: var(--light);
   border-collapse: collapse;
-  border-color: var(--tableDark);
+  border-color: var(--dark);
   border-style: solid;
-  border-width: var(--tableBorder-width);
+  border-width: var(--border-width);
   padding: 0.25rem;
   text-align: left;
 }
@@ -25,25 +31,22 @@
 }
 
 .table th {
-  background-color: var(--table-x-dark);
-}
-
-.table tr {
-  user-select: all;
+  background-color: var(--xdark);
 }
 
 .table tr:hover {
-  background-color: var(--table-x-dark);
+  background-color: var(--dark);
 }
 
 .table th, .table td {
-  border-color: var(--tableDark);
+  border-color: var(--xdark);
   border-style: solid;
-  border-width: var(--tableBorder-width);
+  border-width: var(--border-width);
+  user-select: all;
 }
 
 .tableA {
-  border: var(--tableBorder-width) solid var(--table-light);
+  border: var(--border-width) solid var(--xxlight);
 }
 
 .tableA thead th, .tableA thead td {
@@ -51,15 +54,15 @@
 }
 
 .tableA th {
-  background-color: var(--tableDark);
+  background-color: var(--xdark);
 }
 
 .tableA td {
-  background-color: var(--table-x-dark);
+  background-color: var(--dark);
 }
 
 .tableA th, .tableA td {
-  border: var(--tableBorder-width) solid var(--table-light);
+  border: var(--border-width) solid var(--xxlight);
 }
 
 .tableB {
@@ -71,15 +74,15 @@
 }
 
 .tableB th {
-  background-color: var(--tableDark);
+  background-color: var(--xdark);
 }
 
 .tableB td {
-  background-color: var(--table-x-dark);
+  background-color: var(--dark);
 }
 
 .tableB th, .tableB td {
-  border-bottom: var(--tableBorder-width) solid var(--table-light);
+  border-bottom: var(--border-width) solid var(--xxlight);
 }
 
 .tableC {
@@ -91,18 +94,18 @@
 }
 
 .tableC th {
-  border-bottom: 0.125em solid var(--table-xx-dark);
+  border-bottom: 0.125em solid var(--xxdark);
   background-color: transparent;
 }
 
 .tableC td {
-  border-bottom-color: var(--tableDark);
+  border-bottom-color: var(--xdark);
   border-bottom-style: solid;
-  border-bottom-width: var(--tableBorder-width);
+  border-bottom-width: var(--border-width);
 }
 
 .tableD {
-  border: var(--tableBorder-width) solid var(--table-xx-dark);
+  border: var(--border-width) solid var(--xxdark);
 }
 
 .tableD th, .tableD td {
@@ -110,12 +113,12 @@
 }
 
 .tableD th {
-  border-bottom: var(--tableBorder-width) dashed var(--table-xx-dark);
+  border-bottom: var(--border-width) dashed var(--xxdark);
   background-color: transparent;
 }
 
 .tableE {
-  border: var(--tableBorder-width) solid var(--table-xx-dark);
+  border: var(--border-width) solid var(--xxdark);
 }
 
 .tableE th, .tableE td {
@@ -127,8 +130,8 @@
 }
 
 .tableE td {
-  border-bottom: var(--tableBorder-width) dashed var(--table-light);
-  background-color: var(--table-x-dark);
+  border-bottom: var(--border-width) dashed var(--xxlight);
+  background-color: var(--dark);
 }
 
 .title {

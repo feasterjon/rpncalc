@@ -60,7 +60,8 @@ export const config = {
                   id: 2,
                   name: 'Reverse Polish Notation'
                 }
-              ]
+              ],
+              type: 'c'
             },
             type: 'table'
           }
@@ -75,43 +76,43 @@ export const config = {
               data: [
                 {
                   data: [
-                    'a',
-                    'ANS'
+                    'Last Answer (ANS)',
+                    'a'
                   ],
                   id: 1
                 },
                 {
                   data: [
-                    's',
-                    'Square Root: 4 \u221a'
+                    'Square Root (\u221ax): \u221a4 = 4 s',
+                    's'
                   ],
                   id: 2
                 },
                 {
                   data: [
-                    '^',
-                    'Exponentiation: 2 3 ^'
+                    'Exponentiation (b\u207F): 2\u00D72\u00D72 = 2 3 ^',
+                    '^'
                   ],
                   id: 3
                 },
                 {
                   data: [
-                    'p',
-                    'Archimedes\' Constant: \u03C0'
+                    'Archimedes\' Constant (\u03C0)',
+                    'p'
                   ],
                   id: 4
                 },
                 {
                   data: [
-                    'e',
-                    'Euler\'s Number: \u2107'
+                    'Euler\'s Number (\u2107)',
+                    'e'
                   ],
                   id: 5
                 },
                 {
                   data: [
-                    'f',
-                    'The Golden Ratio: \u03C6'
+                    'The Golden Ratio (\u03C6)',
+                    'f'
                   ],
                   id: 6
                 }
@@ -119,18 +120,19 @@ export const config = {
               headings: [
                 {
                   id: 1,
-                  name: 'Key'
+                  name: 'Description-Example'
                 },
                 {
                   id: 2,
-                  name: 'Value-Example'
+                  name: 'Shortcut'
                 }
               ],
+              type: 'c'
             },
             type: 'table'
           }
         ],
-        heading: 'Keys',
+        heading: 'Keyboard Shortcuts',
         id: 3
       }
     ],

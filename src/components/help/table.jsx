@@ -2,7 +2,8 @@ import styles from './table.module.css';
 
 export function Table(props) {
 
-  const width = props.data.width || '100%';
+  const width = props.data.width || '100%',
+    widthCells = props.data.headings?.length ? `${Math.floor(100 / props.data.headings.length)}%` : '100;';
 
   const type = props.data.type ? `table${props.data.type.toUpperCase()}` : '';
 
@@ -11,7 +12,7 @@ export function Table(props) {
       <thead>
         <tr>
           {props.data.headings.map((heading) => 
-            <th key={`heading-${heading.id}`}>{heading.name}</th>
+            <th key={`heading-${heading.id}`} style={{width: `${widthCells}`}}>{heading.name}</th>
           )}
         </tr>
       </thead>
@@ -19,7 +20,7 @@ export function Table(props) {
         {props.data.data.map((record) =>
           <tr key={`table-${record.id}`}>
             {record.data.map((item, index) =>
-              <td key={`record-${index}`}>{item}</td>
+              <td key={`record-${index}`} style={{width: `${widthCells}`}}>{item}</td>
             )}
           </tr>
         )}
