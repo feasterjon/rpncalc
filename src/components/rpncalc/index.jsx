@@ -354,6 +354,7 @@ export function RPNCalc(props) {
         dark:bg-neutral-900
         flex
         justify-center
+        lg:items-center
         ${keyboardVisible && `grow`}
         ${!keyboardVisible && `hidden`}
       `} data-name="interface">

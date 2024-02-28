@@ -46,7 +46,7 @@ export function Keyboard({ config = {} }) {
   }, [buttons, setCurrentInput]);
 
   return (
-    <div className="flex flex-wrap items-center justify-center lg:w-auto sm:w-11/12">
+    <div className="flex flex-wrap items-center justify-center lg:aspect-square lg:w-auto sm:aspect-auto sm:w-11/12">
       {buttons.map((button) =>
         <div
           className={`
