@@ -21,7 +21,7 @@ export function RPNCalc(props) {
     help = config.help,
     [keyboardVisible, setKeyboardVisible] = useState(true),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
-    [modalVisible, setModalVisible] = useState(false),
+    [modalVisibleHelp, setModalVisibleHelp] = useState(false),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
     prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
@@ -142,6 +142,18 @@ export function RPNCalc(props) {
     if (!validateNumbers(text)) return
     setCurrentExpression(`${currentExpression}${text} `);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if ((event.ctrlKey && event.key === '/') || event.key === '?') {
+        setModalVisibleHelp(!modalVisibleHelp);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [setModalVisibleHelp]);
 
   const toggleHistory = () => {
     vibrate();
@@ -302,7 +314,7 @@ export function RPNCalc(props) {
                   icon: 'question-mark-circle',
                   id: 4,
                   label: 'Help',
-                  onClick: () => { setModalVisible(true) }
+                  onClick: () => { setModalVisibleHelp(true) }
                 }
               ],
               icon: 'ellipsis-vertical',
@@ -343,12 +355,12 @@ export function RPNCalc(props) {
       `} data-name="interface">
         <Keyboard config={inputConfig} visible={keyboardVisible} />
       </div>
-      {modalVisible && (
+      {modalVisibleHelp && (
         <Modal
           body={
             <Help config={help} />
           }
-        close={() => setModalVisible(false)} darkMode={(theme === 'dark') ? true : false} header={help.title} />
+        close={() => setModalVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} header={help.title} />
       )}
     </div>
   );

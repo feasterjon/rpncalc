@@ -115,6 +115,20 @@ export const config = {
                     'f'
                   ],
                   id: 6
+                },
+                {
+                  data: [
+                    'All Clear (AC)',
+                    'Delete'
+                  ],
+                  id: 7
+                },
+                {
+                  data: [
+                    'Access Help',
+                    '?, Ctrl + /'
+                  ],
+                  id: 8
                 }
               ],
               headings: [
