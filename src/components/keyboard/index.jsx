@@ -78,7 +78,7 @@ export function Keyboard({ config = {} }) {
               text-center
               text-neutral-900
               text-xl
-              ${button.styles.etc && button.styles.etc}
+              ${button.styles.etc}
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles.main ? button.styles.main : ''}
             `}
             onClick={() => handleInput(button)}

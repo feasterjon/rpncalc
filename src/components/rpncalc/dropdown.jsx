@@ -1,5 +1,6 @@
 import { vibrate } from './helpers';
 import { Icon } from './icon';
+import styles from './dropdown.module.css';
 import { useEffect, useState } from 'react';
 
 export function Dropdown(props) {
@@ -9,10 +10,10 @@ export function Dropdown(props) {
   const data = config.data || [],
     icon = config.icon,
     [visible, setVisible] = useState(false),
-    styles = config.styles || {};
+    configStyles = config.styles || {};
 
   const handleClickOutside = (event) => {
-    if (event.target.closest('.dropdown')) return
+    if (event.target.closest(`.${styles.dropdown}`) || event.target.closest(`.${styles.persist}`)) return
     setVisible(false);
   };
 
@@ -25,9 +26,9 @@ export function Dropdown(props) {
     <div className="inline-block relative">
       <div className={`
         cursor-pointer
-        dropdown
         select-none
-        ${styles.main && styles.main}
+        ${styles.dropdown}
+        ${configStyles.main}
       `} onClick={() => {vibrate(); setVisible(!visible);}}>
         <Icon id={icon} />
       </div>
@@ -40,7 +41,7 @@ export function Dropdown(props) {
           rounded-md
           shadow-md
           z-10
-          ${styles.menu && styles.menu}
+          ${configStyles.menu}
         `}>
           <ul className="py-1">
             {data.map((item) =>
@@ -50,8 +51,9 @@ export function Dropdown(props) {
                 items-center
                 p-2
                 select-none
-                ${styles.data && styles.data}
-                ${item.styles && item.styles}
+                ${configStyles.data}
+                ${item.styles ? item.styles : ''}
+                ${item.persist ? styles.persist : ''}
               `} key={`dropdown-${item.id}`} onClick={item.onClick}>
                 <Icon id={item.icon} /><span className="ml-2">{item.label}</span>
               </li>
