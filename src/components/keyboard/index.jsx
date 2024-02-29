@@ -2,13 +2,13 @@ import { vibrate } from './helpers';
 import { Icon } from './icon';
 import { useEffect, useState } from 'react';
 
-export function Keyboard({ config = {} }) {
+export function Keyboard(props) {
 
-  const configButtons = config.buttons?.data || [],
-    configButtonsStyles = config.buttons?.styles || {},
+  const configButtons = props.config.buttons?.data || [],
+    configButtonsStyles = props.config.buttons?.styles || {},
     [dynamicStyles, setDynamicStyles] = useState(''),
     [pressedKey, setPressedKey] = useState(''),
-    setCurrentInput = config.setCurrentInput;
+    setCurrentInput = props.config.setCurrentInput;
 
   const buttons = configButtons.map((button) => ({
     icon: button.icon,
