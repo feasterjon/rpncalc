@@ -1,6 +1,6 @@
-import { vibrate } from './helpers';
-import { Icon } from './icon';
+import { Icon } from '../Icon';
 import { useEffect, useState } from 'react';
+import { vibrate } from '../../../utils/vibrate';
 
 export function Keyboard(props) {
 

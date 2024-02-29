@@ -1,17 +1,17 @@
-import { config as configCom } from './config';
-import { Dropdown } from './dropdown';
-import { Help } from '../help';
-import { vibrate } from './helpers';
-import { Icon } from './icon';
-import styles from './index.module.css';
-import { RPN } from './jrpncalc';
-import { Keyboard } from '../keyboard';
-import { Modal } from '../modal';
+import { CONFIG } from '../../config';
+import { Dialog } from '../Elements/Dialog';
+import { Dropdown } from '../Elements/Dropdown';
+import { Icon } from '../Elements/Icon';
+import { Keyboard } from '../Elements/Keyboard';
+import { Help } from '../Help';
+import { JRPNCalc as RPN } from './JRPNCalc';
+import styles from './RPNCalc.module.css';
 import { useEffect, useState } from 'react';
+import { vibrate } from '../../utils/vibrate';
 
 export function RPNCalc(props) {
 
-  const config = props.config ? Object.assign(configCom, props.config) : configCom,
+  const config = props.config ? Object.assign(CONFIG, props.config) : CONFIG,
     sessionHistory = JSON.parse(localStorage.getItem('history')) || [];
 
   const
@@ -21,7 +21,7 @@ export function RPNCalc(props) {
     help = config.help,
     [keyboardVisible, setKeyboardVisible] = useState(true),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
-    [modalVisibleHelp, setModalVisibleHelp] = useState(false),
+    [dialogVisibleHelp, setDialogVisibleHelp] = useState(false),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
     prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
@@ -146,7 +146,7 @@ export function RPNCalc(props) {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if ((event.ctrlKey && event.key === '/') || event.key === '?') {
-        setModalVisibleHelp(!modalVisibleHelp);
+        setDialogVisibleHelp(!dialogVisibleHelp);
       }
       if (!event.ctrlKey && event.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
         setAppHistoryVisible(!appHistoryVisible);
@@ -156,7 +156,7 @@ export function RPNCalc(props) {
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [appHistoryVisible, modalVisibleHelp, setAppHistoryVisible, setModalVisibleHelp]);
+  }, [appHistoryVisible, dialogVisibleHelp, setAppHistoryVisible, setDialogVisibleHelp]);
 
   const toggleHistory = () => {
     vibrate();
@@ -318,7 +318,7 @@ export function RPNCalc(props) {
                   icon: 'question-mark-circle',
                   id: 4,
                   label: 'Help',
-                  onClick: () => { setModalVisibleHelp(true) }
+                  onClick: () => { setDialogVisibleHelp(true) }
                 }
               ],
               icon: 'ellipsis-vertical',
@@ -360,12 +360,12 @@ export function RPNCalc(props) {
       `} data-name="interface">
         <Keyboard config={inputConfig} visible={keyboardVisible} />
       </div>
-      {modalVisibleHelp && (
-        <Modal
+      {dialogVisibleHelp && (
+        <Dialog
           body={
             <Help config={help} />
           }
-        close={() => setModalVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} title={help.title} />
+        close={() => setDialogVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} title={help.title} />
       )}
     </div>
   );

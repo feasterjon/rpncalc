@@ -1,5 +1,5 @@
-import styles from './index.module.css';
-import { Table as TableCom } from './table';
+import styles from './Help.module.css';
+import { Table as TableCom } from '../Elements/Table';
 
 export function Help(props) {
 

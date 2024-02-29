@@ -1,4 +1,4 @@
-import styles from './table.module.css';
+import styles from './Table.module.css';
 
 export function Table(props) {
 

@@ -1,12 +1,12 @@
 /*
 Title: (React) Reverse Polish Notation (RPN)
 Author: Jonathan Feaster, JonFeaster.com
-Date: 2024-02-12
+Date: 2024-02-29
 */
 
 // Reverse Polish Notation (RPN)
 
-export function RPN(expression, msgError = 'error') {
+export function JRPNCalc(expression, msgError = 'error') {
   if (!expression) return ''
   const operators = '+-*/^s', // Operators
     stack = [];

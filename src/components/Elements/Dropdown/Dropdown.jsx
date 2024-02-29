@@ -1,7 +1,7 @@
-import { vibrate } from './helpers';
-import { Icon } from './icon';
-import styles from './dropdown.module.css';
+import { Icon } from '../Icon';
+import styles from './Dropdown.module.css';
 import { useEffect, useState } from 'react';
+import { vibrate } from '../../../utils/vibrate';
 
 export function Dropdown(props) {
 

@@ -1,13 +1,13 @@
-import { Icon } from './icon';
-import styles from './index.module.css';
-import { vibrate } from './helpers';
+import { Icon } from '../Icon';
+import styles from './Dialog.module.css';
+import { vibrate } from '../../../utils/vibrate';
 
-export function Modal(props) {
+export function Dialog(props) {
 
   const cancelable = (props.cancelable !== false) ? true : false;
 
   const handleClickOutside = (event) => {
-    if (cancelable && !event.target.closest(`.${styles.modal}`)) {
+    if (cancelable && !event.target.closest(`.${styles.dialog}`)) {
       props.close();
     }
   };
@@ -15,7 +15,7 @@ export function Modal(props) {
   return (
     <div className={styles.mask} onClick={handleClickOutside}>
       <div className={`
-          ${styles.modal}
+          ${styles.dialog}
           ${props.darkMode ? styles.containerDark : styles.containerLight}
         `}>
         <div className={styles.header}>
