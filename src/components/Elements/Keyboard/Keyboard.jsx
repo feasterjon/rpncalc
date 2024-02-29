@@ -66,18 +66,15 @@ export function Keyboard(props) {
               items-center
               justify-center
               lg:aspect-square
-              lg:text-2xl
               mx-auto
-              my-1
               rounded-full
               select-none
               size-3/4
               sm:aspect-auto
               sm:size-11/12
-              sm:text-base
               text-center
               text-neutral-900
-              text-xl
+              text-2xl
               ${button.styles.etc}
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles.main ? button.styles.main : ''}
             `}
