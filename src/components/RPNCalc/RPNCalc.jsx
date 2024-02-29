@@ -5,14 +5,17 @@ import { Icon } from '../Elements/Icon';
 import { Keyboard } from '../Elements/Keyboard';
 import { Help } from '../Help';
 import { JRPNCalc as RPN } from './JRPNCalc';
+import { storage } from '../../utils/storage';
 import styles from './RPNCalc.module.css';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../utils/vibrate';
 
 export function RPNCalc(props) {
 
-  const config = props.config ? Object.assign(CONFIG, props.config) : CONFIG,
-    sessionHistory = JSON.parse(localStorage.getItem('history')) || [];
+  const config = props.config ? Object.assign(CONFIG, props.config) : CONFIG;
+
+  if (config.storage?.prefix) storage.prefix = config.storage?.prefix;
+  const sessionHistory = storage.getItem('history') || [];
 
   const
     [appHistory, setAppHistory] = useState(sessionHistory),
@@ -31,7 +34,7 @@ export function RPNCalc(props) {
     let defaultIndex = themes.findIndex(theme => theme.name === defaultName) || 0,
       out = {},
       selectedTheme = selectedName ? selectedName
-        : localStorage.getItem('theme') ? localStorage.getItem('theme')
+        : storage.getItem('theme') ? storage.getItem('theme')
         : defaultName;
     let selectedIndex = themes.findIndex(theme => theme.name === selectedTheme);
     if (selectedIndex < 0) selectedIndex = defaultIndex;
@@ -76,7 +79,7 @@ export function RPNCalc(props) {
   };
 
   const inputConfig = {
-    buttons: config.input.buttons,
+    buttons: config.input?.buttons,
     setCurrentInput: handleKeyboardInput
   };
 
@@ -172,14 +175,14 @@ export function RPNCalc(props) {
     vibrate();
     setThemeIndex((themeIndex) => (themeIndex + 1) % themes.length);
     let selectedTheme = themes[(themeIndex + 1) % themes.length].name;
-    localStorage.setItem('theme', selectedTheme);
+    storage.setItem('theme', selectedTheme);
     setTheme(configTheme(selectedTheme).theme.name);
   };
 
   const updateHistory = (expression, answer, lengthMax = 100) => {
     if (!expression && !answer) {
       sessionHistory.length = 0;
-      localStorage.removeItem('history');
+      storage.removeItem('history');
       setAppHistory(sessionHistory);
       return
     }
@@ -191,7 +194,7 @@ export function RPNCalc(props) {
       expression: expression,
       id: getId()
     });
-    localStorage.setItem('history', JSON.stringify(sessionHistory));
+    storage.setItem('history', sessionHistory);
     setAppHistory(sessionHistory);
   };
 

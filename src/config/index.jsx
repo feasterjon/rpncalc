@@ -347,6 +347,9 @@ export const CONFIG = {
       }
     }
   },
+  storage: {
+    prefix: 'RPNCalc-'
+  },
   themes: [
     {
       icon: 'computer-desktop',
