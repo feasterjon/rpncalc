@@ -67,6 +67,7 @@ export function Keyboard(props) {
               justify-center
               lg:aspect-square
               mx-auto
+              my-1
               rounded-full
               select-none
               size-3/4
