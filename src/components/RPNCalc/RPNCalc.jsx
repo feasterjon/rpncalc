@@ -85,8 +85,6 @@ export function RPNCalc(props) {
 
   function calc() {
     let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
-    const outTruncated = out.match(/^-?\d+(?:\.\d{0,10})?/); // truncate decimal to 10th digit
-    if (outTruncated) out = outTruncated.toString();
     if (out !== msgError) {
       setLastAnswer(out);
       updateHistory(currentExpression, out);
