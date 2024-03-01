@@ -288,7 +288,7 @@ export function RPNCalc(props) {
           {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
             <div className={`
               p-4
-              ${index > 0 && `border-t`}
+              ${index > 0 && `border-neutral-900 border-t dark:border-neutral-100`}
             `} key={date}>
               <div className="text-left">{date}</div>
               <ol className="list-none">
