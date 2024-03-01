@@ -51,6 +51,17 @@ export function RPNCalc(props) {
   let [themeIndex, setThemeIndex] = useState(configTheme().index);
   let [theme, setTheme] = useState(configTheme().theme.name);
 
+  const appHistoryFormatted = appHistory.reduce((accumulator, item) => {
+    const date = new Date(item.date).toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+    accumulator[date] = accumulator[date] || [];
+    accumulator[date].push(item);
+    return accumulator
+  }, {});
+
   const handleKeyboardInput = (data) => {
     if (!data) return
     switch (data.value) {
@@ -269,20 +280,27 @@ export function RPNCalc(props) {
           items-end
           justify-end
           lg:text-2xl
-          p-4
           text-lg
           text-right
           text-neutral-900
           xl:text-3xl
         ">
-          <ol className="list-none">
-            {appHistory.map((item) =>
-              <li key={`history-${item.id}`}>
-                {formatNumbers(item.expression)}<br />
-                <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(item.answer)}</span>
-              </li>
-            )}
-          </ol>
+          {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
+            <div className={`
+              p-4
+              ${index > 0 && `border-t`}
+            `} key={date}>
+              <div className="text-left">{date}</div>
+              <ol className="list-none">
+                {entries.map((entry) => (
+                  <li key={`history-${entry.id}`}>
+                    {formatNumbers(entry.expression)}<br />
+                    <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(entry.answer)}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          ))}
         </div>
       </div>
       <div className={`
