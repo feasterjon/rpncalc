@@ -31,6 +31,12 @@ export function Dropdown(props) {
     setSelected(option);
   };
 
+  const toggle = (event) => {
+    if (event.key === 'Enter') {
+      setVisible(!visible);
+    }
+  };
+
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
@@ -47,6 +53,8 @@ export function Dropdown(props) {
         aria-haspopup="listbox"
         aria-expanded={visible}
         onClick={() => {vibrate(); setVisible(!visible);}}
+        onKeyDown={(event) => toggle(event)}
+        tabIndex={0}
       >
         <Icon id={icon} />
       </div>
