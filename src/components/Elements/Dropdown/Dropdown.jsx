@@ -9,12 +9,26 @@ export function Dropdown(props) {
 
   const data = config.data || [],
     icon = config.icon,
+    [selected, setSelected] = useState(null),
     [visible, setVisible] = useState(false),
     configStyles = config.styles || {};
 
   const handleClickOutside = (event) => {
     if (event.target.closest(`.${styles.dropdown}`) || event.target.closest(`.${styles.persist}`)) return
     setVisible(false);
+  };
+
+  const handleKeyDown = (event, item) => {
+    if (event.key === 'Enter') {
+      if (visible && item) {
+        setSelected(item.id);
+        item.onClick();
+      }
+    }
+  };
+
+  const handleSelect = (option) => {
+    setSelected(option);
   };
 
   useEffect(() => {
@@ -29,7 +43,11 @@ export function Dropdown(props) {
         select-none
         ${styles.dropdown}
         ${configStyles.main}
-      `} onClick={() => {vibrate(); setVisible(!visible);}}>
+      `}
+        aria-haspopup="listbox"
+        aria-expanded={visible}
+        onClick={() => {vibrate(); setVisible(!visible);}}
+      >
         <Icon id={icon} />
       </div>
       {visible && (
@@ -43,7 +61,7 @@ export function Dropdown(props) {
           z-10
           ${configStyles.menu}
         `}>
-          <ul className="py-1">
+          <ul className="py-1" role="listbox">
             {data.map((item) =>
               <li className={`
                 cursor-pointer
@@ -54,7 +72,14 @@ export function Dropdown(props) {
                 ${configStyles.data}
                 ${item.styles ? item.styles : ''}
                 ${item.persist ? styles.persist : ''}
-              `} key={`dropdown-${item.id}`} onClick={item.onClick}>
+              `}
+                key={item.id}
+                role="option"
+                aria-selected={item.id === selected?.value}
+                onClick={() => {handleSelect(item.label); item.onClick()}}
+                tabIndex={visible ? 0 : -1}
+                onKeyDown={(event) => handleKeyDown(event, item)}
+              >
                 <Icon id={item.icon} /><span className="ml-2">{item.label}</span>
               </li>
             )}

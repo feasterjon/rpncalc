@@ -337,7 +337,7 @@ export function RPNCalc(props) {
                   icon: 'question-mark-circle',
                   id: 4,
                   label: 'Help',
-                  onClick: () => { setDialogVisibleHelp(true) }
+                  onClick: () => { setDialogVisibleHelp(!dialogVisibleHelp) }
                 }
               ],
               icon: 'ellipsis-vertical',
