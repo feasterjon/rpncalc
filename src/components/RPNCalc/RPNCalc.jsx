@@ -98,7 +98,7 @@ export function RPNCalc(props) {
     let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
     if (out !== msgError) {
       setLastAnswer(out);
-      updateHistory(currentExpression, out);
+      historyUpdate(currentExpression, out);
       out = `${out} `;
     }
     setCurrentExpression(out);
@@ -148,11 +148,16 @@ export function RPNCalc(props) {
   };
 
   const handlePaste = async () => {
-    vibrate();
     const text = await navigator.clipboard.readText();
     if (!text) return
     if (!validateNumbers(text)) return
     setCurrentExpression(`${currentExpression}${text} `);
+  };
+
+  const handlePasteKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handlePaste();
+    }
   };
 
   useEffect(() => {
@@ -188,14 +193,16 @@ export function RPNCalc(props) {
     setTheme(configTheme(selectedTheme).theme.name);
   };
 
-  const updateHistory = (expression, answer, lengthMax = 100) => {
-    if (!expression && !answer) {
-      sessionHistory.length = 0;
-      storage.removeItem('history');
-      setAppHistory(sessionHistory);
-      return
-    }
+  const historyRemove = () => {
+    sessionHistory.length = 0;
+    storage.removeItem('history');
+    setAppHistory(sessionHistory);
+  };
+
+  const historyUpdate = (expression, answer, lengthMax = 100) => {
     if (!expression || !answer) return
+    const lastHistory = sessionHistory[sessionHistory.length - 1];
+    if (lastHistory?.expression === expression && lastHistory?.answer === answer) return // prevent duplicate history
     if (sessionHistory.length >= lengthMax) sessionHistory.splice(0, sessionHistory.length - lengthMax + 1);
     sessionHistory.push({
       answer: answer,
@@ -255,7 +262,7 @@ export function RPNCalc(props) {
               rounded-full
               select-none
               text-neutral-900
-            " onClick={() => {updateHistory(); toggleHistory();}}>
+            " onClick={() => {historyRemove(); toggleHistory();}}>
               <Icon id="trash" />
             </div>
             <div className="
@@ -350,8 +357,8 @@ export function RPNCalc(props) {
           } />
         </div>
         <div className="flex items-end justify-end p-4">
-          <span className="dark:text-rpncalc-primary-light lg:text-5xl text-4xl text-rpncalc-primary xl:text-6xl">
-            {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`}>|</span>
+          <span className="dark:text-rpncalc-primary-light lg:text-5xl text-4xl text-rpncalc-primary xl:text-6xl" aria-label="Expression" role="textbox">
+            {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
           </span>
           {pasteEnabled && <span className="
             bg-neutral-300
@@ -365,7 +372,12 @@ export function RPNCalc(props) {
             rounded-full
             select-none
             text-neutral-900
-          " onClick={handlePaste}><Icon id="clipboard" /></span>}
+          "
+            role="button"
+            onClick={() => {vibrate(); handlePaste()}}
+            onKeyDown={(event) => handlePasteKeyDown(event)}
+            tabIndex={0}
+          ><Icon id="clipboard" /></span>}
         </div>
       </div>
       <div className={`

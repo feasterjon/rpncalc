@@ -50,6 +50,7 @@ export function Dropdown(props) {
         ${styles.dropdown}
         ${configStyles.main}
       `}
+        role="button"
         aria-haspopup="listbox"
         aria-expanded={visible}
         onClick={() => {vibrate(); setVisible(!visible);}}
@@ -81,12 +82,12 @@ export function Dropdown(props) {
                 ${item.styles ? item.styles : ''}
                 ${item.persist ? styles.persist : ''}
               `}
-                key={item.id}
-                role="option"
                 aria-selected={item.id === selected?.value}
+                key={item.id}
                 onClick={() => {handleSelect(item.label); item.onClick()}}
-                tabIndex={visible ? 0 : -1}
                 onKeyDown={(event) => handleKeyDown(event, item)}
+                role="option"
+                tabIndex={visible ? 0 : -1}
               >
                 <Icon id={item.icon} /><span className="ml-2">{item.label}</span>
               </li>

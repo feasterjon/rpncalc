@@ -79,7 +79,7 @@ export function Keyboard(props) {
               ${button.styles.etc}
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles.main ? button.styles.main : ''}
             `}
-            onClick={() => handleInput(button)}
+            role="button" onClick={() => handleInput(button)}
           >
             {button.icon ? <Icon id={button.icon} /> : button.label}
           </div>
