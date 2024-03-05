@@ -237,76 +237,77 @@ export function RPNCalc(props) {
       w-full
       ${config.hScreen !== false ? 'h-screen' : ''}
     `} data-mode={theme}>
-      <div className={`
-        bg-neutral-300
-        dark:bg-neutral-700
-        ${appHistoryVisible ? '' : 'hidden'}
-      `} data-name="history">
-        <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
-          <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
-            <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}><Icon id="arrow-left" styles="h-8 w-8" /></button><span className="ml-2">History</span>
-          </div>
-          <div className="flex grow items-end justify-end">
-            <button className="
-              bg-neutral-400
-              cursor-pointer
-              dark:bg-neutral-600
-              dark:hover:bg-neutral-500
-              dark:text-neutral-100
-              hover:bg-neutral-500
-              ml-2
-              p-2
-              rounded-full
-              select-none
-              text-neutral-900
-            " aria-label="Clear History" onClick={() => {historyRemove(); toggleHistory();}}>
-              <Icon id="trash" />
-            </button>
-            <button className="
-              bg-neutral-400
-              cursor-pointer
-              dark:bg-neutral-600
-              dark:hover:bg-neutral-500
-              dark:text-neutral-100
-              hover:bg-neutral-500
-              ml-2
-              p-2
-              rounded-full
-              select-none
-              text-neutral-900
-            " aria-label="Toggle History" onClick={toggleHistory}>
-              <Icon id="x-mark" />
-            </button>
-          </div>
-        </div>
-        <div className="
-          dark:text-neutral-100
-          items-end
-          justify-end
-          lg:text-2xl
-          text-lg
-          text-right
-          text-neutral-900
-          xl:text-3xl
-        ">
-          {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
-            <div className={`
-              p-4
-              ${index > 0 ? 'border-neutral-900 border-t dark:border-neutral-100' : ''}
-            `} key={index}>
-              <h2 className="text-left" id={`history-${index}`}>{date}</h2>
-              <ul className="list-none" aria-labelledby={`history-${index}`}>
-                {entries.map((entry) => (
-                  <li key={`history-${entry.id}`}>
-                    {formatNumbers(entry.expression)}<br />
-                    <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(entry.answer)}</span>
-                  </li>
-                ))}
-              </ul>
+      {appHistoryVisible && (
+        <div className={`
+          bg-neutral-300
+          dark:bg-neutral-700
+        `} data-name="history">
+          <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
+            <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
+              <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}><Icon id="arrow-left" styles="h-8 w-8" /></button><span className="ml-2">History</span>
             </div>
-          ))}
+            <div className="flex grow items-end justify-end">
+              <button className="
+                bg-neutral-400
+                cursor-pointer
+                dark:bg-neutral-600
+                dark:hover:bg-neutral-500
+                dark:text-neutral-100
+                hover:bg-neutral-500
+                ml-2
+                p-2
+                rounded-full
+                select-none
+                text-neutral-900
+              " aria-label="Clear History" onClick={() => {historyRemove(); toggleHistory();}}>
+                <Icon id="trash" />
+              </button>
+              <button className="
+                bg-neutral-400
+                cursor-pointer
+                dark:bg-neutral-600
+                dark:hover:bg-neutral-500
+                dark:text-neutral-100
+                hover:bg-neutral-500
+                ml-2
+                p-2
+                rounded-full
+                select-none
+                text-neutral-900
+              " aria-label="Toggle History" onClick={toggleHistory}>
+                <Icon id="x-mark" />
+              </button>
+            </div>
+          </div>
+          <div className="
+            dark:text-neutral-100
+            items-end
+            justify-end
+            lg:text-2xl
+            text-lg
+            text-right
+            text-neutral-900
+            xl:text-3xl
+          ">
+            {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
+              <div className={`
+                p-4
+                ${index > 0 ? 'border-neutral-900 border-t dark:border-neutral-100' : ''}
+              `} key={index}>
+                <h2 className="text-left" id={`history-${index}`}>{date}</h2>
+                <ul className="list-none" aria-labelledby={`history-${index}`}>
+                  {entries.map((entry) => (
+                    <li key={`history-${entry.id}`}>
+                      {formatNumbers(entry.expression)}<br />
+                      <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(entry.answer)}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
       <div className={`
         bg-neutral-200
         dark:bg-neutral-800
