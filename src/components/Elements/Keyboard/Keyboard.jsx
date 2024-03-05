@@ -56,7 +56,7 @@ export function Keyboard(props) {
           `}
           key={`button-${button.id}`}
         >
-          <div
+          <button
             className={`
               aspect-square
               cursor-pointer
@@ -79,10 +79,12 @@ export function Keyboard(props) {
               ${button.styles.etc}
               ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles.main ? button.styles.main : ''}
             `}
-            role="button" onClick={() => handleInput(button)}
+            aria-label={button.label}
+            onClick={() => handleInput(button)}
+            tabIndex={-1}
           >
             {button.icon ? <Icon id={button.icon} /> : button.label}
-          </div>
+          </button>
         </div>
       )}
     </div>

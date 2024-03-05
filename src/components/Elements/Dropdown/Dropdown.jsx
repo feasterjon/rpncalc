@@ -9,6 +9,7 @@ export function Dropdown(props) {
 
   const data = config.data || [],
     icon = config.icon,
+    label = config.label,
     [selected, setSelected] = useState(null),
     [visible, setVisible] = useState(false),
     configStyles = config.styles || {};
@@ -31,12 +32,6 @@ export function Dropdown(props) {
     setSelected(option);
   };
 
-  const toggle = (event) => {
-    if (event.key === 'Enter') {
-      setVisible(!visible);
-    }
-  };
-
   useEffect(() => {
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
@@ -44,21 +39,19 @@ export function Dropdown(props) {
 
   return (
     <div className="inline-block relative">
-      <div className={`
+      <button className={`
         cursor-pointer
         select-none
         ${styles.dropdown}
         ${configStyles.main}
       `}
-        role="button"
         aria-haspopup="listbox"
+        aria-label={label}
         aria-expanded={visible}
         onClick={() => {vibrate(); setVisible(!visible);}}
-        onKeyDown={(event) => toggle(event)}
-        tabIndex={0}
       >
         <Icon id={icon} />
-      </div>
+      </button>
       {visible && (
         <div className={`
           absolute

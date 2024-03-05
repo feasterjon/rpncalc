@@ -148,16 +148,11 @@ export function RPNCalc(props) {
   };
 
   const handlePaste = async () => {
+    vibrate();
     const text = await navigator.clipboard.readText();
     if (!text) return
     if (!validateNumbers(text)) return
     setCurrentExpression(`${currentExpression}${text} `);
-  };
-
-  const handlePasteKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      handlePaste();
-    }
   };
 
   useEffect(() => {
@@ -247,10 +242,10 @@ export function RPNCalc(props) {
       `} data-name="history">
         <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
           <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
-            <span className="cursor-pointer my-auto" onClick={toggleHistory}><Icon id="arrow-left" styles="h-8 w-8" /></span><span className="ml-2">History</span>
+            <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}><Icon id="arrow-left" styles="h-8 w-8" /></button><span className="ml-2">History</span>
           </div>
           <div className="flex grow items-end justify-end">
-            <div className="
+            <button className="
               bg-neutral-400
               cursor-pointer
               dark:bg-neutral-600
@@ -262,10 +257,10 @@ export function RPNCalc(props) {
               rounded-full
               select-none
               text-neutral-900
-            " onClick={() => {historyRemove(); toggleHistory();}}>
+            " aria-label="Clear History" onClick={() => {historyRemove(); toggleHistory();}}>
               <Icon id="trash" />
-            </div>
-            <div className="
+            </button>
+            <button className="
               bg-neutral-400
               cursor-pointer
               dark:bg-neutral-600
@@ -277,9 +272,9 @@ export function RPNCalc(props) {
               rounded-full
               select-none
               text-neutral-900
-            " onClick={toggleHistory}>
+            " aria-label="Toggle History" onClick={toggleHistory}>
               <Icon id="x-mark" />
-            </div>
+            </button>
           </div>
         </div>
         <div className="
@@ -296,16 +291,16 @@ export function RPNCalc(props) {
             <div className={`
               p-4
               ${index > 0 && `border-neutral-900 border-t dark:border-neutral-100`}
-            `} key={date}>
-              <div className="text-left">{date}</div>
-              <ol className="list-none">
+            `} key={index}>
+              <h2 className="text-left" id={`history-${index}`}>{date}</h2>
+              <ul className="list-none" aria-labelledby={`history-${index}`}>
                 {entries.map((entry) => (
                   <li key={`history-${entry.id}`}>
                     {formatNumbers(entry.expression)}<br />
                     <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(entry.answer)}</span>
                   </li>
                 ))}
-              </ol>
+              </ul>
             </div>
           ))}
         </div>
@@ -348,6 +343,7 @@ export function RPNCalc(props) {
                 }
               ],
               icon: 'ellipsis-vertical',
+              label: 'Settings',
               styles: {
                 data: 'dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 text-neutral-900',
                 main: 'bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 ml-2 p-2 rounded-full text-neutral-900',
@@ -357,10 +353,10 @@ export function RPNCalc(props) {
           } />
         </div>
         <div className="flex items-end justify-end p-4">
-          <span className="dark:text-rpncalc-primary-light lg:text-5xl text-4xl text-rpncalc-primary xl:text-6xl" aria-label="Expression" role="textbox">
+          <span className="dark:text-rpncalc-primary-light lg:text-5xl text-4xl text-rpncalc-primary xl:text-6xl" aria-label="Expression" role="textbox" tabIndex={0}>
             {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
           </span>
-          {pasteEnabled && <span className="
+          {pasteEnabled && <button className="
             bg-neutral-300
             cursor-pointer
             dark:bg-neutral-700
@@ -373,11 +369,9 @@ export function RPNCalc(props) {
             select-none
             text-neutral-900
           "
-            role="button"
-            onClick={() => {vibrate(); handlePaste()}}
-            onKeyDown={(event) => handlePasteKeyDown(event)}
-            tabIndex={0}
-          ><Icon id="clipboard" /></span>}
+            aria-label="Paste"
+            onClick={handlePaste}
+          ><Icon id="clipboard" /></button>}
         </div>
       </div>
       <div className={`
