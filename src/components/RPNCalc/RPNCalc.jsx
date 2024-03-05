@@ -238,10 +238,7 @@ export function RPNCalc(props) {
       ${config.hScreen !== false ? 'h-screen' : ''}
     `} data-mode={theme}>
       {appHistoryVisible && (
-        <div className={`
-          bg-neutral-300
-          dark:bg-neutral-700
-        `} data-name="history">
+        <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
           <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
             <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
               <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}>
