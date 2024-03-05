@@ -244,7 +244,10 @@ export function RPNCalc(props) {
         `} data-name="history">
           <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
             <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
-              <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}><Icon id="arrow-left" styles="h-8 w-8" /></button><span className="ml-2">History</span>
+              <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}>
+                <Icon id="arrow-left" styles="h-8 w-8" />
+              </button>
+              <span className="ml-2">History</span>
             </div>
             <div className="flex grow items-end justify-end">
               <button className="
