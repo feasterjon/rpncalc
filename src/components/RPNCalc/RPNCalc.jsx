@@ -3,6 +3,7 @@ import { Dialog } from '../Elements/Dialog';
 import { Dropdown } from '../Elements/Dropdown';
 import { Icon } from '../Elements/Icon';
 import { Keyboard } from '../Elements/Keyboard';
+import { Transition } from '../Elements/Transition';
 import { Help } from '../Help';
 import { JRPNCalc as RPN } from './JRPNCalc';
 import { storage } from '../../utils/storage';
@@ -237,8 +238,8 @@ export function RPNCalc(props) {
       w-full
       ${config.hScreen !== false ? 'h-screen' : ''}
     `} data-mode={theme}>
-      {appHistoryVisible && (
-        <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
+      <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
+        <Transition show={appHistoryVisible}>
           <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
             <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
               <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}>
@@ -306,8 +307,8 @@ export function RPNCalc(props) {
               </div>
             ))}
           </div>
-        </div>
-      )}
+        </Transition>
+      </div>
       <div className={`
         bg-neutral-200
         dark:bg-neutral-800
@@ -395,15 +396,15 @@ export function RPNCalc(props) {
         lg:items-center
         ${keyboardVisible ? 'grow' : 'hidden'}
       `} data-name="interface">
-        <Keyboard config={inputConfig} visible={keyboardVisible} />
+        <Keyboard config={inputConfig} />
       </div>
-      {dialogVisibleHelp && (
+      <Transition show={dialogVisibleHelp}>
         <Dialog
           body={
             <Help config={help} />
           }
         close={() => setDialogVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} title={help.title} />
-      )}
+      </Transition>
     </div>
   );
 }
