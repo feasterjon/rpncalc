@@ -7,7 +7,7 @@ import { Help } from '../Help';
 import { JRPNCalc as RPN } from './JRPNCalc';
 import { storage } from '../../utils/storage';
 import styles from './RPNCalc.module.css';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { vibrate } from '../../utils/vibrate';
 
 export function RPNCalc(props) {
@@ -22,6 +22,7 @@ export function RPNCalc(props) {
     [appHistoryVisible, setAppHistoryVisible] = useState(false),
     [currentExpression, setCurrentExpression] = useState(''),
     help = config.help,
+    inputRef = useRef(null),
     [keyboardVisible, setKeyboardVisible] = useState(true),
     [lastAnswer, setLastAnswer] = useState(sessionHistory[sessionHistory.length - 1]?.answer || ''),
     [dialogVisibleHelp, setDialogVisibleHelp] = useState(false),
@@ -150,6 +151,7 @@ export function RPNCalc(props) {
   const handlePaste = async () => {
     vibrate();
     const text = await navigator.clipboard.readText();
+    if (inputRef.current) inputRef.current.focus();
     if (!text) return
     if (!validateNumbers(text)) return
     setCurrentExpression(`${currentExpression}${text} `);
@@ -353,7 +355,17 @@ export function RPNCalc(props) {
           } />
         </div>
         <div className="flex items-end justify-end p-4">
-          <span className="dark:text-rpncalc-primary-light lg:text-5xl text-4xl text-rpncalc-primary xl:text-6xl" aria-label="Expression" role="textbox" tabIndex={0}>
+          <span className="
+            dark:text-rpncalc-primary-light
+            lg:text-5xl text-4xl
+            text-rpncalc-primary
+            xl:text-6xl
+          "
+            aria-label="Expression"
+            ref={inputRef}
+            role="textbox"
+            tabIndex={0}
+          >
             {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
           </span>
           {pasteEnabled && <button className="
