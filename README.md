@@ -6,7 +6,14 @@ A Reverse Polish Notation (RPN) calculator app produced with [React](https://rea
 
 Reverse Polish Notation (RPN) is a mathematical notation in which every operator follows all of its operands. It is also known as postfix notation. The description "Polish" refers to the nationality of logician Jan Lukasiewicz, who invented (prefix) Polish notation in the 1920's.
 
-### Examples
+## Motivation
+
+RPN is faster because it:
+
+- Eliminates parenthesized expressions
+- Reduces the number of keystrokes and operations needed to perform typical calculations
+
+## Examples
 
 | Infix Notation          | Reverse Polish Notation |
 | ----------------------- | ----------------------- |
@@ -15,13 +22,6 @@ Reverse Polish Notation (RPN) is a mathematical notation in which every operator
 | 5(1+2+3)                | 5 1 2 + 3 + ×           |
 | (5(1+2+3))-8            | 5 1 2 + 3 + × 8 -       |
 | ((5(1+2+3))-8)÷13       | 5 1 2 + 3 + × 8 - 13 ÷  |
-
-## Motivation
-
-RPN is faster because it:
-
-- Eliminates parenthesized expressions
-- Reduces the number of keystrokes and operations needed to perform typical calculations
 
 ## Keyboard Shortcuts
 
