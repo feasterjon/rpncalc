@@ -21,6 +21,7 @@ export function RPNCalc(props) {
   const
     [appHistory, setAppHistory] = useState(sessionHistory),
     [appHistoryVisible, setAppHistoryVisible] = useState(false),
+    [appHistoryExtendedVisible, setAppHistoryExtendedVisible] = useState(false),
     [currentExpression, setCurrentExpression] = useState(''),
     help = config.help,
     inputRef = useRef(null),
@@ -178,6 +179,11 @@ export function RPNCalc(props) {
     setAppHistoryVisible(!appHistoryVisible);
   };
 
+  const toggleHistoryExtended = () => {
+    vibrate();
+    setAppHistoryExtendedVisible(!appHistoryExtendedVisible);
+  };
+
   const toggleKeypad = () => {
     vibrate();
     setKeyboardVisible(!keyboardVisible);
@@ -240,7 +246,7 @@ export function RPNCalc(props) {
     `} data-mode={theme}>
       <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
         <Transition show={appHistoryVisible}>
-          <div className="border-b border-neutral-900 dark:border-neutral-100 flex p-4" data-name="history-title">
+          <div className="flex p-4" data-name="history-title">
             <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
               <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}>
                 <Icon id="arrow-left" styles="h-8 w-8" />
@@ -291,20 +297,42 @@ export function RPNCalc(props) {
             xl:text-3xl
           ">
             {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
-              <div className={`
-                p-4
-                ${index > 0 ? 'border-neutral-900 border-t dark:border-neutral-100' : ''}
-              `} key={index}>
-                <h2 className="text-left" id={`history-${index}`}>{date}</h2>
-                <ul className="list-none" aria-labelledby={`history-${index}`}>
-                  {entries.map((entry) => (
-                    <li key={`history-${entry.id}`}>
-                      {formatNumbers(entry.expression)}<br />
-                      <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(entry.answer)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? appHistoryExtendedVisible : true} key={index}>
+                <div className="border-neutral-900 border-t dark:border-neutral-100 p-4">
+                  <div className="flex mb-4">
+                    <div className="flex grow">
+                      <h2 className="text-left" id={`history-${index}`}>{date}</h2>
+                    </div>
+                    <div className="flex items-end justify-end my-auto">
+                      {(Object.entries(appHistoryFormatted).length > 1) && (
+                        <button className="
+                          bg-neutral-400
+                          cursor-pointer
+                          dark:bg-neutral-600
+                          dark:hover:bg-neutral-500
+                          dark:text-neutral-100
+                          hover:bg-neutral-500
+                          ml-2
+                          p-2
+                          rounded-full
+                          select-none
+                          text-neutral-900
+                        " aria-label="Toggle Extended History" onClick={toggleHistoryExtended}>
+                          {appHistoryExtendedVisible ? (<Icon id="chevron-down" />): <Icon id="chevron-up" />}
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <ul className="list-none" aria-labelledby={`history-${index}`}>
+                    {entries.map((entry) => (
+                      <li key={`history-${entry.id}`}>
+                        {formatNumbers(entry.expression)}<br />
+                        <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(entry.answer)}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Transition>
             ))}
           </div>
         </Transition>
