@@ -2,7 +2,7 @@
 
 A Reverse Polish Notation (RPN) calculator app produced with [React](https://react.dev/) and [Tailwind CSS](https://tailwindcss.com/)
 
-View the live version at [https://feasterjon.github.io/rpncalc/](https://feasterjon.github.io/rpncalc/).
+View the live version at [https://app.jonfeaster.com/rpncalc/](https://app.jonfeaster.com/rpncalc/).
 
 ## Introduction
 

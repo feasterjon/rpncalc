@@ -218,8 +218,8 @@ export function RPNCalc(props) {
     setAppHistory(sessionHistory);
   };
 
-  function validateNumbers(expression, maxDecimals = 10, maxDigits = 15) {
-    if (!expression) return true
+  function validateNumbers(expression, maxDecimals, maxDigits) {
+    if (!expression || (!maxDecimals && !maxDigits)) return true
     expression = expression.toString();
     let numbers = expression.split(' ');
     for (const number of numbers) {
