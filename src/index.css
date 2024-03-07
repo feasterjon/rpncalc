@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --rpncalc-color-primary: var(--rpncalc-color-primary-hs) 62%;
+    --rpncalc-color-primary-dark: var(--rpncalc-color-primary-hs) 38%;
+    --rpncalc-color-primary-hs: 207 73%;
+    --rpncalc-color-primary-light: var(--rpncalc-color-primary-hs) 86%;
+    --rpncalc-color-secondary: var(--rpncalc-color-secondary-hs) 64%;
+    --rpncalc-color-secondary-dark: var(--rpncalc-color-secondary-hs) 39%;
+    --rpncalc-color-secondary-hs: 12 72%;
+    --rpncalc-color-secondary-light: var(--rpncalc-color-secondary-hs) 89%;
+  }
+}
