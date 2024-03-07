@@ -1,6 +1,7 @@
 {
   "short_name": "RPNCalc",
   "name": "RPN Calculator",
+  "description": "A Reverse Polish Notation (RPN) Calculator",
   "icons": [
     {
       "src": "favicon.ico",
