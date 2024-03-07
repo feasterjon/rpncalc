@@ -2,6 +2,7 @@
   "name": "rpncalc",
   "version": "0.1.0",
   "private": false,
+  "homepage": "http://feasterjon.github.io/rpncalc/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
