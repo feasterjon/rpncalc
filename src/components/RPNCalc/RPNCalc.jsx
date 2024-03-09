@@ -247,7 +247,7 @@ export function RPNCalc(props) {
       <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
         <Transition show={appHistoryVisible}>
           <div className="flex p-4" data-name="history-title">
-            <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary">
+            <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary-dark">
               <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}>
                 <Icon id="arrow-left" styles="h-8 w-8" />
               </button>
@@ -327,7 +327,7 @@ export function RPNCalc(props) {
                     {entries.map((entry) => (
                       <li key={`history-${entry.id}`}>
                         {formatNumbers(entry.expression)}<br />
-                        <span className="dark:text-rpncalc-primary-light text-rpncalc-primary">{formatNumbers(entry.answer)}</span>
+                        <span className="dark:text-rpncalc-primary-light text-rpncalc-primary-dark">{formatNumbers(entry.answer)}</span>
                       </li>
                     ))}
                   </ul>
@@ -388,7 +388,7 @@ export function RPNCalc(props) {
           <span className="
             dark:text-rpncalc-primary-light
             lg:text-5xl text-4xl
-            text-rpncalc-primary
+            text-rpncalc-primary-dark
             xl:text-6xl
           "
             aria-label="Expression"
