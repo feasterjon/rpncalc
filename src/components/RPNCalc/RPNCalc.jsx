@@ -33,7 +33,7 @@ export function RPNCalc(props) {
     prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
     themes = config.themes;
 
-  function configTheme(selectedName, defaultName = 'os-default') {
+  const configTheme = (selectedName, defaultName = 'os-default') => {
     let defaultIndex = themes.findIndex(theme => theme.name === defaultName) || 0,
       out = {},
       selectedTheme = selectedName ? selectedName
@@ -97,9 +97,10 @@ export function RPNCalc(props) {
     setCurrentInput: handleKeyboardInput
   };
 
-  function calc() {
+  const calc = () => {
     let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
     if (out !== msgError) {
+      out = formatAnswer(out);
       setLastAnswer(out);
       historyUpdate(currentExpression, out);
       out = `${out} `;
@@ -107,7 +108,7 @@ export function RPNCalc(props) {
     setCurrentExpression(out);
   }
 
-  async function checkPasteEnabled() {
+  const checkPasteEnabled = async () => {
     try {
       await navigator.clipboard.readText();
       setPasteEnabled(true);
@@ -117,7 +118,27 @@ export function RPNCalc(props) {
     checkPasteEnabled();
   }, []);
 
-  function formatExpression(expression) {
+  const formatAnswer = (data, maxDecimals = 10, maxDigits) => {
+    if (!data) return null
+    const parts = data.split('e');
+    const partNumber = parts[0],
+      partExponent = parts[1];
+    const numberParts = partNumber.split('.');
+    const numberPartsInteger = maxDigits ? numberParts[0].slice(0, maxDigits) : numberParts[0];
+    let numberPartsDecimal = numberParts[1];
+    if (maxDecimals && numberPartsDecimal) numberPartsDecimal = numberParts[1].slice(0, maxDecimals);
+    if (maxDecimals && partExponent) {
+      if ((numberPartsDecimal.length + partExponent.length + 1) > maxDecimals) {
+        numberPartsDecimal = `${numberPartsDecimal.slice(0, numberPartsDecimal.length - (partExponent.length + 1))}e${partExponent}`;
+        return `${numberPartsInteger}.${numberPartsDecimal}`
+      }
+      numberPartsDecimal = `${numberPartsDecimal}e${partExponent}`;
+    }
+    if (numberPartsDecimal) return `${numberPartsInteger}.${numberPartsDecimal}`
+    return numberPartsInteger
+  }
+
+  const formatExpression = (expression) => {
     if (!expression) return
     const buttonsFormat = inputConfig.buttons?.data?.filter(button =>
       button.type === 'fn' || button.type === 'operator'
@@ -134,7 +155,7 @@ export function RPNCalc(props) {
     return out
   }
 
-  function formatNumbers(expression) {
+  const formatNumbers = (expression) => {
     let out = '';
     expression = expression.toString();
     let numbers = expression.split(' ');
@@ -218,7 +239,7 @@ export function RPNCalc(props) {
     setAppHistory(sessionHistory);
   };
 
-  function validateNumbers(expression, maxDecimals, maxDigits) {
+  const validateNumbers = (expression, maxDecimals, maxDigits) => {
     if (!expression || (!maxDecimals && !maxDigits)) return true
     expression = expression.toString();
     let numbers = expression.split(' ');
