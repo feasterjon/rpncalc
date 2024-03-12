@@ -17,6 +17,18 @@ RPN is faster because it:
 
 ## Quick Start
 
+### Explore On Your Device
+
+RPN Calculator is a **Progressive Web App (PWA)** that provides a user experience like that of a platform-specific app. In addition to being accessed directly from the web it can also be *installed on your device.*
+
+1. Visit the app at [https://app.jonfeaster.com/rpncalc/](https://app.jonfeaster.com/rpncalc/).
+2. **Check for Install Option:**
+    - **Desktop Browsers:** Look for an "Install" button or menu option in the address bar (usually on the right side).
+    - **Mobile Browsers:** You might see a banner or prompt asking if you want to add the website to your home screen.
+3. **Click "Install":** Follow the on-screen prompts to complete the installation. These prompts may vary slightly depending on the browser.
+
+### Explore Locally (for Developers)
+
 1. Clone this repo.
 2. Install dependencies: `npm install`
 3. Start a local server and follow the prompts to view the code running in a browser: `npm start`
