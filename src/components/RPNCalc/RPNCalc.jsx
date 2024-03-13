@@ -444,6 +444,7 @@ export function RPNCalc(props) {
         flex
         justify-center
         lg:items-center
+        sm:items-start
         ${keyboardVisible ? 'grow' : 'hidden'}
       `} data-name="interface">
         <Keyboard config={inputConfig} />
