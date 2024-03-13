@@ -11,12 +11,11 @@ export function Keyboard(props) {
     setCurrentInput = props.config.setCurrentInput;
 
   const buttons = configButtons.map((button) => ({
-    icon: button.icon,
+    icon: button.icon || {},
     id: button.id,
     label: button.label || button.value,
     order: button.order,
-    styles: configButtonsStyles[button.type] || configButtonsStyles.main,
-    size: button.size,
+    stylesType: configButtonsStyles[button.type] || configButtonsStyles.main,
     type: button.type,
     value: button.value
   }));
@@ -31,7 +30,7 @@ export function Keyboard(props) {
       const button = buttons.find(button => button.value === event.key);
       if (button) {
         setPressedKey(button.id);
-        setDynamicStyles(button.styles.active || '');
+        setDynamicStyles(button.stylesType.active || '');
         setTimeout(() => {
           setPressedKey(null);
           setDynamicStyles('');
@@ -71,6 +70,7 @@ export function Keyboard(props) {
           >
             <button
               className={`
+                2xl:text-2xl
                 aspect-square
                 cursor-pointer
                 dark:text-neutral-100
@@ -88,15 +88,15 @@ export function Keyboard(props) {
                 sm:size-11/12
                 text-center
                 text-neutral-900
-                text-2xl
-                ${button.styles.etc}
-                ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles.main ? button.styles.main : ''}
+                text-xl
+                ${button.stylesType.etc}
+                ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.stylesType.main ? button.stylesType.main : ''}
               `}
               aria-label={button.label}
               onClick={() => handleInput(button)}
               tabIndex={-1}
             >
-              {button.icon ? <Icon id={button.icon} /> : button.label}
+              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : '2xl:h-8 2xl:w-8 h-7 w-7'} /> : button.label}
             </button>
           </div>
         )}

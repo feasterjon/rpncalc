@@ -119,7 +119,7 @@ export function RPNCalc(props) {
   }, []);
 
   const formatAnswer = (data, maxDecimals = 10, maxDigits) => {
-    if (!data) return null
+    if (!data) return ''
     const parts = data.split('e');
     const partNumber = parts[0],
       partExponent = parts[1];
