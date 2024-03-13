@@ -11,6 +11,7 @@ export function Keyboard(props) {
     setCurrentInput = props.config.setCurrentInput;
 
   const buttons = configButtons.map((button) => ({
+    aria: button.aria ? button.aria : button.label ? button.label : button.value,
     icon: button.icon || {},
     id: button.id,
     label: button.label || button.value,
@@ -92,7 +93,7 @@ export function Keyboard(props) {
                 ${button.stylesType.etc}
                 ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.stylesType.main ? button.stylesType.main : ''}
               `}
-              aria-label={button.label}
+              aria-label={button.aria}
               onClick={() => handleInput(button)}
               tabIndex={-1}
             >
