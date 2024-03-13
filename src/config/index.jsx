@@ -209,6 +209,7 @@ export const CONFIG = {
           valueMath: (1 + Math.sqrt(5)) / 2
         },
         {
+          aria: 'Delete',
           id: 6,
           label: 'AC',
           order: 'sm:order-[2]',
@@ -216,6 +217,7 @@ export const CONFIG = {
           value: 'Delete'
         },
         {
+          aria: 'Backspace',
           icon: {
             id: 'delete-left'
           },
@@ -226,6 +228,7 @@ export const CONFIG = {
           value: 'Backspace'
         },
         {
+          aria: 'Last Answer',
           id: 8,
           label: 'ANS',
           order: 'sm:order-[4]',
@@ -330,12 +333,14 @@ export const CONFIG = {
           value: '.'
         },
         {
+          aria: 'Space',
           id: 24,
           label: 'SPC',
           order: 'sm:order-[24]',
           value: ' '
         },
         {
+          aria: 'Enter',
           icon: {
             id: 'corner-down-left'
           },
