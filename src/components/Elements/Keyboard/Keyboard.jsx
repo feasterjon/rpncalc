@@ -11,12 +11,11 @@ export function Keyboard(props) {
     setCurrentInput = props.config.setCurrentInput;
 
   const buttons = configButtons.map((button) => ({
-    icon: button.icon,
+    icon: button.icon || {},
     id: button.id,
     label: button.label || button.value,
     order: button.order,
-    styles: configButtonsStyles[button.type] || configButtonsStyles.main,
-    size: button.size,
+    stylesType: configButtonsStyles[button.type] || configButtonsStyles.main,
     type: button.type,
     value: button.value
   }));
@@ -31,7 +30,7 @@ export function Keyboard(props) {
       const button = buttons.find(button => button.value === event.key);
       if (button) {
         setPressedKey(button.id);
-        setDynamicStyles(button.styles.active || '');
+        setDynamicStyles(button.stylesType.active || '');
         setTimeout(() => {
           setPressedKey(null);
           setDynamicStyles('');
@@ -89,14 +88,14 @@ export function Keyboard(props) {
                 text-center
                 text-neutral-900
                 text-2xl
-                ${button.styles.etc}
-                ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.styles.main ? button.styles.main : ''}
+                ${button.stylesType.etc}
+                ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.stylesType.main ? button.stylesType.main : ''}
               `}
               aria-label={button.label}
               onClick={() => handleInput(button)}
               tabIndex={-1}
             >
-              {button.icon ? <Icon id={button.icon} /> : button.label}
+              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'h-8 lg:h-5 lg:w-5 w-8 xl:h-8 xl:w-8'} /> : button.label}
             </button>
           </div>
         )}

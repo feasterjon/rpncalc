@@ -163,6 +163,9 @@ export const CONFIG = {
     buttons: {
       data: [
         {
+          icon: {
+            id: 'square-root-variable'
+          },
           id: 1,
           label: '\u221a',
           order: 'sm:order-[1]',
@@ -170,6 +173,9 @@ export const CONFIG = {
           value: 's'
         },
         {
+          icon: {
+            id: 'angle-up'
+          },
           id: 2,
           order: 'sm:order-[6]',
           type: 'fn',
@@ -210,7 +216,9 @@ export const CONFIG = {
           value: 'Delete'
         },
         {
-          icon: 'backspace',
+          icon: {
+            id: 'delete-left'
+          },
           id: 7,
           label: '\u232B',
           order: 'sm:order-[3]',
@@ -225,6 +233,9 @@ export const CONFIG = {
           value: 'a'
         },
         {
+          icon: {
+            id: 'divide'
+          },
           id: 9,
           label: '\u00F7',
           order: 'sm:order-[5]',
@@ -247,6 +258,9 @@ export const CONFIG = {
           value: '9'
         },
         {
+          icon: {
+            id: 'multiply'
+          },
           id: 13,
           label: '\u00D7',
           order: 'sm:order-[10]',
@@ -269,6 +283,9 @@ export const CONFIG = {
           value: '6'
         },
         {
+          icon: {
+            id: 'minus'
+          },
           id: 17,
           order: 'sm:order-[15]',
           type: 'operator',
@@ -277,7 +294,10 @@ export const CONFIG = {
         {
           id: 18,
           order: 'sm:order-[17]',
-          value: '1'
+          value: '1',
+          styles: {
+            etc: 'text-red-500'
+          }
         },
         {
           id: 19,
@@ -290,6 +310,9 @@ export const CONFIG = {
           value: '3'
         },
         {
+          icon: {
+            id: 'plus'
+          },
           id: 21,
           order: 'sm:order-[20]',
           type: 'operator',
@@ -313,6 +336,9 @@ export const CONFIG = {
           value: ' '
         },
         {
+          icon: {
+            id: 'corner-down-left'
+          },
           id: 25,
           label: '\u23ce',
           order: 'sm:order-[25]',
