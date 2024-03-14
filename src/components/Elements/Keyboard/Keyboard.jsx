@@ -52,6 +52,7 @@ export function Keyboard(props) {
       lg:w-auto
       sm:w-full
       w-auto
+      xl:h-[90%]
     ">
       <div className="
         flex
