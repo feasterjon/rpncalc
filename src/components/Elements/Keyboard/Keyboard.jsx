@@ -72,7 +72,7 @@ export function Keyboard(props) {
           >
             <button
               className={`
-                2xl:text-2xl
+                xl:text-3xl
                 aspect-square
                 cursor-pointer
                 dark:text-neutral-100
@@ -88,9 +88,10 @@ export function Keyboard(props) {
                 size-3/4
                 sm:aspect-auto
                 sm:size-11/12
+                sm:text-xl
                 text-center
                 text-neutral-900
-                text-xl
+                text-2xl
                 ${button.stylesType.etc}
                 ${`button-${button.id}` === `button-${pressedKey}` ? dynamicStyles : button.stylesType.main ? button.stylesType.main : ''}
               `}
@@ -98,7 +99,7 @@ export function Keyboard(props) {
               onClick={() => handleInput(button)}
               tabIndex={-1}
             >
-              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : '2xl:h-8 2xl:w-8 h-7 w-7'} /> : button.label}
+              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'xl:size-9 lg:size-6 size-8 sm:size-7'} /> : button.label}
             </button>
           </div>
         )}
