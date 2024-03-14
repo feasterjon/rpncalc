@@ -182,6 +182,10 @@ export const CONFIG = {
           value: '^'
         },
         {
+          aria: 'Pi',
+          icon: {
+            id: 'pi'
+          },
           id: 3,
           label: '\u03C0',
           name: 'Archimedes\' Constant',
@@ -191,6 +195,10 @@ export const CONFIG = {
           valueMath: Math.PI
         },
         {
+          aria: 'e',
+          icon: {
+            id: 'epsilon'
+          },
           id: 4,
           label: '\u2107',
           name: 'Euler\'s Number',
@@ -200,6 +208,10 @@ export const CONFIG = {
           valueMath: Math.E
         },
         {
+          aria: 'Phi',
+          icon: {
+            id: 'phi'
+          },
           id: 5,
           label: '\u03C6',
           name: 'The Golden Ratio',

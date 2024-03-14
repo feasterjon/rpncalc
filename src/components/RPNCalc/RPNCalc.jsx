@@ -407,10 +407,12 @@ export function RPNCalc(props) {
         </div>
         <div className="flex items-end justify-end p-4">
           <span className={`
+            break-all
             dark:text-rpncalc-primary-light
-            lg:text-6xl
             text-rpncalc-primary-dark
             xl:text-7xl
+            ${(formatNumbers(currentExpression).length < 25) ? 'lg:text-6xl' : 'lg:text-5xl'}
+            ${(formatNumbers(currentExpression).length < 20) ? 'md:text-6xl' : 'md:text-5xl'}
             ${(formatNumbers(currentExpression).length < 10) ? 'text-6xl' : 'text-5xl'}
           `}
             aria-label="Expression"
