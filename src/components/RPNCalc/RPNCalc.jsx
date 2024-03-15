@@ -308,6 +308,7 @@ export function RPNCalc(props) {
             </div>
           </div>
           <div className="
+            break-all
             dark:text-neutral-100
             items-end
             justify-end
