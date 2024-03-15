@@ -103,7 +103,7 @@ export function Keyboard(props) {
               onClick={() => handleInput(button)}
               tabIndex={-1}
             >
-              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'xl:size-9 lg:size-6 size-8 sm:size-7'} /> : button.label}
+              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'xl:size-9 lg:size-6 rpncalc-tall:size-6 size-8 sm:size-7'} /> : button.label}
             </button>
           </div>
         )}
