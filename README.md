@@ -102,8 +102,13 @@ module.exports = {
             light: 'hsl(var(--rpncalc-color-secondary-light))'
           }
         }
+      },
+      screens: {
+        'rpncalc-tall': {
+          'raw': '(min-height: 1024px)'
+        }
       }
-    }
+    },
   },
   ...
 }
