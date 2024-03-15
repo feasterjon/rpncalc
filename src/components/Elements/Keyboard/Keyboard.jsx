@@ -50,6 +50,8 @@ export function Keyboard(props) {
       flex
       lg:aspect-square
       lg:w-auto
+      rpncalc-tall:aspect-square
+      rpncalc-tall:items-center
       sm:w-full
       w-auto
       xl:h-3/4
@@ -84,6 +86,8 @@ export function Keyboard(props) {
                 mx-auto
                 my-[0.125rem]
                 rounded-full
+                rpncalc-tall:aspect-square
+                rpncalc-tall:text-3xl
                 select-none
                 size-3/4
                 sm:aspect-auto

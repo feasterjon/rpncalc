@@ -446,6 +446,7 @@ export function RPNCalc(props) {
         flex
         justify-center
         lg:items-center
+        rpncalc-tall:items-center
         sm:items-start
         ${keyboardVisible ? 'grow' : 'hidden'}
       `} data-name="interface">
