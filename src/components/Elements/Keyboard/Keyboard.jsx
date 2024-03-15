@@ -50,6 +50,8 @@ export function Keyboard(props) {
       flex
       lg:aspect-square
       lg:w-auto
+      rpncalc-tall:aspect-square
+      rpncalc-tall:items-center
       sm:w-full
       w-auto
       xl:h-3/4
@@ -84,6 +86,8 @@ export function Keyboard(props) {
                 mx-auto
                 my-[0.125rem]
                 rounded-full
+                rpncalc-tall:aspect-square
+                rpncalc-tall:text-3xl
                 select-none
                 size-3/4
                 sm:aspect-auto
@@ -99,7 +103,7 @@ export function Keyboard(props) {
               onClick={() => handleInput(button)}
               tabIndex={-1}
             >
-              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'xl:size-9 lg:size-6 size-8 sm:size-7'} /> : button.label}
+              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'xl:size-9 lg:size-6 rpncalc-tall:size-6 size-8 sm:size-7'} /> : button.label}
             </button>
           </div>
         )}

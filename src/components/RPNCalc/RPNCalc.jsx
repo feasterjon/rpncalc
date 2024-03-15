@@ -308,6 +308,7 @@ export function RPNCalc(props) {
             </div>
           </div>
           <div className="
+            break-all
             dark:text-neutral-100
             items-end
             justify-end
@@ -446,6 +447,7 @@ export function RPNCalc(props) {
         flex
         justify-center
         lg:items-center
+        rpncalc-tall:items-center
         sm:items-start
         ${keyboardVisible ? 'grow' : 'hidden'}
       `} data-name="interface">
