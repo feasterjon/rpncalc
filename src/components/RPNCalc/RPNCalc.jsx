@@ -447,7 +447,6 @@ export function RPNCalc(props) {
         justify-center
         lg:items-center
         rpncalc-tall:items-center
-        sm:items-start
         ${keyboardVisible ? 'grow' : 'hidden'}
       `} data-name="interface">
         <Keyboard config={inputConfig} />
