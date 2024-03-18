@@ -12,8 +12,17 @@
   padding: 0.5rem 1rem;
 }
 
-.bgTransparent {
+.bgTransparentDark {
   background-color: transparent;
+}
+
+.bgTransparentLight {
+  background-color: transparent;
+  color: hsl(0 0% 5%);
+}
+
+.bgTransparentLight:hover {
+  color: hsl(0 0% 95%);
 }
 
 .button:hover {
