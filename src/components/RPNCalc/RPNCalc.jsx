@@ -268,20 +268,23 @@ export function RPNCalc(props) {
       <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
         <Transition show={appHistoryVisible}>
           <div className="flex p-4" data-name="history-title">
-            <div className="dark:text-rpncalc-primary-light flex select-none text-3xl text-rpncalc-primary-dark">
+            <div className="
+              dark:text-rpncalc-primary-light
+              flex select-none
+              text-3xl
+              text-rpncalc-primary-dark
+            ">
               <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}>
                 <Icon id="arrow-left" styles="h-8 w-8" />
               </button>
-              <span className="ml-2">History</span>
+              <button className="cursor-pointer ml-2" aria-label="Toggle History" onClick={toggleHistory}>History</button>
             </div>
             <div className="flex grow items-end justify-end">
               <button className="
-                bg-neutral-400
                 cursor-pointer
-                dark:bg-neutral-600
-                dark:hover:bg-neutral-500
+                dark:hover:bg-neutral-600
                 dark:text-neutral-100
-                hover:bg-neutral-500
+                hover:bg-neutral-400
                 ml-2
                 p-2
                 rounded-full
@@ -291,12 +294,10 @@ export function RPNCalc(props) {
                 <Icon id="trash" />
               </button>
               <button className="
-                bg-neutral-400
                 cursor-pointer
-                dark:bg-neutral-600
-                dark:hover:bg-neutral-500
+                dark:hover:bg-neutral-600
                 dark:text-neutral-100
-                hover:bg-neutral-500
+                hover:bg-neutral-400
                 ml-2
                 p-2
                 rounded-full
@@ -424,12 +425,10 @@ export function RPNCalc(props) {
             {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
           </span>
           {pasteEnabled && <button className="
-            bg-neutral-300
             cursor-pointer
-            dark:bg-neutral-700
-            dark:hover:bg-neutral-600
+            dark:hover:bg-neutral-700
             dark:text-neutral-100
-            hover:bg-neutral-400
+            hover:bg-neutral-300
             ml-2
             p-2
             rounded-full
@@ -448,7 +447,6 @@ export function RPNCalc(props) {
         justify-center
         lg:items-center
         rpncalc-tall:items-center
-        sm:items-start
         ${keyboardVisible ? 'grow' : 'hidden'}
       `} data-name="interface">
         <Keyboard config={inputConfig} />
@@ -458,7 +456,7 @@ export function RPNCalc(props) {
           body={
             <Help config={help} />
           }
-        close={() => setDialogVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} title={help.title} />
+        close={() => setDialogVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} footer={help.footer} title={help.title} />
       </Transition>
     </div>
   );

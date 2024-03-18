@@ -25,7 +25,11 @@ export function Dialog(props) {
             </div>
           )}
           <div className={styles.controls}>
-            <button className={`${styles.button} ${styles.rounded}`} onClick={() => { vibrate(); props.close(); }}>
+            <button className={`
+              ${styles.button}
+              ${styles.rounded}
+              ${props.darkMode ? styles.bgTransparentDark : styles.bgTransparentLight}
+            `} onClick={() => { vibrate(); props.close(); }}>
               <Icon id="x-mark" />
             </button>
           </div>
