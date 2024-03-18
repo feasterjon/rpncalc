@@ -425,12 +425,10 @@ export function RPNCalc(props) {
             {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
           </span>
           {pasteEnabled && <button className="
-            bg-neutral-300
             cursor-pointer
-            dark:bg-neutral-700
-            dark:hover:bg-neutral-600
+            dark:hover:bg-neutral-700
             dark:text-neutral-100
-            hover:bg-neutral-400
+            hover:bg-neutral-300
             ml-2
             p-2
             rounded-full
