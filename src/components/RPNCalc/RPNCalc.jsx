@@ -456,7 +456,7 @@ export function RPNCalc(props) {
           body={
             <Help config={help} />
           }
-        close={() => setDialogVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} title={help.title} />
+        close={() => setDialogVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} footer={help.footer} title={help.title} />
       </Transition>
     </div>
   );
