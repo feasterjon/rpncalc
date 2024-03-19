@@ -29,7 +29,9 @@ export function RPNCalc(props) {
     [dialogVisibleHelp, setDialogVisibleHelp] = useState(false),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
-    prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
+    [prefersDark, setPrefersDark] = useState(false),
+    [theme, setTheme] = useState('light'),
+    [themeIndex, setThemeIndex] = useState(0),
     themes = config.themes;
 
   const configTheme = (selectedName, defaultName = 'os-default') => {
@@ -50,8 +52,11 @@ export function RPNCalc(props) {
     return out
   }
 
-  let [themeIndex, setThemeIndex] = useState(configTheme().index);
-  let [theme, setTheme] = useState(configTheme().theme.name);
+  useEffect(() => {
+    setPrefersDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    setTheme(configTheme().theme.name);
+    setThemeIndex(configTheme().index);
+  }, [configTheme]);
 
   const appHistoryFormatted = appHistory.reduce((accumulator, item) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
