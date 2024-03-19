@@ -18,8 +18,7 @@ export function RPNCalc(props) {
   if (config.storage?.prefix) storage.prefix = config.storage?.prefix;
   const sessionHistory = storage.getItem('history') || [];
 
-  const
-    [appHistory, setAppHistory] = useState(sessionHistory),
+  const [appHistory, setAppHistory] = useState(sessionHistory),
     [appHistoryVisible, setAppHistoryVisible] = useState(false),
     [appHistoryExtendedVisible, setAppHistoryExtendedVisible] = useState(false),
     [currentExpression, setCurrentExpression] = useState(''),
