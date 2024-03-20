@@ -1,6 +1,6 @@
 export const storage = {
   getItem: (keyName) => {
-    const keyValue = localStorage.getItem(`${storage.prefix}${keyName}`);
+    const keyValue = window.localStorage.getItem(`${storage.prefix}${keyName}`);
     try {
       return JSON.parse(keyValue)
     } catch (error) {
@@ -9,10 +9,10 @@ export const storage = {
   },
   prefix: '',
   removeItem: (keyName) => {
-    localStorage.removeItem(`${storage.prefix}${keyName}`);
+    window.localStorage.removeItem(`${storage.prefix}${keyName}`);
   },
   setItem: (keyName, keyValue) => {
-    localStorage.setItem(`${storage.prefix}${keyName}`,
+    window.localStorage.setItem(`${storage.prefix}${keyName}`,
       typeof keyValue === 'object' ? JSON.stringify(keyValue) : keyValue
     );
   }

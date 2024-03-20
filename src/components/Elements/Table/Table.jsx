@@ -8,7 +8,7 @@ export function Table(props) {
   const type = props.data.type ? `table${props.data.type.toUpperCase()}` : '';
 
   return (
-    <table className={`${styles.table} ${type ? styles[type] : ''}`} style={{width: `${width}`}}>
+    <table className={`${styles.table} ${type ? styles[type] : ''} ${styles.vars}`} style={{width: `${width}`}}>
       <thead>
         <tr>
           {props.data.headings.map((heading) => 
