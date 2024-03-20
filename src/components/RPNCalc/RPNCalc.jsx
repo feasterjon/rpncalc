@@ -29,29 +29,24 @@ export function RPNCalc(props) {
     [dialogVisibleHelp, setDialogVisibleHelp] = useState(false),
     msgError = 'error',
     [pasteEnabled, setPasteEnabled] = useState(null),
-    prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches,
+    [prefersDark, setPrefersDark] = useState(null),
+    [theme, setTheme] = useState('light'),
+    [themeIndex, setThemeIndex] = useState(0),
     themes = config.themes;
 
-  const configTheme = (selectedName, defaultName = 'os-default') => {
-    let defaultIndex = themes.findIndex(theme => theme.name === defaultName) || 0,
-      out = {},
-      selectedTheme = selectedName ? selectedName
-        : storage.getItem('theme') ? storage.getItem('theme')
-        : defaultName;
-    let selectedIndex = themes.findIndex(theme => theme.name === selectedTheme);
-    if (selectedIndex < 0) selectedIndex = defaultIndex;
-    out.index = selectedIndex;
-    if (selectedIndex === defaultIndex) {
+  useEffect(() => {
+    setPrefersDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const savedTheme = storage.getItem('theme');
+    let selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
+    let selectedTheme = themes[selectedIndex];
+    if (!selectedTheme) selectedIndex = 0;
+    if (selectedIndex === 0) {
       const osTheme = prefersDark ? 'dark' : 'light';
-      out.theme = themes.find(theme => theme.name === osTheme);
-      return out
+      selectedTheme = themes.find(theme => theme.name === osTheme);
     }
-    out.theme = themes[selectedIndex];
-    return out
-  }
-
-  let [themeIndex, setThemeIndex] = useState(configTheme().index);
-  let [theme, setTheme] = useState(configTheme().theme.name);
+    setTheme(selectedTheme.name);
+    setThemeIndex(selectedIndex);
+  }, [prefersDark, themes]);
 
   const appHistoryFormatted = appHistory.reduce((accumulator, item) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
@@ -211,10 +206,19 @@ export function RPNCalc(props) {
 
   const toggleTheme = () => {
     vibrate();
-    setThemeIndex((themeIndex) => (themeIndex + 1) % themes.length);
-    let selectedTheme = themes[(themeIndex + 1) % themes.length].name;
-    storage.setItem('theme', selectedTheme);
-    setTheme(configTheme(selectedTheme).theme.name);
+    let selectedIndex = themeIndex + 1;
+    let selectedTheme = themes[selectedIndex],
+      selectedThemeName;
+    if (!selectedTheme) selectedIndex = 0;
+    if (selectedIndex === 0) {
+      const osTheme = prefersDark ? 'dark' : 'light';
+      selectedTheme = themes.find(theme => theme.name === osTheme);
+      selectedThemeName = themes[selectedIndex].name;
+    }
+    if (!selectedThemeName) selectedThemeName = selectedTheme.name;
+    storage.setItem('theme', selectedThemeName);
+    setTheme(selectedTheme.name);
+    setThemeIndex(selectedIndex);
   };
 
   const historyRemove = () => {
