@@ -3,48 +3,138 @@
 import { CONFIG } from '../../config';
 import { Dialog } from '../Elements/Dialog';
 import { Dropdown } from '../Elements/Dropdown';
+import { Help } from '../Help';
 import { Icon } from '../Elements/Icon';
+import { JRPNCalc as RPN } from './JRPNCalc';
 import { Keyboard } from '../Elements/Keyboard';
 import { LoadingScreen } from '../Elements/LoadingScreen';
-import { Transition } from '../Elements/Transition';
-import { Help } from '../Help';
-import { JRPNCalc as RPN } from './JRPNCalc';
+import { randomId } from '../../utils/randomId';
 import { storage } from '../../utils/storage';
 import styles from './RPNCalc.module.css';
-import { useEffect, useRef, useState } from 'react';
+import { Transition } from '../Elements/Transition';
+import { useEffect, useReducer, useRef } from 'react';
 import { vibrate } from '../../utils/vibrate';
+
+const actions = {
+  setAppHistory: 'SET_APP_HISTORY',
+  setCurrentExpression: 'SET_CURRENT_EXPRESSION',
+  setIsLoading: 'SET_IS_LOADING',
+  setLastAnswer: 'SET_LAST_ANSWER',
+  setPasteEnabled: 'SET_PASTE_ENABLED',
+  setPrefersDark: 'SET_PREFERS_DARK',
+  setTheme: 'SET_THEME',
+  setThemeIndex: 'SET_THEME_INDEX',
+  toggleAppHistoryExtendedVisible: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE',
+  toggleAppHistoryVisible: 'TOGGLE_APP_HISTORY_VISIBLE',
+  toggleDialogVisibleHelp: 'TOGGLE_DIALOG_VISIBLE_HELP',
+  toggleKeyboardVisible: 'TOGGLE_KEYBOARD_VISIBLE'
+};
+
+const initialState = {
+  appHistory: [],
+  appHistoryExtendedVisible: false,
+  appHistoryVisible: false,
+  currentExpression: '',
+  dialogVisibleHelp: false,
+  isLoading: true,
+  keyboardVisible: true,
+  lastAnswer: '',
+  pasteEnabled: null,
+  prefersDark: null,
+  theme: 'light',
+  themeIndex: 0
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case actions.setAppHistory:
+      return { ...state, appHistory: action.payload };
+    case actions.setCurrentExpression:
+      return { ...state, currentExpression: action.payload };
+    case actions.setIsLoading:
+      return { ...state, isLoading: action.payload };
+    case actions.setLastAnswer:
+      return { ...state, lastAnswer: action.payload };
+    case actions.setPasteEnabled:
+      return { ...state, pasteEnabled: action.payload };
+    case actions.setPrefersDark:
+      return { ...state, prefersDark: action.payload };
+    case actions.setTheme:
+      return { ...state, theme: action.payload };
+    case actions.setThemeIndex:
+      return { ...state, themeIndex: action.payload };
+    case actions.toggleAppHistoryExtendedVisible:
+      return { ...state, appHistoryExtendedVisible: !state.appHistoryExtendedVisible };
+    case actions.toggleAppHistoryVisible:
+      return { ...state, appHistoryVisible: !state.appHistoryVisible };
+    case actions.toggleDialogVisibleHelp:
+      return { ...state, dialogVisibleHelp: !state.dialogVisibleHelp };
+    case actions.toggleKeyboardVisible:
+      return { ...state, keyboardVisible: !state.keyboardVisible };
+    default:
+      return state;
+  }
+};
 
 export function RPNCalc(props) {
 
-  const config = props.config ? Object.assign(CONFIG, props.config) : CONFIG;
-
-  const [appHistory, setAppHistory] = useState([]),
-    [appHistoryVisible, setAppHistoryVisible] = useState(false),
-    [appHistoryExtendedVisible, setAppHistoryExtendedVisible] = useState(false),
-    [currentExpression, setCurrentExpression] = useState(''),
-    help = config.help,
+  const config = props.config ? Object.assign(CONFIG, props.config) : CONFIG,
     inputRef = useRef(null),
-    [isLoading, setIsLoading] = useState(true),
-    [keyboardVisible, setKeyboardVisible] = useState(true),
-    [lastAnswer, setLastAnswer] = useState(''),
-    [dialogVisibleHelp, setDialogVisibleHelp] = useState(false),
     msgError = 'error',
-    [pasteEnabled, setPasteEnabled] = useState(null),
-    [prefersDark, setPrefersDark] = useState(null),
-    [theme, setTheme] = useState('light'),
-    [themeIndex, setThemeIndex] = useState(0),
+    [state, dispatch] = useReducer(reducer, initialState);
+
+  const help = config.help,
     themes = config.themes;
 
   if (config.storage?.prefix) storage.prefix = config.storage?.prefix;
-  useEffect(() => {
-    const savedHistory = storage.getItem('history') || [];
-    setAppHistory(savedHistory);
-    setLastAnswer(savedHistory[savedHistory.length - 1]?.answer || '');
-  }, []);
+
+  const setAppHistory = (data) => {
+    dispatch({ type: actions.setAppHistory, payload: data });
+  },
+  setCurrentExpression = (data) => {
+    dispatch({ type: actions.setCurrentExpression, payload: data });
+  },
+  setIsLoading = (data) => {
+    dispatch({ type: actions.setIsLoading, payload: data });
+  },
+  setLastAnswer = (data) => {
+    dispatch({ type: actions.setLastAnswer, payload: data });
+  },
+  setPasteEnabled = (data) => {
+    dispatch({ type: actions.setPasteEnabled, payload: data });
+  },
+  setPrefersDark = (data) => {
+    dispatch({ type: actions.setPrefersDark, payload: data });
+  },
+  setTheme = (data) => {
+    dispatch({ type: actions.setTheme, payload: data });
+  },
+  setThemeIndex = (data) => {
+    dispatch({ type: actions.setThemeIndex, payload: data });
+  },
+  toggleAppHistoryExtendedVisible = () => {
+    vibrate();
+    dispatch({ type: actions.toggleAppHistoryExtendedVisible });
+  },
+  toggleAppHistoryVisible = () => {
+    vibrate();
+    dispatch({ type: actions.toggleAppHistoryVisible });
+  },
+  toggleDialogVisibleHelp = () => {
+    vibrate();
+    dispatch({ type: actions.toggleDialogVisibleHelp });
+  },
+  toggleKeyboardVisible = () => {
+    vibrate();
+    dispatch({ type: actions.toggleKeyboardVisible });
+  };
 
   useEffect(() => {
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches,
+      savedHistory = storage.getItem('history') || [],
       savedTheme = storage.getItem('theme');
+    setAppHistory(savedHistory);
+    setLastAnswer(savedHistory[savedHistory.length - 1]?.answer || '');
     setPrefersDark(prefersDarkScheme);
     let selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
     let selectedTheme = themes[selectedIndex];
@@ -58,7 +148,32 @@ export function RPNCalc(props) {
     setIsLoading(false);
   }, [themes]);
 
-  const appHistoryFormatted = appHistory.reduce((accumulator, item) => {
+  const checkPasteEnabled = async () => {
+    try {
+      await navigator.clipboard.readText();
+      setPasteEnabled(true);
+    } catch (error) {}
+  }
+  useEffect(() => {
+    checkPasteEnabled();
+  });
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if ((event.ctrlKey && event.key === '/') || event.key === '?') {
+        toggleDialogVisibleHelp();
+      }
+      if (!event.ctrlKey && event.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
+        toggleAppHistoryVisible();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [state.appHistoryVisible, state.dialogVisibleHelp]);
+
+  const appHistoryFormatted = state.appHistory.reduce((accumulator, item) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'long',
@@ -69,58 +184,16 @@ export function RPNCalc(props) {
     return accumulator
   }, {});
 
-  const handleKeyboardInput = (data) => {
-    if (!data) return
-    switch (data.value) {
-      case 'a':
-        setCurrentExpression(`${currentExpression}${lastAnswer} `);
-        break;
-      case 'Backspace':
-        if (currentExpression === msgError) {
-          setCurrentExpression('');
-          break;
-        }
-        setCurrentExpression(currentExpression.substring(0, (currentExpression.length - 1)));
-        break;
-      case 'Delete':
-        setCurrentExpression('');
-        break;
-      case 'Enter':
-        calc();
-        break;
-      default:
-        let out = (data.value === ' ' || data.value === '.') ? data.value : data.label || data.value; // do not set the Space or Period label
-        out = `${currentExpression}${out}`;
-        if (validateNumbers(out)) setCurrentExpression(out);
-        break;
-    }
-  };
-
-  const inputConfig = {
-    buttons: config.input?.buttons,
-    setCurrentInput: handleKeyboardInput
-  };
-
   const calc = () => {
-    let out = RPN(formatExpression(currentExpression.toString()), msgError).toString();
+    let out = RPN(formatExpression(state.currentExpression.toString()), msgError).toString();
     if (out !== msgError) {
       out = formatAnswer(out);
       setLastAnswer(out);
-      historyUpdate(currentExpression, out);
+      historyUpdate(state.currentExpression, out);
       out = `${out} `;
     }
     setCurrentExpression(out);
   }
-
-  const checkPasteEnabled = async () => {
-    try {
-      await navigator.clipboard.readText();
-      setPasteEnabled(true);
-    } catch (error) {}
-  }
-  useEffect(() => {
-    checkPasteEnabled();
-  }, []);
 
   const formatAnswer = (data, maxDecimals = 10, maxDigits) => {
     if (!data) return ''
@@ -171,8 +244,36 @@ export function RPNCalc(props) {
     return out
   }
 
-  const getId = () => {
-    return Math.floor(Math.random() * (10 ** 10 - 10 ** 9 + 1)) + (10 ** 9) // random 10-digit positive integer
+  const handleKeyboardInput = (data) => {
+    if (!data) return
+    switch (data.value) {
+      case 'a':
+        setCurrentExpression(`${state.currentExpression}${state.lastAnswer} `);
+        break;
+      case 'Backspace':
+        if (state.currentExpression === msgError) {
+          setCurrentExpression('');
+          break;
+        }
+        setCurrentExpression(state.currentExpression.substring(0, (state.currentExpression.length - 1)));
+        break;
+      case 'Delete':
+        setCurrentExpression('');
+        break;
+      case 'Enter':
+        calc();
+        break;
+      default:
+        let out = (data.value === ' ' || data.value === '.') ? data.value : data.label || data.value; // do not set the Space or Period label
+        out = `${state.currentExpression}${out}`;
+        if (validateNumbers(out)) setCurrentExpression(out);
+        break;
+    }
+  };
+
+  const inputConfig = {
+    buttons: config.input?.buttons,
+    setCurrentInput: handleKeyboardInput
   };
 
   const handlePaste = async () => {
@@ -181,47 +282,36 @@ export function RPNCalc(props) {
     if (inputRef.current) inputRef.current.focus();
     if (!text) return
     if (!validateNumbers(text)) return
-    setCurrentExpression(`${currentExpression}${text} `);
+    setCurrentExpression(`${state.currentExpression}${text} `);
   };
 
-  useEffect(() => {
-    const handleKeyDown = (event) => {
-      if ((event.ctrlKey && event.key === '/') || event.key === '?') {
-        setDialogVisibleHelp(!dialogVisibleHelp);
-      }
-      if (!event.ctrlKey && event.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
-        setAppHistoryVisible(!appHistoryVisible);
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    }
-  }, [appHistoryVisible, dialogVisibleHelp, setAppHistoryVisible, setDialogVisibleHelp]);
-
-  const toggleHistory = () => {
-    vibrate();
-    setAppHistoryVisible(!appHistoryVisible);
+  const historyRemove = () => {
+    state.appHistory.length = 0;
+    storage.removeItem('history');
   };
 
-  const toggleHistoryExtended = () => {
-    vibrate();
-    setAppHistoryExtendedVisible(!appHistoryExtendedVisible);
-  };
-
-  const toggleKeypad = () => {
-    vibrate();
-    setKeyboardVisible(!keyboardVisible);
+  const historyUpdate = (expression, answer, lengthMax = 100) => {
+    if (!expression || !answer) return
+    const lastHistory = state.appHistory[state.appHistory.length - 1];
+    if (lastHistory?.expression === expression && lastHistory?.answer === answer) return // prevent duplicate history
+    if (state.appHistory.length >= lengthMax) state.appHistory.splice(0, state.appHistory.length - lengthMax + 1);
+    state.appHistory.push({
+      answer: answer,
+      date: Date.now(),
+      expression: expression,
+      id: randomId()
+    });
+    storage.setItem('history', state.appHistory);
   };
 
   const toggleTheme = () => {
     vibrate();
-    let selectedIndex = themeIndex + 1;
+    let selectedIndex = state.themeIndex + 1;
     let selectedTheme = themes[selectedIndex],
       selectedThemeName;
     if (!selectedTheme) selectedIndex = 0;
     if (selectedIndex === 0) {
-      const osTheme = prefersDark ? 'dark' : 'light';
+      const osTheme = state.prefersDark ? 'dark' : 'light';
       selectedTheme = themes.find(theme => theme.name === osTheme);
       selectedThemeName = themes[selectedIndex].name;
     }
@@ -229,25 +319,6 @@ export function RPNCalc(props) {
     storage.setItem('theme', selectedThemeName);
     setTheme(selectedTheme.name);
     setThemeIndex(selectedIndex);
-  };
-
-  const historyRemove = () => {
-    appHistory.length = 0;
-    storage.removeItem('history');
-  };
-
-  const historyUpdate = (expression, answer, lengthMax = 100) => {
-    if (!expression || !answer) return
-    const lastHistory = appHistory[appHistory.length - 1];
-    if (lastHistory?.expression === expression && lastHistory?.answer === answer) return // prevent duplicate history
-    if (appHistory.length >= lengthMax) appHistory.splice(0, appHistory.length - lengthMax + 1);
-    appHistory.push({
-      answer: answer,
-      date: Date.now(),
-      expression: expression,
-      id: getId()
-    });
-    storage.setItem('history', appHistory);
   };
 
   const validateNumbers = (expression, maxDecimals, maxDigits) => {
@@ -270,7 +341,7 @@ export function RPNCalc(props) {
 
   return (
     <>
-      {isLoading ? (
+      {state.isLoading ? (
         <LoadingScreen message="Loading..." />
       ) : (
         <div className={`
@@ -279,9 +350,9 @@ export function RPNCalc(props) {
           h-full
           w-full
           ${config.hScreen !== false ? 'h-screen' : ''}
-        `} data-mode={theme}>
+        `} data-mode={state.theme}>
           <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
-            <Transition show={appHistoryVisible}>
+            <Transition show={state.appHistoryVisible}>
               <div className="flex p-4" data-name="history-title">
                 <div className="
                   dark:text-rpncalc-primary-light
@@ -289,10 +360,10 @@ export function RPNCalc(props) {
                   text-3xl
                   text-rpncalc-primary-dark
                 ">
-                  <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleHistory}>
+                  <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>
                     <Icon id="arrow-left" styles="h-8 w-8" />
                   </button>
-                  <button className="cursor-pointer ml-2" aria-label="Toggle History" onClick={toggleHistory}>History</button>
+                  <button className="cursor-pointer ml-2" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>History</button>
                 </div>
                 <div className="flex grow items-end justify-end">
                   <button className="
@@ -305,7 +376,7 @@ export function RPNCalc(props) {
                     rounded-full
                     select-none
                     text-neutral-900
-                  " aria-label="Clear History" onClick={() => {historyRemove(); toggleHistory();}}>
+                  " aria-label="Clear History" onClick={() => {historyRemove(); toggleAppHistoryVisible();}}>
                     <Icon id="trash" />
                   </button>
                   <button className="
@@ -318,7 +389,7 @@ export function RPNCalc(props) {
                     rounded-full
                     select-none
                     text-neutral-900
-                  " aria-label="Toggle History" onClick={toggleHistory}>
+                  " aria-label="Toggle History" onClick={toggleAppHistoryVisible}>
                     <Icon id="x-mark" />
                   </button>
                 </div>
@@ -335,7 +406,7 @@ export function RPNCalc(props) {
                 xl:text-3xl
               ">
                 {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
-                  <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? appHistoryExtendedVisible : true} key={index}>
+                  <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? state.appHistoryExtendedVisible : true} key={index}>
                     <div className="border-neutral-900 border-t dark:border-neutral-100 p-4">
                       <div className="flex mb-4">
                         <div className="flex grow">
@@ -355,8 +426,8 @@ export function RPNCalc(props) {
                               rounded-full
                               select-none
                               text-neutral-900
-                            " aria-label="Toggle Extended History" onClick={toggleHistoryExtended}>
-                              {appHistoryExtendedVisible ? (<Icon id="chevron-down" />): <Icon id="chevron-up" />}
+                            " aria-label="Toggle Extended History" onClick={toggleAppHistoryExtendedVisible}>
+                              {state.appHistoryExtendedVisible ? (<Icon id="chevron-down" />): <Icon id="chevron-up" />}
                             </button>
                           )}
                         </div>
@@ -378,14 +449,14 @@ export function RPNCalc(props) {
           <div className={`
             bg-neutral-200
             dark:bg-neutral-800
-            ${keyboardVisible ? '' : 'grow'}
+            ${state.keyboardVisible ? '' : 'grow'}
           `} data-name="terminal">
             <div className="flex items-end justify-end p-4">
               <Dropdown config={
                 {
                   data: [
                     {
-                      icon: themes[themeIndex].icon,
+                      icon: themes[state.themeIndex].icon,
                       id: 1,
                       label: 'Theme',
                       onClick: toggleTheme,
@@ -395,13 +466,13 @@ export function RPNCalc(props) {
                       icon: 'clock',
                       id: 2,
                       label: 'History',
-                      onClick: toggleHistory
+                      onClick: toggleAppHistoryVisible
                     },
                     {
-                      icon: keyboardVisible ? 'eye' : 'eye-slash',
+                      icon: state.keyboardVisible ? 'eye' : 'eye-slash',
                       id: 3,
                       label: 'Keypad',
-                      onClick: toggleKeypad,
+                      onClick: toggleKeyboardVisible,
                       persist: true,
                       styles: 'hidden lg:flex'
                     },
@@ -409,7 +480,7 @@ export function RPNCalc(props) {
                       icon: 'question-mark-circle',
                       id: 4,
                       label: 'Help',
-                      onClick: () => { setDialogVisibleHelp(!dialogVisibleHelp) }
+                      onClick: () => { toggleDialogVisibleHelp() }
                     }
                   ],
                   icon: 'ellipsis-vertical',
@@ -428,18 +499,18 @@ export function RPNCalc(props) {
                 dark:text-rpncalc-primary-light
                 text-rpncalc-primary-dark
                 xl:text-7xl
-                ${(formatNumbers(currentExpression).length < 25) ? 'lg:text-6xl' : 'lg:text-5xl'}
-                ${(formatNumbers(currentExpression).length < 20) ? 'md:text-6xl' : 'md:text-5xl'}
-                ${(formatNumbers(currentExpression).length < 10) ? 'text-6xl' : 'text-5xl'}
+                ${(formatNumbers(state.currentExpression).length < 25) ? 'lg:text-6xl' : 'lg:text-5xl'}
+                ${(formatNumbers(state.currentExpression).length < 20) ? 'md:text-6xl' : 'md:text-5xl'}
+                ${(formatNumbers(state.currentExpression).length < 10) ? 'text-6xl' : 'text-5xl'}
               `}
                 aria-label="Expression"
                 ref={inputRef}
                 role="textbox"
                 tabIndex={0}
               >
-                {formatNumbers(currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
+                {formatNumbers(state.currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
               </span>
-              {pasteEnabled && <button className="
+              {state.pasteEnabled && <button className="
                 cursor-pointer
                 dark:hover:bg-neutral-700
                 dark:text-neutral-100
@@ -462,16 +533,16 @@ export function RPNCalc(props) {
             justify-center
             lg:items-center
             rpncalc-tall:items-center
-            ${keyboardVisible ? 'grow' : 'hidden'}
+            ${state.keyboardVisible ? 'grow' : 'hidden'}
           `} data-name="interface">
             <Keyboard config={inputConfig} />
           </div>
-          <Transition show={dialogVisibleHelp}>
+          <Transition show={state.dialogVisibleHelp}>
             <Dialog
               body={
                 <Help config={help} />
               }
-            close={() => setDialogVisibleHelp(false)} darkMode={(theme === 'dark') ? true : false} footer={help.footer} title={help.title} />
+            close={() => toggleDialogVisibleHelp()} darkMode={(state.theme === 'dark') ? true : false} footer={help.footer} title={help.title} />
           </Transition>
         </div>
       )}
