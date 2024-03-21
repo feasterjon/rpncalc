@@ -1,6 +1,6 @@
 {
   "name": "rpncalc",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "private": true,
   "homepage": "http://feasterjon.github.io/rpncalc/",
   "dependencies": {
@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "REACT_APP_VERSION=1.0.x-dev react-scripts start",
-    "build": "REACT_APP_VERSION=1.0.0b react-scripts build",
+    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy" : "npm run build",
