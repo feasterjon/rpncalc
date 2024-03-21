@@ -85,8 +85,10 @@ The custom color palette is configured in the `tailwind.config.js` file in the n
 
 ``` tailwind.config.js
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
 module.exports = {
   ...
+  darkMode: ['class', '[data-mode="dark"]'],
   theme: {
     extend: {
       colors: {
