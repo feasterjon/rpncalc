@@ -54,7 +54,6 @@ export function Keyboard(props) {
       rpncalc-tall:items-center
       sm:w-full
       w-auto
-      xl:h-3/4
     ">
       <div className="
         flex
@@ -74,7 +73,6 @@ export function Keyboard(props) {
           >
             <button
               className={`
-                xl:text-3xl
                 aspect-square
                 cursor-pointer
                 dark:text-neutral-100
@@ -103,7 +101,7 @@ export function Keyboard(props) {
               onClick={() => handleInput(button)}
               tabIndex={-1}
             >
-              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'xl:size-9 lg:size-6 rpncalc-tall:size-6 size-8 sm:size-7'} /> : button.label}
+              {button.icon.id ? <Icon id={button.icon.id} styles={button.icon.styles ? button.icon.styles : 'lg:size-6 rpncalc-tall:size-6 size-8 sm:size-7'} /> : button.label}
             </button>
           </div>
         )}
