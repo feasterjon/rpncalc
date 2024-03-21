@@ -43,19 +43,20 @@ export function RPNCalc(props) {
   }, []);
 
   useEffect(() => {
-    setPrefersDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
-    const savedTheme = storage.getItem('theme');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches,
+      savedTheme = storage.getItem('theme');
+    setPrefersDark(prefersDarkScheme);
     let selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
     let selectedTheme = themes[selectedIndex];
     if (!selectedTheme) selectedIndex = 0;
     if (selectedIndex === 0) {
-      const osTheme = prefersDark ? 'dark' : 'light';
+      const osTheme = prefersDarkScheme ? 'dark' : 'light';
       selectedTheme = themes.find(theme => theme.name === osTheme);
     }
     setTheme(selectedTheme.name);
     setThemeIndex(selectedIndex);
     setIsLoading(false);
-  }, [prefersDark, themes]);
+  }, [themes]);
 
   const appHistoryFormatted = appHistory.reduce((accumulator, item) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
