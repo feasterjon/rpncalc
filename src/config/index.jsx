@@ -1,6 +1,6 @@
 export const CONFIG = {
   help: {
-    footer: process.env.REACT_APP_VERSION ? `RPNCalc ${process.env.REACT_APP_VERSION}` : '',
+    footer: `${process.env.REACT_APP_VERSION ? `RPNCalc ${process.env.REACT_APP_VERSION} | ` : ''}JonFeaster.com`,
     sections: [
       {
         data: [
