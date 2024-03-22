@@ -113,19 +113,15 @@ export function RPNCalc(props) {
     dispatch({ type: actions.setThemeIndex, payload: data });
   },
   toggleAppHistoryExtendedVisible = () => {
-    vibrate();
     dispatch({ type: actions.toggleAppHistoryExtendedVisible });
   },
   toggleAppHistoryVisible = () => {
-    vibrate();
     dispatch({ type: actions.toggleAppHistoryVisible });
   },
   toggleDialogVisibleHelp = () => {
-    vibrate();
     dispatch({ type: actions.toggleDialogVisibleHelp });
   },
   toggleKeyboardVisible = () => {
-    vibrate();
     dispatch({ type: actions.toggleKeyboardVisible });
   };
 
@@ -305,7 +301,6 @@ export function RPNCalc(props) {
   };
 
   const toggleTheme = () => {
-    vibrate();
     let selectedIndex = state.themeIndex + 1;
     let selectedTheme = themes[selectedIndex],
       selectedThemeName;
@@ -542,7 +537,11 @@ export function RPNCalc(props) {
               body={
                 <Help config={help} />
               }
-            close={() => toggleDialogVisibleHelp()} darkMode={(state.theme === 'dark') ? true : false} footer={help.footer} title={help.title} />
+              close={() => toggleDialogVisibleHelp()}
+              darkMode={(state.theme === 'dark') ? true : false}
+              footer={help.footer}
+              title={help.title}
+            />
           </Transition>
         </div>
       )}

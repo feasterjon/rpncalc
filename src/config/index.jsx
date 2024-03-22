@@ -388,7 +388,8 @@ export const CONFIG = {
           active: 'bg-rpncalc-primary border-rpncalc-primary',
           etc: 'border-2 border-rpncalc-primary-light dark:border-rpncalc-primary active:bg-rpncalc-primary active:border-rpncalc-primary'
         }
-      }
+      },
+      vibrateEnabled: true
     }
   },
   storage: {

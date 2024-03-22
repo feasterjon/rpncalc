@@ -8,7 +8,8 @@ export function Keyboard(props) {
     configButtonsStyles = props.config.buttons?.styles || {},
     [dynamicStyles, setDynamicStyles] = useState(''),
     [pressedKey, setPressedKey] = useState(''),
-    setCurrentInput = props.config.setCurrentInput;
+    setCurrentInput = props.config.setCurrentInput,
+    vibrateEnabled = props.config.buttons?.vibrateEnabled;
 
   const buttons = configButtons.map((button) => ({
     aria: button.aria ? button.aria : button.label ? button.label : button.value,
@@ -22,7 +23,7 @@ export function Keyboard(props) {
   }));
 
   const handleInput = (input) => {
-    vibrate();
+    if (vibrateEnabled) vibrate();
     setCurrentInput(input);
   };
 
