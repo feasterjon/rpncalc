@@ -4,7 +4,8 @@ import { vibrate } from '../../../utils/vibrate';
 
 export function Dialog(props) {
 
-  const cancelable = (props.cancelable !== false) ? true : false;
+  const cancelable = (props.cancelable !== false) ? true : false,
+    vibrateEnabled = props.vibrateEnabled;
 
   const handleClickOutside = (event) => {
     if (cancelable && !event.target.closest(`.${styles.dialog}`)) {
@@ -29,7 +30,7 @@ export function Dialog(props) {
               ${styles.button}
               ${styles.rounded}
               ${props.darkMode ? styles.bgTransparentDark : styles.bgTransparentLight}
-            `} onClick={() => { vibrate(); props.close(); }}>
+            `} onClick={vibrateEnabled ? () => { vibrate(); props.close(); } : () => { props.close(); }}>
               <Icon id="x-mark" />
             </button>
           </div>
@@ -44,7 +45,7 @@ export function Dialog(props) {
             <div className={styles.content}>{props.footer}</div>
           )}
           <div className={styles.controls}>
-            <button className={styles.button} onClick={() => { vibrate(); props.close(); }}>
+            <button className={styles.button} onClick={vibrateEnabled ? () => { vibrate(); props.close(); } : () => { props.close(); }}>
               Close
             </button>
           </div>

@@ -12,7 +12,8 @@ export function Dropdown(props) {
     label = config.label,
     [selected, setSelected] = useState(null),
     [visible, setVisible] = useState(false),
-    configStyles = config.styles || {};
+    configStyles = config.styles || {},
+    vibrateEnabled = config.vibrateEnabled;
 
   const handleClickOutside = (event) => {
     if (event.target.closest(`.${styles.dropdown}`) || event.target.closest(`.${styles.persist}`)) return
@@ -48,7 +49,7 @@ export function Dropdown(props) {
         aria-haspopup="listbox"
         aria-label={label}
         aria-expanded={visible}
-        onClick={() => {vibrate(); setVisible(!visible);}}
+        onClick={vibrateEnabled ? () => {vibrate(); setVisible(!visible);} : () => {setVisible(!visible);}}
       >
         <Icon id={icon} />
       </button>

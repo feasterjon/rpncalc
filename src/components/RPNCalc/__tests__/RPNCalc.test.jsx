@@ -1,13 +1,13 @@
-import { mockMatchMedia } from './__mocks__/matchMedia';
+import { mockMatchMedia } from '../../../__mocks__/matchMedia';
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import { RPNCalc } from '../RPNCalc';
 
 beforeAll(() => {
   mockMatchMedia();
 });
 
-test('renders the RPNCalc Expression', () => {
-  render(<App />);
+test('It renders the Expression', () => {
+  render(<RPNCalc />);
   const linkElement = screen.getByRole('textbox', {name: /Expression/i});
   expect(linkElement).toBeInTheDocument();
 });

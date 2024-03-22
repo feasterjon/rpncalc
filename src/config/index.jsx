@@ -1,6 +1,6 @@
 export const CONFIG = {
   help: {
-    footer: process.env.REACT_APP_VERSION ? `RPNCalc ${process.env.REACT_APP_VERSION}` : '',
+    footer: `${process.env.REACT_APP_VERSION ? `RPNCalc ${process.env.REACT_APP_VERSION} | ` : ''}JonFeaster.com`,
     sections: [
       {
         data: [
@@ -388,7 +388,8 @@ export const CONFIG = {
           active: 'bg-rpncalc-primary border-rpncalc-primary',
           etc: 'border-2 border-rpncalc-primary-light dark:border-rpncalc-primary active:bg-rpncalc-primary active:border-rpncalc-primary'
         }
-      }
+      },
+      vibrateEnabled: true
     }
   },
   storage: {
