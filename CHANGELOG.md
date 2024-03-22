@@ -2,28 +2,8 @@
 
 ## Unreleased
 
-### Added
+- In Progress
 
-- New features
+## 1.0.0 - 2024-03-22
 
-### Changed
-
-- Changes in existing functionality
-
-### Deprecated
-
-- Soon-to-be removed features
-
-### Removed
-
-- Removed features
-
-### Fixed
-
-- Bug fixes
-
-### Security
-
-- Addressed vulnerabilities
-
-## 1.0.0 - YYYY-MM-DD
+- Initial Release
