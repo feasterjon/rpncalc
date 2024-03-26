@@ -24,6 +24,12 @@ export function Icon({ id, styles = 'h-6 w-6' }) {
           <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
         </svg>
       )
+    case 'circle-half-stroke':
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" strokeWidth={1.5} className={styles}>
+         <path d="m 12,2.82353 c -5.06235,0 -9.17647,4.11412 -9.17647,9.17647 0,5.062351 4.11412,9.176471 9.17647,9.176471 5.06235,0 9.17647,-4.11412 9.17647,-9.176471 0,-5.06235 -4.11412,-9.17647 -9.17647,-9.17647 z m 0,16.823531 V 4.35294 c 4.21353,0 7.64706,3.43353 7.64706,7.64706 0,4.213531 -3.43353,7.647061 -7.64706,7.647061 z" />
+        </svg>
+      )
     case 'clipboard':
       return (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles}>
@@ -34,12 +40,6 @@ export function Icon({ id, styles = 'h-6 w-6' }) {
       return (
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-        </svg>
-      )
-    case 'computer-desktop':
-      return (
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
         </svg>
       )
     case 'corner-down-left':

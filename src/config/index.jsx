@@ -397,7 +397,7 @@ export const CONFIG = {
   },
   themes: [
     {
-      icon: 'computer-desktop',
+      icon: 'circle-half-stroke',
       id: 1,
       label: 'System',
       name: "os-default"
