@@ -4,6 +4,12 @@
 
 - In Progress
 
+## 1.0.2 - 2024-03-26
+
+### Changed
+
+- Increased dropdown text size and padding
+
 ## 1.0.1 - 2024-03-26
 
 ### Changed

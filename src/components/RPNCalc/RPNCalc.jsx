@@ -481,7 +481,7 @@ export function RPNCalc(props) {
                   icon: 'ellipsis-vertical',
                   label: 'Settings',
                   styles: {
-                    data: 'dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 text-neutral-900',
+                    data: 'dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 p-3 text-neutral-900 text-xl',
                     main: 'bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 ml-2 p-2 rounded-full text-neutral-900',
                     menu: 'bg-neutral-300 dark:bg-neutral-700'
                   }
