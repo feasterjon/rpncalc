@@ -240,6 +240,12 @@ export function RPNCalc(props) {
     return out
   }
 
+  const handleInsert = (data) => {
+    if (!data) return
+    if (!validateNumbers(data)) return
+    setCurrentExpression(`${state.currentExpression}${data} `);
+  };
+
   const handleKeyboardInput = (data) => {
     if (!data) return
     switch (data.value) {
@@ -403,7 +409,7 @@ export function RPNCalc(props) {
                     <div className="border-neutral-900 border-t dark:border-neutral-100 p-4">
                       <div className="flex mb-4">
                         <div className="flex grow">
-                          <h2 className="text-left" id={`history-${index}`}>{date}</h2>
+                          <h2 className="cursor-pointer select-all text-left" id={`history-${index}`}>{date}</h2>
                         </div>
                         <div className="flex items-end justify-end my-auto">
                           {(Object.entries(appHistoryFormatted).length > 1) && (
@@ -427,9 +433,17 @@ export function RPNCalc(props) {
                       </div>
                       <ul className="list-none" aria-labelledby={`history-${index}`}>
                         {entries.map((entry) => (
-                          <li key={`history-${entry.id}`}>
-                            {formatNumbers(entry.expression)}<br />
-                            <span className="dark:text-rpncalc-primary-light text-rpncalc-primary-dark">{formatNumbers(entry.answer)}</span>
+                          <li className="py-2" key={`history-${entry.id}`}>
+                            <span className="
+                              cursor-pointer
+                              select-all
+                            " onClick={() => {handleInsert(entry.expression);}}>{formatNumbers(entry.expression)}</span><br />
+                            <span className="
+                              cursor-pointer
+                              dark:text-rpncalc-primary-light
+                              select-all
+                              text-rpncalc-primary-dark
+                            " onClick={() => {handleInsert(entry.answer);}}>{formatNumbers(entry.answer)}</span>
                           </li>
                         ))}
                       </ul>
