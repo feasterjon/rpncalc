@@ -394,11 +394,9 @@ export function RPNCalc(props) {
                 dark:text-neutral-100
                 items-end
                 justify-end
-                lg:text-2xl
-                text-lg
+                text-3xl
                 text-right
                 text-neutral-900
-                xl:text-3xl
               ">
                 {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
                   <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? state.appHistoryExtendedVisible : true} key={index}>
