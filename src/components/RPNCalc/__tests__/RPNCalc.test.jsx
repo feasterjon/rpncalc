@@ -8,6 +8,6 @@ beforeAll(() => {
 
 test('It renders the Expression', () => {
   render(<RPNCalc />);
-  const linkElement = screen.getByRole('textbox', {name: /Expression/i});
-  expect(linkElement).toBeInTheDocument();
+  const expressionElement = screen.getByRole('textbox', {name: /Expression/i});
+  expect(expressionElement).toBeInTheDocument();
 });
