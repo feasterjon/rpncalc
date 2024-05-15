@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- In Progress
+- Enabled TypeScript
 
 ## 1.0.3 - 2024-03-29
 
