@@ -1,15 +1,19 @@
 import { Spinner } from '../Spinner';
 import styles from './LoadingScreen.module.css';
 
-export function LoadingScreen(props) {
+type LoadingScreenProps = {
+  message: string;
+}
+
+export function LoadingScreen({ message }: LoadingScreenProps) {
   return (
     <div className={`${styles.main} ${styles.vars}`}>
       <div>
         <Spinner />
       </div>
-      {props.message && (
+      {message && (
         <div>
-          {props.message}
+          {message}
         </div>
       )}
     </div>
