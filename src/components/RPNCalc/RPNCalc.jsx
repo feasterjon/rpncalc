@@ -127,8 +127,12 @@ export function RPNCalc(props) {
 
   useEffect(() => {
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches,
-      savedHistory = storage.getItem('history') || [],
       savedTheme = storage.getItem('theme');
+    let savedHistory = storage.getItem('history') || [];
+    if (!Array.isArray(savedHistory)) {
+      savedHistory = [];
+      storage.removeItem('history');
+    }
     setAppHistory(savedHistory);
     setLastAnswer(savedHistory[savedHistory.length - 1]?.answer || '');
     setPrefersDark(prefersDarkScheme);
