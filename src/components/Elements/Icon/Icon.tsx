@@ -1,4 +1,9 @@
-export function Icon({ id, styles = 'h-6 w-6' }) {
+type IconProps = {
+  id: string;
+  styles: string;
+}
+
+export function Icon({ id, styles = 'h-6 w-6' }: IconProps) {
   switch (id) {
     case 'angle-up':
       return (
