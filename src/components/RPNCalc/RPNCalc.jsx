@@ -550,14 +550,13 @@ export function RPNCalc(props) {
           </div>
           <Transition show={state.dialogVisibleHelp}>
             <Dialog
-              body={
-                <Help config={help} />
-              }
               close={() => toggleDialogVisibleHelp()}
               darkMode={(state.theme === 'dark') ? true : false}
               footer={help.footer}
               title={help.title}
-            />
+            >
+              <Help config={help} />
+            </Dialog>
           </Transition>
         </div>
       )}
