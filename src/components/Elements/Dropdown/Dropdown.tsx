@@ -13,7 +13,7 @@ type Item = {
 }
 
 type Config = {
-  data: (Item)[];
+  data: Item[];
   icon: string;
   label: string;
   styles: {

@@ -8,7 +8,7 @@ export function JRPNCalc(expression: string, msgError: string = 'error'): string
 
   const hasOperator = (data: string | undefined): boolean => {
     if (!data) return false
-    const operators: (string)[] = ['+', '-', '*', '/', '^', 's'];
+    const operators: string[] = ['+', '-', '*', '/', '^', 's'];
     for (const operator of operators) {
       if (data.includes(operator) && !data.includes('e')) return true // allow for exponential notation
     }
@@ -16,10 +16,10 @@ export function JRPNCalc(expression: string, msgError: string = 'error'): string
   }
 
   if (!expression) return ''
-  const stack: (number)[] = [];
+  const stack: number[] = [];
   expression = expression.replace(/^\s*|\s*$/g, ''); // remove leading and trailing whitespace
   if (!expression) return '' // nothing left after removing white space
-  const tokens: (string)[] = expression.split(/\s+/); // split expression into tokens
+  const tokens: string[] = expression.split(/\s+/); // split expression into tokens
   let result: number;
   for (const token of tokens) {
     if (token.length > 1 && hasOperator(token)) return msgError // token is malformed (e.g. operator without a preceding space)
