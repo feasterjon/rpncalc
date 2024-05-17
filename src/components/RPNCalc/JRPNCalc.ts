@@ -1,7 +1,7 @@
 /*
 Title: JRPNCalc Reverse Polish Notation (RPN)
 Author: Jonathan Feaster, JonFeaster.com
-Date: 2024-05-16
+Date: 2024-05-17
 */
 
 export function JRPNCalc(expression: string, msgError: string = 'error'): string {
@@ -28,8 +28,8 @@ export function JRPNCalc(expression: string, msgError: string = 'error'): string
       continue;
     }
     if (!hasOperator(token) || token.length > 1 || !stack.length) return msgError // token not valid operator or repeated, or no operands
-    const operandB: string | number | undefined = stack.pop(),
-      operandA: string | number | undefined = stack.pop();
+    const operandB: number | undefined = stack.pop(),
+      operandA: number | undefined = stack.pop();
     if ((token === 's' && operandA) || (token === 's' && Number.isNaN(operandB))) return msgError // square root without a single valid operand
     switch (token) {
       case '+':
