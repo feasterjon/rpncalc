@@ -5,8 +5,7 @@ export const CONFIG = {
       {
         data: [
           {
-            data: 'Reverse Polish Notation (RPN) is a mathematical notation in which every operator follows all of its operands. It is also known as postfix notation. The description "Polish" refers to the nationality of logician Jan Lukasiewicz, who invented (prefix) Polish notation in the 1920\'s.',
-            type: 'text'
+            data: 'Reverse Polish Notation (RPN) is a mathematical notation in which every operator follows all of its operands. It is also known as postfix notation. The description "Polish" refers to the nationality of logician Jan Lukasiewicz, who invented (prefix) Polish notation in the 1920\'s.'
           }
         ],
         id: 1
@@ -63,8 +62,7 @@ export const CONFIG = {
                 }
               ],
               type: 'c'
-            },
-            type: 'table'
+            }
           }
         ],
         heading: 'Examples',
@@ -150,8 +148,7 @@ export const CONFIG = {
                 }
               ],
               type: 'c'
-            },
-            type: 'table'
+            }
           }
         ],
         heading: 'Keyboard Shortcuts',
