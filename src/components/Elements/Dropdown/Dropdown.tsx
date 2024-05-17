@@ -3,15 +3,6 @@ import styles from './Dropdown.module.css';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../../utils/vibrate';
 
-type Item = {
-  icon: string;
-  id: number;
-  label: string;
-  onClick: () => void;
-  persist?: boolean;
-  styles?: string;
-}
-
 type Config = {
   data: Item[];
   icon: string;
@@ -22,11 +13,20 @@ type Config = {
     menu?: string;
   };
   vibrateEnabled?: boolean;
-}
+};
 
 type DropdownProps = {
   config: Config;
-}
+};
+
+type Item = {
+  icon: string;
+  id: number;
+  label: string;
+  onClick: () => void;
+  persist?: boolean;
+  styles?: string;
+};
 
 export function Dropdown({ config }: DropdownProps) {
 

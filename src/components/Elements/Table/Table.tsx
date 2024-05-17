@@ -1,25 +1,25 @@
 import styles from './Table.module.css';
 
-type Record = {
-  data: string[];
-  id: number;
-}
-
-type Heading = {
-  id: number;
-  name: string;
-}
-
 type Config = {
   data: Record[];
   headings: Heading[];
   type?: string;
   width?: number;
-}
+};
+
+type Heading = {
+  id: number;
+  name: string;
+};
+
+type Record = {
+  data: string[];
+  id: number;
+};
 
 type TableProps = {
   data: Config;
-}
+};
 
 export function Table({ data }: TableProps) {
 

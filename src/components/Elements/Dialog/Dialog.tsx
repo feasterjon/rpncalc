@@ -10,7 +10,7 @@ type DialogProps = {
   footer?: React.ReactNode;
   title?: string;
   vibrateEnabled?: boolean;
-}
+};
 
 export function Dialog({
   cancelable = true,

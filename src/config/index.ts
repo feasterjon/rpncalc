@@ -1,4 +1,78 @@
-export const CONFIG = {
+type Config = {
+  help: Help;
+  input: Input;
+  storage: { prefix: string };
+  themes: {
+    icon: string;
+    id: number;
+    label: string;
+    name: string;
+  }[];
+};
+
+type Help = {
+  footer: string;
+  sections: HelpSection[];
+  title: string;
+};
+
+type HelpArticle = {
+  data: string | HelpTable;
+};
+
+type HelpHeading = {
+  id: number;
+  name: string;
+};
+
+type HelpRecord = {
+  data: string[];
+  id: number;
+};
+
+type HelpSection = {
+  data: HelpArticle[];
+  heading?: string;
+  id: number;
+};
+
+type HelpTable = {
+  data: HelpRecord[];
+  headings: HelpHeading[];
+  type?: string;
+  width?: number;
+};
+
+type Input = {
+  buttons: {
+    data: InputButton[];
+    styles: {
+      [key: string]: {
+        active: string;
+        etc: string;
+        main?: string;
+      };
+    };
+    vibrateEnabled: boolean;
+  };
+};
+
+type InputButton = {
+  aria?: string;
+  icon?: { id: string };
+  id: number;
+  label?: string;
+  name?: string;
+  order?: string;
+  type?: string;
+  value: string;
+  valueMath?: number | string;
+  styles?: {
+    [key: string]: string;
+  };
+};
+
+export const CONFIG: Config = {
   help: {
     footer: `${process.env.REACT_APP_VERSION ? `RPNCalc ${process.env.REACT_APP_VERSION} | ` : ''}JonFeaster.com`,
     sections: [

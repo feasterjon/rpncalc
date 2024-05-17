@@ -3,7 +3,7 @@ type Storage = {
   prefix: string;
   removeItem: (keyName: string) => void;
   setItem: (keyName: string, keyValue: string | object) => void;
-}
+};
 
 export const storage: Storage = {
   getItem: (keyName: string) => {

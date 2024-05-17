@@ -3,7 +3,7 @@ import styles from './LoadingScreen.module.css';
 
 type LoadingScreenProps = {
   message: string;
-}
+};
 
 export function LoadingScreen({ message }: LoadingScreenProps) {
   return (
