@@ -3,33 +3,53 @@ import styles from './Dropdown.module.css';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../../utils/vibrate';
 
-export function Dropdown(props) {
+type Item = {
+  icon: string;
+  id: number;
+  label: string;
+  onClick: () => void;
+  persist?: boolean;
+  styles?: string;
+}
 
-  const config = props.config || {};
+type Config = {
+  data: (Item)[];
+  icon: string;
+  label: string;
+  styles: {
+    data?: string;
+    main?: string;
+    menu?: string;
+  };
+  vibrateEnabled?: boolean;
+}
 
-  const data = config.data || [],
-    icon = config.icon,
-    label = config.label,
-    [selected, setSelected] = useState(null),
-    [visible, setVisible] = useState(false),
-    configStyles = config.styles || {},
-    vibrateEnabled = config.vibrateEnabled;
+type DropdownProps = {
+  config: Config;
+}
 
-  const handleClickOutside = (event) => {
-    if (event.target.closest(`.${styles.dropdown}`) || event.target.closest(`.${styles.persist}`)) return
+export function Dropdown({ config }: DropdownProps) {
+
+  const { data = [], icon, label, styles: configStyles = {}, vibrateEnabled = false } = config,
+    [selected, setSelected] = useState<string | null>(null),
+    [visible, setVisible] = useState<boolean>(false);
+
+  const handleClickOutside = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const closestDropdown = target.closest(`.${styles.dropdown}`),
+      closestPersist = target.closest(`.${styles.persist}`);
+    if (closestDropdown || closestPersist) return
     setVisible(false);
   };
 
-  const handleKeyDown = (event, item) => {
-    if (event.key === 'Enter') {
-      if (visible && item) {
-        setSelected(item.id);
-        item.onClick();
-      }
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLLIElement>, item: Item) => {
+    if (e.key === 'Enter' && visible && item) {
+      setSelected(item.id.toString());
+      item.onClick();
     }
   };
 
-  const handleSelect = (option) => {
+  const handleSelect = (option: string) => {
     setSelected(option);
   };
 
@@ -44,7 +64,7 @@ export function Dropdown(props) {
         cursor-pointer
         select-none
         ${styles.dropdown}
-        ${configStyles.main}
+        ${configStyles.main || ''}
       `}
         aria-haspopup="listbox"
         aria-label={label}
@@ -62,7 +82,7 @@ export function Dropdown(props) {
           rounded-md
           shadow-md
           z-10
-          ${configStyles.menu}
+          ${configStyles.menu || ''}
         `}>
           <ul className="py-1" role="listbox">
             {data.map((item) =>
@@ -72,11 +92,11 @@ export function Dropdown(props) {
                 items-center
                 p-2
                 select-none
-                ${configStyles.data}
+                ${configStyles.data || ''}
                 ${item.styles ? item.styles : ''}
                 ${item.persist ? styles.persist : ''}
               `}
-                aria-selected={item.id === selected?.value}
+                aria-selected={item.id.toString() === selected}
                 key={item.id}
                 onClick={() => {handleSelect(item.label); item.onClick()}}
                 onKeyDown={(event) => handleKeyDown(event, item)}
