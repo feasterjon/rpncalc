@@ -59,14 +59,14 @@ type Input = {
 
 type InputButton = {
   aria?: string;
-  icon?: { id: string };
+  icon?: { id: string; styles?: string };
   id: number;
   label?: string;
   name?: string;
   order?: string;
   type?: string;
   value: string;
-  valueMath?: number | string;
+  valueMath?: number;
   styles?: {
     [key: string]: string;
   };

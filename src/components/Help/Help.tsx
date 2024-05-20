@@ -20,7 +20,7 @@ type HelpProps = {
   config: Config;
 };
 
-type Record = {
+type Row = {
   data: string[];
   id: number;
 };
@@ -32,7 +32,7 @@ type Section = {
 };
 
 type Table = {
-  data: Record[];
+  data: Row[];
   headings: Heading[];
   type?: string;
   width?: number;

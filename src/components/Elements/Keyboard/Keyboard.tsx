@@ -2,34 +2,79 @@ import { Icon } from '../Icon';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../../utils/vibrate';
 
-export function Keyboard(props) {
+type Button = {
+  aria: string;
+  icon: { id?: string; styles?: string };
+  id: number;
+  label: string;
+  order: string;
+  stylesType: { etc: string; main?: string; active?: string };
+  type: string;
+  value: string;
+};
 
-  const configButtons = props.config.buttons?.data || [],
-    configButtonsStyles = props.config.buttons?.styles || {},
-    [dynamicStyles, setDynamicStyles] = useState(''),
-    [pressedKey, setPressedKey] = useState(''),
-    setCurrentInput = props.config.setCurrentInput,
-    vibrateEnabled = props.config.buttons?.vibrateEnabled;
+type Config = {
+  buttons?: {
+    data?: ConfigButton[];
+    styles: {
+      [key: string]: {
+        active: string;
+        etc: string;
+        main?: string;
+      };
+    };
+    vibrateEnabled?: boolean;
+  };
+  setCurrentInput: (input: Button) => void;
+};
 
-  const buttons = configButtons.map((button) => ({
+type ConfigButton = {
+  aria?: string;
+  icon?: { id: string; styles?: string };
+  id: number;
+  label?: string;
+  name?: string;
+  order?: string;
+  type?: string;
+  value: string;
+  valueMath?: number;
+  styles: {
+    [key: string]: string;
+  };
+};
+
+type KeyboardProps = {
+  config: Config;
+};
+
+export function Keyboard({ config }: KeyboardProps) {
+
+  const configButtons: ConfigButton[] = config.buttons?.data || [],
+    configButtonsStyles: Record<string, { active: string; etc: string; main?: string }> = config.buttons?.styles || {},
+    [dynamicStyles, setDynamicStyles] = useState<string>(''),
+    [pressedKey, setPressedKey] = useState<number | null>(null),
+    setCurrentInput = config.setCurrentInput,
+    vibrateEnabled: boolean = config.buttons?.vibrateEnabled || false;
+
+  const buttons: Button[] = configButtons.map((button) => ({
     aria: button.aria ? button.aria : button.label ? button.label : button.value,
     icon: button.icon || {},
     id: button.id,
     label: button.label || button.value,
-    order: button.order,
-    stylesType: configButtonsStyles[button.type] || configButtonsStyles.main,
-    type: button.type,
+    order: button.order || '',
+    stylesType: button.type ? (configButtonsStyles[button.type] || configButtonsStyles.main) : configButtonsStyles.main,
+    type: button.type || '',
     value: button.value
   }));
 
-  const handleInput = (input) => {
+  const handleInput = (input: Button) => {
     if (vibrateEnabled) vibrate();
     setCurrentInput(input);
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      const button = buttons.find(button => button.value === event.key);
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const button = buttons.find(button => button.value === e.key);
       if (button) {
         setPressedKey(button.id);
         setDynamicStyles(button.stylesType.active || '');

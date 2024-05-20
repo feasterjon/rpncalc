@@ -1,7 +1,7 @@
 import styles from './Table.module.css';
 
 type Config = {
-  data: Record[];
+  data: Row[];
   headings: Heading[];
   type?: string;
   width?: number;
@@ -12,7 +12,7 @@ type Heading = {
   name: string;
 };
 
-type Record = {
+type Row = {
   data: string[];
   id: number;
 };
@@ -39,10 +39,10 @@ export function Table({ data }: TableProps) {
         </tr>
       </thead>
       <tbody>
-        {data.data.map((record) =>
-          <tr key={`table-${record.id}`}>
-            {record.data.map((item, index) =>
-              <td key={`record-${index}`} style={{width: `${widthCells}`}}>{item}</td>
+        {data.data.map((row) =>
+          <tr key={`table-${row.id}`}>
+            {row.data.map((item, index) =>
+              <td key={`row-data-${index}`} style={{width: `${widthCells}`}}>{item}</td>
             )}
           </tr>
         )}
