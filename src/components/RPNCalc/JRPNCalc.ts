@@ -1,14 +1,14 @@
 /*
 Title: JRPNCalc Reverse Polish Notation (RPN)
 Author: Jonathan Feaster, JonFeaster.com
-Date: 2024-05-17
+Date: 2024-05-23
 */
 
 export function JRPNCalc(expression: string, msgError: string = 'error'): string {
 
-  const hasOperator = (data: string | undefined): boolean => {
+  const hasOperator = (data: string): boolean => {
     if (!data) return false
-    const operators: string[] = ['+', '-', '*', '/', '^', 's'];
+    const operators = ['+', '-', '*', '/', '^', 's'];
     for (const operator of operators) {
       if (data.includes(operator) && !data.includes('e')) return true // allow for exponential notation
     }
@@ -19,7 +19,7 @@ export function JRPNCalc(expression: string, msgError: string = 'error'): string
   const stack: number[] = [];
   expression = expression.replace(/^\s*|\s*$/g, ''); // remove leading and trailing whitespace
   if (!expression) return '' // nothing left after removing white space
-  const tokens: string[] = expression.split(/\s+/); // split expression into tokens
+  const tokens = expression.split(/\s+/); // split expression into tokens
   let result: number;
   for (const token of tokens) {
     if (token.length > 1 && hasOperator(token)) return msgError // token is malformed (e.g. operator without a preceding space)
@@ -28,8 +28,8 @@ export function JRPNCalc(expression: string, msgError: string = 'error'): string
       continue;
     }
     if (!hasOperator(token) || token.length > 1 || !stack.length) return msgError // token not valid operator or repeated, or no operands
-    const operandB: number | undefined = stack.pop(),
-      operandA: number | undefined = stack.pop();
+    const operandB = stack.pop(),
+      operandA = stack.pop();
     if ((token === 's' && operandA) || (token === 's' && Number.isNaN(operandB))) return msgError // square root without a single valid operand
     switch (token) {
       case '+':
