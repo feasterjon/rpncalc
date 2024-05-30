@@ -3,20 +3,18 @@ import styles from './Dropdown.module.css';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../../utils/vibrate';
 
-type Config = {
-  data: Item[];
-  icon: string;
-  label: string;
-  styles: {
-    data?: string;
-    main?: string;
-    menu?: string;
-  };
-  vibrateEnabled?: boolean;
-};
-
 type DropdownProps = {
-  config: Config;
+  config: {
+    data: Item[];
+    icon: string;
+    label: string;
+    styles: {
+      data?: string;
+      main?: string;
+      menu?: string;
+    };
+    vibrateEnabled?: boolean;
+  }
 };
 
 type Item = {

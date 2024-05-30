@@ -13,21 +13,6 @@ type Button = {
   value: string;
 };
 
-type Config = {
-  buttons?: {
-    data?: ConfigButton[];
-    styles: {
-      [key: string]: {
-        active: string;
-        etc: string;
-        main?: string;
-      };
-    };
-    vibrateEnabled?: boolean;
-  };
-  setCurrentInput: (input: Button) => void;
-};
-
 type ConfigButton = {
   aria?: string;
   icon?: { id: string; styles?: string };
@@ -44,7 +29,20 @@ type ConfigButton = {
 };
 
 type KeyboardProps = {
-  config: Config;
+  config: {
+    buttons?: {
+      data?: ConfigButton[];
+      styles: {
+        [key: string]: {
+          active: string;
+          etc: string;
+          main?: string;
+        };
+      };
+      vibrateEnabled?: boolean;
+    };
+    setCurrentInput: (input: Button) => void;
+  }
 };
 
 export function Keyboard({ config }: KeyboardProps) {
