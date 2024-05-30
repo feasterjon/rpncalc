@@ -38,7 +38,7 @@ export function Dropdown({ config }: DropdownProps) {
     const target = e.target as HTMLElement;
     const closestDropdown = target.closest(`.${styles.dropdown}`),
       closestPersist = target.closest(`.${styles.persist}`);
-    if (closestDropdown || closestPersist) return
+    if (closestDropdown || closestPersist) return;
     setVisible(false);
   };
 

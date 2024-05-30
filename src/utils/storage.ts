@@ -9,9 +9,9 @@ export const storage: Storage = {
   getItem: (keyName: string) => {
     const keyValue = window.localStorage.getItem(`${storage.prefix}${keyName}`);
     try {
-      return JSON.parse(keyValue!)
+      return JSON.parse(keyValue!);
     } catch (error) {
-      return keyValue
+      return keyValue;
     }
   },
   prefix: '',

@@ -181,7 +181,7 @@ export function RPNCalc(props) {
     });
     accumulator[date] = accumulator[date] || [];
     accumulator[date].push(item);
-    return accumulator
+    return accumulator;
   }, {});
 
   const calc = () => {
@@ -196,7 +196,7 @@ export function RPNCalc(props) {
   }
 
   const formatAnswer = (data, maxDecimals = 10, maxDigits) => {
-    if (!data) return ''
+    if (!data) return '';
     const parts = data.split('e');
     const partNumber = parts[0],
       partExponent = parts[1];
@@ -207,16 +207,16 @@ export function RPNCalc(props) {
     if (maxDecimals && partExponent) {
       if ((numberPartsDecimal.length + partExponent.length + 1) > maxDecimals) {
         numberPartsDecimal = `${numberPartsDecimal.slice(0, numberPartsDecimal.length - (partExponent.length + 1))}e${partExponent}`;
-        return `${numberPartsInteger}.${numberPartsDecimal}`
+        return `${numberPartsInteger}.${numberPartsDecimal}`;
       }
       numberPartsDecimal = `${numberPartsDecimal}e${partExponent}`;
     }
-    if (numberPartsDecimal) return `${numberPartsInteger}.${numberPartsDecimal}`
-    return numberPartsInteger
+    if (numberPartsDecimal) return `${numberPartsInteger}.${numberPartsDecimal}`;
+    return numberPartsInteger;
   }
 
   const formatExpression = (expression) => {
-    if (!expression) return
+    if (!expression) return;
     const buttonsFormat = inputConfig.buttons?.data?.filter(button =>
       button.type === 'fn' || button.type === 'operator'
     );
@@ -229,7 +229,7 @@ export function RPNCalc(props) {
         // out = out.replaceAll(button.label, buttonValue); // 2024-02-07: eventually do this (too new)
       });
     }
-    return out
+    return out;
   }
 
   const formatNumbers = (expression) => {
@@ -241,17 +241,17 @@ export function RPNCalc(props) {
       numFragments[0] = numFragments[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
       out = `${out} ${numFragments.join('.')}`;
     });
-    return out
+    return out;
   }
 
   const handleInsert = (data) => {
-    if (!data) return
-    if (!validateNumbers(data)) return
+    if (!data) return;
+    if (!validateNumbers(data)) return;
     setCurrentExpression(`${state.currentExpression}${data} `);
   };
 
   const handleKeyboardInput = (data) => {
-    if (!data) return
+    if (!data) return;
     switch (data.value) {
       case 'a':
         setCurrentExpression(`${state.currentExpression}${state.lastAnswer} `);
@@ -286,8 +286,8 @@ export function RPNCalc(props) {
     vibrate();
     const text = await navigator.clipboard.readText();
     if (inputRef.current) inputRef.current.focus();
-    if (!text) return
-    if (!validateNumbers(text)) return
+    if (!text) return;
+    if (!validateNumbers(text)) return;
     setCurrentExpression(`${state.currentExpression}${text} `);
   };
 
@@ -297,9 +297,9 @@ export function RPNCalc(props) {
   };
 
   const historyUpdate = (expression, answer, lengthMax = 100) => {
-    if (!expression || !answer) return
+    if (!expression || !answer) return;
     const lastHistory = state.appHistory[state.appHistory.length - 1];
-    if (lastHistory?.expression === expression && lastHistory?.answer === answer) return // prevent duplicate history
+    if (lastHistory?.expression === expression && lastHistory?.answer === answer) return; // prevent duplicate history
     if (state.appHistory.length >= lengthMax) state.appHistory.splice(0, state.appHistory.length - lengthMax + 1);
     state.appHistory.push({
       answer: answer,
@@ -327,21 +327,21 @@ export function RPNCalc(props) {
   };
 
   const validateNumbers = (expression, maxDecimals, maxDigits) => {
-    if (!expression || (!maxDecimals && !maxDigits)) return true
+    if (!expression || (!maxDecimals && !maxDigits)) return true;
     expression = expression.toString();
     let numbers = expression.split(' ');
     for (const number of numbers) {
       let numFragments = number.split('.');
       if (numFragments?.[0]?.length > maxDigits) {
         alert(`Maximum number of digits (${maxDigits}) exceeded.`);
-        return false
+        return false;
       }
       if (numFragments?.[1]?.length > maxDecimals) {
         alert(`Maximum number of digits after decimal point (${maxDecimals}) exceeded.`);
-        return false
+        return false;
       }
     }
-    return true
+    return true;
   }
 
   return (
