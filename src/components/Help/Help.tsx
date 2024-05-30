@@ -1,5 +1,5 @@
+import type { Help } from '@/types/help';
 import styles from './Help.module.css';
-import { type Help } from '@/types/help';
 import { Table as TableCom } from '../Elements/Table';
 
 type HelpProps = {

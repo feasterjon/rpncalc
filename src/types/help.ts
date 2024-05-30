@@ -1,4 +1,4 @@
-import { type Table } from './table';
+import type { Table } from './table';
 
 export type Help = {
   footer: string;

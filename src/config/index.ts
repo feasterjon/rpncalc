@@ -1,8 +1,9 @@
-import { type Help } from '@/types/help';
+import type { Help } from '@/types/help';
+import type { Keyboard } from '@/types/keyboard';
 
 type Config = {
   help: Help;
-  input: Input;
+  input: Keyboard;
   storage: { prefix: string };
   themes: {
     icon: string;
@@ -10,33 +11,6 @@ type Config = {
     label: string;
     name: string;
   }[];
-};
-
-type Input = {
-  buttons: {
-    data: {
-      aria?: string;
-      icon?: { id: string; styles?: string };
-      id: number;
-      label?: string;
-      name?: string;
-      order?: string;
-      type?: string;
-      value: string;
-      valueMath?: number;
-      styles?: {
-        [key: string]: string;
-      };
-    }[];
-    styles: {
-      [key: string]: {
-        active: string;
-        etc: string;
-        main?: string;
-      };
-    };
-    vibrateEnabled: boolean;
-  };
 };
 
 export const CONFIG: Config = {
@@ -426,9 +400,9 @@ export const CONFIG: Config = {
           active: 'bg-rpncalc-primary border-rpncalc-primary',
           etc: 'border-2 border-rpncalc-primary-light dark:border-rpncalc-primary active:bg-rpncalc-primary active:border-rpncalc-primary'
         }
-      },
-      vibrateEnabled: true
-    }
+      }
+    },
+    vibrateEnabled: true
   },
   storage: {
     prefix: 'RPNCalc-'

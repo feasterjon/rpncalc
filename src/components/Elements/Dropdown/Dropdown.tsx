@@ -14,7 +14,7 @@ type DropdownProps = {
       menu?: string;
     };
     vibrateEnabled?: boolean;
-  }
+  };
 };
 
 type Item = {

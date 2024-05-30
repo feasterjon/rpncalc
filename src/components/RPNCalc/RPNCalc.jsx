@@ -279,7 +279,8 @@ export function RPNCalc(props) {
 
   const inputConfig = {
     buttons: config.input?.buttons,
-    setCurrentInput: handleKeyboardInput
+    setCurrentInput: handleKeyboardInput,
+    vibrateEnabled: config.input?.vibrateEnabled || false
   };
 
   const handlePaste = async () => {

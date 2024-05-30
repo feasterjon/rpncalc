@@ -1,3 +1,4 @@
+import type { Button as ConfigButton, Keyboard } from '@/types/keyboard';
 import { Icon } from '../Icon';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../../utils/vibrate';
@@ -13,36 +14,10 @@ type Button = {
   value: string;
 };
 
-type ConfigButton = {
-  aria?: string;
-  icon?: { id: string; styles?: string };
-  id: number;
-  label?: string;
-  name?: string;
-  order?: string;
-  type?: string;
-  value: string;
-  valueMath?: number;
-  styles: {
-    [key: string]: string;
-  };
-};
-
 type KeyboardProps = {
-  config: {
-    buttons?: {
-      data?: ConfigButton[];
-      styles: {
-        [key: string]: {
-          active: string;
-          etc: string;
-          main?: string;
-        };
-      };
-      vibrateEnabled?: boolean;
-    };
+  config: Keyboard & {
     setCurrentInput: (input: Button) => void;
-  }
+  };
 };
 
 export function Keyboard({ config }: KeyboardProps) {
@@ -52,7 +27,7 @@ export function Keyboard({ config }: KeyboardProps) {
     [dynamicStyles, setDynamicStyles] = useState<string>(''),
     [pressedKey, setPressedKey] = useState<number | null>(null),
     setCurrentInput = config.setCurrentInput,
-    vibrateEnabled: boolean = config.buttons?.vibrateEnabled || false;
+    vibrateEnabled: boolean = config?.vibrateEnabled || false;
 
   const buttons: Button[] = configButtons.map((button) => ({
     aria: button.aria ? button.aria : button.label ? button.label : button.value,

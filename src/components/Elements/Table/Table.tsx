@@ -1,5 +1,5 @@
 import styles from './Table.module.css';
-import { type Table } from '@/types/table';
+import type { Table } from '@/types/table';
 
 type TableProps = {
   data: Table;
