@@ -1,3 +1,5 @@
+import { type Help } from '@/types/help';
+
 type Config = {
   help: Help;
   input: Input;
@@ -10,42 +12,22 @@ type Config = {
   }[];
 };
 
-type Help = {
-  footer: string;
-  sections: HelpSection[];
-  title: string;
-};
-
-type HelpArticle = {
-  data: string | HelpTable;
-};
-
-type HelpHeading = {
-  id: number;
-  name: string;
-};
-
-type HelpRecord = {
-  data: string[];
-  id: number;
-};
-
-type HelpSection = {
-  data: HelpArticle[];
-  heading?: string;
-  id: number;
-};
-
-type HelpTable = {
-  data: HelpRecord[];
-  headings: HelpHeading[];
-  type?: string;
-  width?: number;
-};
-
 type Input = {
   buttons: {
-    data: InputButton[];
+    data: {
+      aria?: string;
+      icon?: { id: string; styles?: string };
+      id: number;
+      label?: string;
+      name?: string;
+      order?: string;
+      type?: string;
+      value: string;
+      valueMath?: number;
+      styles?: {
+        [key: string]: string;
+      };
+    }[];
     styles: {
       [key: string]: {
         active: string;
@@ -54,21 +36,6 @@ type Input = {
       };
     };
     vibrateEnabled: boolean;
-  };
-};
-
-type InputButton = {
-  aria?: string;
-  icon?: { id: string; styles?: string };
-  id: number;
-  label?: string;
-  name?: string;
-  order?: string;
-  type?: string;
-  value: string;
-  valueMath?: number;
-  styles?: {
-    [key: string]: string;
   };
 };
 

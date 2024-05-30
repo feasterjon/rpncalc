@@ -1,41 +1,9 @@
 import styles from './Help.module.css';
+import { type Help } from '@/types/help';
 import { Table as TableCom } from '../Elements/Table';
 
-type Article = {
-  data: string | Table;
-};
-
-type Config = {
-  footer: string;
-  sections: Section[];
-  title: string;
-};
-
-type Heading = {
-  id: number;
-  name: string;
-};
-
 type HelpProps = {
-  config: Config;
-};
-
-type Row = {
-  data: string[];
-  id: number;
-};
-
-type Section = {
-  data: Article[];
-  heading?: string;
-  id: number;
-};
-
-type Table = {
-  data: Row[];
-  headings: Heading[];
-  type?: string;
-  width?: number;
+  config: Help;
 };
 
 export function Help({ config }: HelpProps) {
