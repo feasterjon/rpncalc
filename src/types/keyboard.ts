@@ -23,6 +23,6 @@ export type Keyboard = {
         main?: string;
       };
     };
-  }
+  };
   vibrateEnabled?: boolean;
 };
