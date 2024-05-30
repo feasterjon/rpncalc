@@ -1,22 +1,8 @@
 import styles from './Table.module.css';
-
-type Heading = {
-  id: number;
-  name: string;
-};
-
-type Row = {
-  data: string[];
-  id: number;
-};
+import { type Table } from '@/types/table';
 
 type TableProps = {
-  data: {
-    data: Row[];
-    headings: Heading[];
-    type?: string;
-    width?: number;
-  }
+  data: Table;
 };
 
 export function Table({ data }: TableProps) {
