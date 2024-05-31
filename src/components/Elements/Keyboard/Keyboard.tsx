@@ -1,18 +1,7 @@
-import type { Button as ConfigButton, Keyboard } from '@/types/keyboard';
+import type { Button, ConfigButton, Keyboard } from '@/types/keyboard';
 import { Icon } from '../Icon';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../../utils/vibrate';
-
-type Button = {
-  aria: string;
-  icon: { id?: string; styles?: string };
-  id: number;
-  label: string;
-  order: string;
-  stylesType: { etc: string; main?: string; active?: string };
-  type: string;
-  value: string;
-};
 
 type KeyboardProps = {
   config: Keyboard & {

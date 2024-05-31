@@ -1,6 +1,8 @@
 'use client';
 
 import { CONFIG } from '../../config';
+import type { Config, Theme } from '@/types/config';
+import type { Button as KeyboardButton, ConfigButton as KeyboardConfigButton } from '@/types/keyboard';
 import { Dialog } from '../Elements/Dialog';
 import { Dropdown } from '../Elements/Dropdown';
 import { Help } from '../Help';
@@ -14,6 +16,41 @@ import styles from './RPNCalc.module.css';
 import { Transition } from '../Elements/Transition';
 import { useEffect, useReducer, useRef } from 'react';
 import { vibrate } from '../../utils/vibrate';
+
+type Action = {
+  type: string;
+  payload?: any;
+};
+
+type AppHistoryFormatted = {
+  [date: string]: AppHistoryItem[];
+};
+
+type AppHistoryItem = {
+  answer: string;
+  date: number;
+  expression: string;
+  id: string;
+};
+
+type AppState = {
+  appHistory: AppHistoryItem[];
+  appHistoryExtendedVisible: boolean;
+  appHistoryVisible: boolean;
+  currentExpression: string;
+  dialogVisibleHelp: boolean;
+  isLoading: boolean;
+  keyboardVisible: boolean;
+  lastAnswer: string;
+  pasteEnabled: boolean | null;
+  prefersDark: boolean | null;
+  theme: string;
+  themeIndex: number;
+};
+
+type RPNCalcProps = {
+  config?: Config;
+};
 
 const actions = {
   setAppHistory: 'SET_APP_HISTORY',
@@ -45,7 +82,7 @@ const initialState = {
   themeIndex: 0
 };
 
-const reducer = (state, action) => {
+const reducer = (state: AppState, action: Action) => {
   switch (action.type) {
     case actions.setAppHistory:
       return { ...state, appHistory: action.payload };
@@ -76,40 +113,40 @@ const reducer = (state, action) => {
   }
 };
 
-export function RPNCalc(props) {
+export function RPNCalc({ config }: RPNCalcProps) {
 
-  const config = props.config ? Object.assign(CONFIG, props.config) : CONFIG,
-    inputRef = useRef(null),
+  const appConfig = config ? Object.assign(CONFIG, config) : CONFIG,
+    inputRef = useRef<HTMLSpanElement>(null),
     msgError = 'error',
     [state, dispatch] = useReducer(reducer, initialState);
 
-  const help = config.help,
-    themes = config.themes;
+  const help = appConfig.help,
+    themes: Theme[] = appConfig.themes;
 
-  if (config.storage?.prefix) storage.prefix = config.storage?.prefix;
+  if (appConfig.storage?.prefix) storage.prefix = appConfig.storage?.prefix;
 
-  const setAppHistory = (data) => {
+  const setAppHistory = (data: AppHistoryItem[]) => {
     dispatch({ type: actions.setAppHistory, payload: data });
   },
-  setCurrentExpression = (data) => {
+  setCurrentExpression = (data: string) => {
     dispatch({ type: actions.setCurrentExpression, payload: data });
   },
-  setIsLoading = (data) => {
+  setIsLoading = (data: boolean) => {
     dispatch({ type: actions.setIsLoading, payload: data });
   },
-  setLastAnswer = (data) => {
+  setLastAnswer = (data: string) => {
     dispatch({ type: actions.setLastAnswer, payload: data });
   },
-  setPasteEnabled = (data) => {
+  setPasteEnabled = (data: boolean | null) => {
     dispatch({ type: actions.setPasteEnabled, payload: data });
   },
-  setPrefersDark = (data) => {
+  setPrefersDark = (data: boolean | null) => {
     dispatch({ type: actions.setPrefersDark, payload: data });
   },
-  setTheme = (data) => {
+  setTheme = (data: string) => {
     dispatch({ type: actions.setTheme, payload: data });
   },
-  setThemeIndex = (data) => {
+  setThemeIndex = (data: number) => {
     dispatch({ type: actions.setThemeIndex, payload: data });
   },
   toggleAppHistoryExtendedVisible = () => {
@@ -128,20 +165,22 @@ export function RPNCalc(props) {
   useEffect(() => {
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches,
       savedTheme = storage.getItem('theme');
-    let savedHistory = storage.getItem('history') || [];
-    if (!Array.isArray(savedHistory)) {
-      savedHistory = [];
-      storage.removeItem('history');
-    }
+    let storageHistory = storage.getItem('history');
+    let savedHistory: AppHistoryItem[] = [];
+    (Array.isArray(storageHistory))
+      ? savedHistory = storageHistory
+      : storage.removeItem('history');
     setAppHistory(savedHistory);
     setLastAnswer(savedHistory[savedHistory.length - 1]?.answer || '');
     setPrefersDark(prefersDarkScheme);
-    let selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
+    let selectedIndex = 0;
+    if (savedTheme) selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
+    if (selectedIndex < 0) selectedIndex = 0;
     let selectedTheme = themes[selectedIndex];
-    if (!selectedTheme) selectedIndex = 0;
     if (selectedIndex === 0) {
       const osTheme = prefersDarkScheme ? 'dark' : 'light';
-      selectedTheme = themes.find(theme => theme.name === osTheme);
+      const lookupTheme = themes.find(theme => theme.name === osTheme);
+      selectedTheme = lookupTheme ? lookupTheme : themes[0];
     }
     setTheme(selectedTheme.name);
     setThemeIndex(selectedIndex);
@@ -159,11 +198,11 @@ export function RPNCalc(props) {
   });
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if ((event.ctrlKey && event.key === '/') || event.key === '?') {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey && e.key === '/') || e.key === '?') {
         toggleDialogVisibleHelp();
       }
-      if (!event.ctrlKey && event.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
+      if (!e.ctrlKey && e.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
         toggleAppHistoryVisible();
       }
     };
@@ -173,7 +212,7 @@ export function RPNCalc(props) {
     }
   }, [state.appHistoryVisible, state.dialogVisibleHelp]);
 
-  const appHistoryFormatted = state.appHistory.reduce((accumulator, item) => {
+  const appHistoryFormatted = state.appHistory.reduce((accumulator: AppHistoryFormatted, item: AppHistoryItem) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'long',
@@ -185,7 +224,7 @@ export function RPNCalc(props) {
   }, {});
 
   const calc = () => {
-    let out = RPN(formatExpression(state.currentExpression.toString()), msgError).toString();
+    let out = RPN(formatExpression(state.currentExpression), msgError).toString();
     if (out !== msgError) {
       out = formatAnswer(out);
       setLastAnswer(out);
@@ -195,7 +234,7 @@ export function RPNCalc(props) {
     setCurrentExpression(out);
   }
 
-  const formatAnswer = (data, maxDecimals = 10, maxDigits) => {
+  const formatAnswer = (data: string, maxDecimals:number = 10, maxDigits: number = 100) => {
     if (!data) return '';
     const parts = data.split('e');
     const partNumber = parts[0],
@@ -215,24 +254,25 @@ export function RPNCalc(props) {
     return numberPartsInteger;
   }
 
-  const formatExpression = (expression) => {
-    if (!expression) return;
-    const buttonsFormat = inputConfig.buttons?.data?.filter(button =>
+  const formatExpression = (expression: string) => {
+    if (!expression) return '';
+    const buttons = inputConfig.buttons.data || [];
+    const buttonsFormat = buttons.filter((button: KeyboardConfigButton) =>
       button.type === 'fn' || button.type === 'operator'
     );
     let out = expression.toString();
     out = out.replace(new RegExp(',', 'g'), ''); // remove commas
     if (buttonsFormat.length) {
-      buttonsFormat.forEach(button => {
-        let buttonValue = button.valueMath || button.value;
+      buttonsFormat.forEach((button: KeyboardConfigButton) => {
+        let buttonValue = button.valueMath ? button.valueMath.toString() : button.value;
         out = out.replace(new RegExp(`${button.label}`, 'g'), buttonValue);
-        // out = out.replaceAll(button.label, buttonValue); // 2024-02-07: eventually do this (too new)
+        // out = out.replaceAll(`${button.label}`, buttonValue); // 2024-05-31: eventually do this
       });
     }
     return out;
   }
 
-  const formatNumbers = (expression) => {
+  const formatNumbers = (expression: string) => {
     let out = '';
     expression = expression.toString();
     let numbers = expression.split(' ');
@@ -244,13 +284,13 @@ export function RPNCalc(props) {
     return out;
   }
 
-  const handleInsert = (data) => {
-    if (!data) return;
+  const handleInsert = (data: string) => {
+    if (!data) return '';
     if (!validateNumbers(data)) return;
     setCurrentExpression(`${state.currentExpression}${data} `);
   };
 
-  const handleKeyboardInput = (data) => {
+  const handleKeyboardInput = (data: KeyboardButton) => {
     if (!data) return;
     switch (data.value) {
       case 'a':
@@ -278,9 +318,9 @@ export function RPNCalc(props) {
   };
 
   const inputConfig = {
-    buttons: config.input?.buttons,
+    buttons: appConfig.input.buttons,
     setCurrentInput: handleKeyboardInput,
-    vibrateEnabled: config.input?.vibrateEnabled || false
+    vibrateEnabled: appConfig.input?.vibrateEnabled || false
   };
 
   const handlePaste = async () => {
@@ -297,7 +337,7 @@ export function RPNCalc(props) {
     storage.removeItem('history');
   };
 
-  const historyUpdate = (expression, answer, lengthMax = 100) => {
+  const historyUpdate = (expression: string, answer: string, lengthMax = 100) => {
     if (!expression || !answer) return;
     const lastHistory = state.appHistory[state.appHistory.length - 1];
     if (lastHistory?.expression === expression && lastHistory?.answer === answer) return; // prevent duplicate history
@@ -318,7 +358,8 @@ export function RPNCalc(props) {
     if (!selectedTheme) selectedIndex = 0;
     if (selectedIndex === 0) {
       const osTheme = state.prefersDark ? 'dark' : 'light';
-      selectedTheme = themes.find(theme => theme.name === osTheme);
+      const lookupTheme = themes.find(theme => theme.name === osTheme);
+      selectedTheme = lookupTheme ? lookupTheme : themes[0];
       selectedThemeName = themes[selectedIndex].name;
     }
     if (!selectedThemeName) selectedThemeName = selectedTheme.name;
@@ -327,7 +368,7 @@ export function RPNCalc(props) {
     setThemeIndex(selectedIndex);
   };
 
-  const validateNumbers = (expression, maxDecimals, maxDigits) => {
+  const validateNumbers = (expression: string, maxDecimals = 100, maxDigits = 100) => {
     if (!expression || (!maxDecimals && !maxDigits)) return true;
     expression = expression.toString();
     let numbers = expression.split(' ');
@@ -355,7 +396,7 @@ export function RPNCalc(props) {
           flex-col
           h-full
           w-full
-          ${config.hScreen !== false ? 'h-screen' : ''}
+          ${appConfig.hScreen !== false ? 'h-screen' : ''}
         `} data-mode={state.theme}>
           <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
             <Transition show={state.appHistoryVisible}>
@@ -437,7 +478,7 @@ export function RPNCalc(props) {
                         </div>
                       </div>
                       <ul className="list-none" aria-labelledby={`history-${index}`}>
-                        {entries.map((entry) => (
+                        {((entries as AppHistoryItem[]) || []).map((entry) => (
                           <li className="py-2" key={`history-${entry.id}`}>
                             <span className="
                               cursor-pointer

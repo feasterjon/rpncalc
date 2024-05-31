@@ -1,17 +1,4 @@
-import type { Help } from '@/types/help';
-import type { Keyboard } from '@/types/keyboard';
-
-type Config = {
-  help: Help;
-  input: Keyboard;
-  storage: { prefix: string };
-  themes: {
-    icon: string;
-    id: number;
-    label: string;
-    name: string;
-  }[];
-};
+import type { Config } from '@/types/config';
 
 export const CONFIG: Config = {
   help: {

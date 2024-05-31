@@ -1,12 +1,12 @@
 type Storage = {
-  getItem: (keyName: string) => string | object;
+  getItem: (keyName: string) => string | object | null;
   prefix: string;
   removeItem: (keyName: string) => void;
   setItem: (keyName: string, keyValue: string | object) => void;
 };
 
 export const storage: Storage = {
-  getItem: (keyName: string) => {
+  getItem: (keyName) => {
     const keyValue = window.localStorage.getItem(`${storage.prefix}${keyName}`);
     try {
       return JSON.parse(keyValue!);
@@ -15,10 +15,10 @@ export const storage: Storage = {
     }
   },
   prefix: '',
-  removeItem: (keyName: string) => {
+  removeItem: (keyName) => {
     window.localStorage.removeItem(`${storage.prefix}${keyName}`);
   },
-  setItem: (keyName: string, keyValue: string | object) => {
+  setItem: (keyName, keyValue) => {
     window.localStorage.setItem(`${storage.prefix}${keyName}`,
       typeof keyValue === 'object' ? JSON.stringify(keyValue) : keyValue
     );

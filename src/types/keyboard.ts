@@ -1,4 +1,15 @@
 export type Button = {
+  aria: string;
+  icon: { id?: string; styles?: string };
+  id: number;
+  label: string;
+  order: string;
+  stylesType: { etc: string; main?: string; active?: string };
+  type: string;
+  value: string;
+};
+
+export type ConfigButton = {
   aria?: string;
   icon?: { id: string; styles?: string };
   id: number;
@@ -15,7 +26,7 @@ export type Button = {
 
 export type Keyboard = {
   buttons: {
-    data?: Button[];
+    data?: ConfigButton[];
     styles: {
       [key: string]: {
         active: string;
