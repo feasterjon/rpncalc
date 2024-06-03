@@ -17,10 +17,19 @@ import { Transition } from '../Elements/Transition';
 import { useEffect, useReducer, useRef } from 'react';
 import { vibrate } from '../../utils/vibrate';
 
-type Action = {
-  type: string;
-  payload?: any;
-};
+type Action =
+  | { type: 'SET_APP_HISTORY'; payload: AppHistoryItem[]; }
+  | { type: 'SET_CURRENT_EXPRESSION'; payload: string; }
+  | { type: 'SET_IS_LOADING'; payload: boolean; }
+  | { type: 'SET_LAST_ANSWER'; payload: string; }
+  | { type: 'SET_PASTE_ENABLED'; payload: boolean | null; }
+  | { type: 'SET_PREFERS_DARK'; payload: boolean | null; }
+  | { type: 'SET_THEME'; payload: string; }
+  | { type: 'SET_THEME_INDEX'; payload: number; }
+  | { type: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE'; }
+  | { type: 'TOGGLE_APP_HISTORY_VISIBLE'; }
+  | { type: 'TOGGLE_DIALOG_VISIBLE_HELP'; }
+  | { type: 'TOGGLE_KEYBOARD_VISIBLE'; };
 
 type AppHistoryFormatted = {
   [date: string]: AppHistoryItem[];
@@ -30,7 +39,7 @@ type AppHistoryItem = {
   answer: string;
   date: number;
   expression: string;
-  id: string;
+  id: number;
 };
 
 type AppState = {
@@ -52,21 +61,6 @@ type RPNCalcProps = {
   config?: Config;
 };
 
-const actions = {
-  setAppHistory: 'SET_APP_HISTORY',
-  setCurrentExpression: 'SET_CURRENT_EXPRESSION',
-  setIsLoading: 'SET_IS_LOADING',
-  setLastAnswer: 'SET_LAST_ANSWER',
-  setPasteEnabled: 'SET_PASTE_ENABLED',
-  setPrefersDark: 'SET_PREFERS_DARK',
-  setTheme: 'SET_THEME',
-  setThemeIndex: 'SET_THEME_INDEX',
-  toggleAppHistoryExtendedVisible: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE',
-  toggleAppHistoryVisible: 'TOGGLE_APP_HISTORY_VISIBLE',
-  toggleDialogVisibleHelp: 'TOGGLE_DIALOG_VISIBLE_HELP',
-  toggleKeyboardVisible: 'TOGGLE_KEYBOARD_VISIBLE'
-};
-
 const initialState = {
   appHistory: [],
   appHistoryExtendedVisible: false,
@@ -84,29 +78,29 @@ const initialState = {
 
 const reducer = (state: AppState, action: Action) => {
   switch (action.type) {
-    case actions.setAppHistory:
+    case 'SET_APP_HISTORY':
       return { ...state, appHistory: action.payload };
-    case actions.setCurrentExpression:
+    case 'SET_CURRENT_EXPRESSION':
       return { ...state, currentExpression: action.payload };
-    case actions.setIsLoading:
+    case 'SET_IS_LOADING':
       return { ...state, isLoading: action.payload };
-    case actions.setLastAnswer:
+    case 'SET_LAST_ANSWER':
       return { ...state, lastAnswer: action.payload };
-    case actions.setPasteEnabled:
+    case 'SET_PASTE_ENABLED':
       return { ...state, pasteEnabled: action.payload };
-    case actions.setPrefersDark:
+    case 'SET_PREFERS_DARK':
       return { ...state, prefersDark: action.payload };
-    case actions.setTheme:
+    case 'SET_THEME':
       return { ...state, theme: action.payload };
-    case actions.setThemeIndex:
+    case 'SET_THEME_INDEX':
       return { ...state, themeIndex: action.payload };
-    case actions.toggleAppHistoryExtendedVisible:
+    case 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE':
       return { ...state, appHistoryExtendedVisible: !state.appHistoryExtendedVisible };
-    case actions.toggleAppHistoryVisible:
+    case 'TOGGLE_APP_HISTORY_VISIBLE':
       return { ...state, appHistoryVisible: !state.appHistoryVisible };
-    case actions.toggleDialogVisibleHelp:
+    case 'TOGGLE_DIALOG_VISIBLE_HELP':
       return { ...state, dialogVisibleHelp: !state.dialogVisibleHelp };
-    case actions.toggleKeyboardVisible:
+    case 'TOGGLE_KEYBOARD_VISIBLE':
       return { ...state, keyboardVisible: !state.keyboardVisible };
     default:
       return state;
@@ -126,40 +120,40 @@ export function RPNCalc({ config }: RPNCalcProps) {
   if (appConfig.storage?.prefix) storage.prefix = appConfig.storage?.prefix;
 
   const setAppHistory = (data: AppHistoryItem[]) => {
-    dispatch({ type: actions.setAppHistory, payload: data });
+    dispatch({ type: 'SET_APP_HISTORY', payload: data });
   },
   setCurrentExpression = (data: string) => {
-    dispatch({ type: actions.setCurrentExpression, payload: data });
+    dispatch({ type: 'SET_CURRENT_EXPRESSION', payload: data });
   },
   setIsLoading = (data: boolean) => {
-    dispatch({ type: actions.setIsLoading, payload: data });
+    dispatch({ type: 'SET_IS_LOADING', payload: data });
   },
   setLastAnswer = (data: string) => {
-    dispatch({ type: actions.setLastAnswer, payload: data });
+    dispatch({ type: 'SET_LAST_ANSWER', payload: data });
   },
   setPasteEnabled = (data: boolean | null) => {
-    dispatch({ type: actions.setPasteEnabled, payload: data });
+    dispatch({ type: 'SET_PASTE_ENABLED', payload: data });
   },
   setPrefersDark = (data: boolean | null) => {
-    dispatch({ type: actions.setPrefersDark, payload: data });
+    dispatch({ type: 'SET_PREFERS_DARK', payload: data });
   },
   setTheme = (data: string) => {
-    dispatch({ type: actions.setTheme, payload: data });
+    dispatch({ type: 'SET_THEME', payload: data });
   },
   setThemeIndex = (data: number) => {
-    dispatch({ type: actions.setThemeIndex, payload: data });
+    dispatch({ type: 'SET_THEME_INDEX', payload: data });
   },
   toggleAppHistoryExtendedVisible = () => {
-    dispatch({ type: actions.toggleAppHistoryExtendedVisible });
+    dispatch({ type: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE' });
   },
   toggleAppHistoryVisible = () => {
-    dispatch({ type: actions.toggleAppHistoryVisible });
+    dispatch({ type: 'TOGGLE_APP_HISTORY_VISIBLE' });
   },
   toggleDialogVisibleHelp = () => {
-    dispatch({ type: actions.toggleDialogVisibleHelp });
+    dispatch({ type: 'TOGGLE_DIALOG_VISIBLE_HELP' });
   },
   toggleKeyboardVisible = () => {
-    dispatch({ type: actions.toggleKeyboardVisible });
+    dispatch({ type: 'TOGGLE_KEYBOARD_VISIBLE' });
   };
 
   useEffect(() => {
