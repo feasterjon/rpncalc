@@ -5,7 +5,7 @@ const mockConfig = {
   data: [
     { icon: 'eye', id: 1, label: 'Option 1', onClick: jest.fn() },
     { icon: 'clock', id: 2, label: 'Option 2', onClick: jest.fn(), persist: true },
-    { icon: 'question-mark-circle', id: 3, label: 'Option 3', onClick: jest.fn() },
+    { icon: 'question-mark-circle', id: 3, label: 'Option 3', onClick: jest.fn() }
   ],
   icon: 'info',
   label: 'Dropdown',

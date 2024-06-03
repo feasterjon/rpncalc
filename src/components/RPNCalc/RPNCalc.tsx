@@ -392,9 +392,9 @@ export function RPNCalc({ config }: RPNCalcProps) {
           w-full
           ${appConfig.hScreen !== false ? 'h-screen' : ''}
         `} data-mode={state.theme}>
-          <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
+          <div className="bg-neutral-300 dark:bg-neutral-700" data-testid="history">
             <Transition show={state.appHistoryVisible}>
-              <div className="flex p-4" data-name="history-title">
+              <div className="flex p-4" data-testid="history-title">
                 <div className="
                   dark:text-rpncalc-primary-light
                   flex select-none
@@ -497,7 +497,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
             bg-neutral-200
             dark:bg-neutral-800
             ${state.keyboardVisible ? '' : 'grow'}
-          `} data-name="terminal">
+          `} data-testid="terminal">
             <div className="flex items-end justify-end p-4">
               <Dropdown config={
                 {
@@ -554,6 +554,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                 ref={inputRef}
                 role="textbox"
                 tabIndex={0}
+                data-testid="expression"
               >
                 {formatNumbers(state.currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
               </span>
@@ -581,7 +582,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
             lg:items-center
             rpncalc-tall:items-center
             ${state.keyboardVisible ? 'grow' : 'hidden'}
-          `} data-name="interface">
+          `} data-testid="interface">
             <Keyboard config={inputConfig} />
           </div>
           <Transition show={state.dialogVisibleHelp}>
