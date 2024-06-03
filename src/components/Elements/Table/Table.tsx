@@ -12,7 +12,6 @@ export function Table({ data }: TableProps) {
 
   const type = data.type ? `table${data.type.toUpperCase()}` : '';
 
-
   return (
     <table className={`${styles.table} ${type ? styles[type] : ''} ${styles.vars}`} style={{width: `${width}%`}}>
       <thead>
