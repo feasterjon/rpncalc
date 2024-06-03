@@ -9,11 +9,11 @@ const mockData = {
     { id: 3, name: 'Country' }
   ],
   data: [
-    { id: 1, data: ['Clare', '30', 'USA'] },
+    { id: 1, data: ['Clare', '21', 'USA'] },
     { id: 2, data: ['David', '25', 'Germany'] },
-    { id: 3, data: ['Nick', '35', 'UK'] },
-    { id: 4, data: ['Richard', '20', 'Switzerland'] },
-    { id: 5, data: ['Roger', '40', 'Japan'] }
+    { id: 3, data: ['Nick', '28', 'UK'] },
+    { id: 4, data: ['Richard', '22', 'Switzerland'] },
+    { id: 5, data: ['Roger', '30', 'Japan'] }
   ],
   type: 'b'
 };
@@ -22,11 +22,16 @@ describe('Table Component', () => {
   test('renders table with correct data', () => {
     render(<Table data={mockData} />);
 
+    const tableElement = screen.getByRole('table');
+
     // Assert table is rendered
-    expect(screen.getByRole('table')).toBeInTheDocument();
+    expect(tableElement).toBeInTheDocument();
 
     // Assert table class is assigned
-    expect(screen.getByRole('table')).toHaveClass('tableB');
+    expect(tableElement).toHaveClass('tableB');
+
+    // Assert width style is assigned
+    expect(tableElement).toHaveStyle('width: 100%');
 
     // Assert headings are rendered
     const headingCells = screen.getAllByRole('columnheader');
@@ -43,7 +48,7 @@ describe('Table Component', () => {
     const dataCells = screen.getAllByRole('cell');
     expect(dataCells).toHaveLength(mockData.headings.length * mockData.data.length); // Total data cells in the table
     expect(dataCells[0]).toHaveTextContent('Clare');
-    expect(dataCells[1]).toHaveTextContent('30');
+    expect(dataCells[1]).toHaveTextContent('21');
     expect(dataCells[2]).toHaveTextContent('USA');
   });
 });
