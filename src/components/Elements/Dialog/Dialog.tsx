@@ -31,7 +31,7 @@ export function Dialog({
   };
 
   return (
-    <div className={styles.mask} onClick={handleClickOutside}>
+    <div className={styles.mask} onClick={handleClickOutside} data-testid="dialog-mask">
       <div className={`
           ${styles.dialog}
           ${darkMode ? styles.containerDark : styles.containerLight}
