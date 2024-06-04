@@ -778,6 +778,15 @@ describe('RPNCalc Component', () => {
     expect(screen.getByTestId('history').firstChild).toHaveClass('fadeHidden');
   });
 
+  test('It toggles History visibility when h key is pressed', () => {
+    render(<RPNCalc />);
+    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeHidden');
+    fireEvent.keyDown(window, { key: 'h', code: 'KeyH' });
+    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeVisible');
+    fireEvent.keyDown(window, { key: 'h', code: 'KeyH' });
+    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeHidden');
+  });
+
   test('It toggles Extended History visibility when clicking Toggle Extended History button is clicked', () => {
     setMockLocalStorageData();
     render(<RPNCalc />);
