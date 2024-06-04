@@ -8,6 +8,8 @@ type DialogProps = {
   close: () => void;
   darkMode?: boolean;
   footer?: React.ReactNode;
+  maxHeight?: number;
+  maxWidth?: number;
   title?: string;
   vibrateEnabled?: boolean;
 };
@@ -18,6 +20,8 @@ export function Dialog({
   close,
   darkMode,
   footer,
+  maxHeight = 90,
+  maxWidth = 90,
   title,
   vibrateEnabled = false
 }: DialogProps) {
@@ -35,7 +39,9 @@ export function Dialog({
       <div className={`
           ${styles.dialog}
           ${darkMode ? styles.containerDark : styles.containerLight}
-        `}>
+        `}
+        style={{maxHeight: `${maxHeight}%`, maxWidth: `${maxWidth}%`}}
+      >
         {title && (
           <div className={styles.header}>
             <div className={styles.title}>
