@@ -72,4 +72,30 @@ describe('RPNCalc Component', () => {
     fireEvent.click(screen.getByRole('option', { name: /Keypad/i }));
     expect(screen.getByTestId('interface')).not.toHaveClass('hidden');
   });
+
+  test('It toggles Help visibility when clicking Help dropdown item', () => {
+    render(<RPNCalc />);
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    fireEvent.click(screen.getByLabelText('Settings'));
+    fireEvent.click(screen.getByRole('option', { name: /Help/i }));
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeVisible');
+  });
+
+  test('It toggles Help visibility when ? key is pressed', () => {
+    render(<RPNCalc />);
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    fireEvent.keyDown(window, { key: '?', code: 'Slash' });
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeVisible');
+    fireEvent.keyDown(window, { key: '?', code: 'Slash' });
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+  });
+
+  test('It toggles Help visibility when Ctrl + / key is pressed', () => {
+    render(<RPNCalc />);
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    fireEvent.keyDown(window, { key: '/', ctrlKey: true });
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeVisible');
+    fireEvent.keyDown(window, { key: '/', ctrlKey: true });
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+  });
 });
