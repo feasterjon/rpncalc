@@ -1,9 +1,12 @@
+import type { Help as HelpType } from '@/types/help';
 import styles from './Help.module.css';
 import { Table as TableCom } from '../Elements/Table';
 
-export function Help(props) {
+type HelpProps = {
+  config: HelpType;
+};
 
-  const config = props.config || {};
+export function Help({ config }: HelpProps) {
 
   return (
     <>
@@ -12,9 +15,9 @@ export function Help(props) {
           {section.heading && (
             <div className={styles.heading}>{section.heading}</div>
           )}
-          {section.data.map((article) =>
-            <div key={`article-${article.id}`}>
-              {article.type === 'text' ?
+          {section.data.map((article, index) =>
+            <div key={`article-${index}`}>
+              {typeof article.data === 'string' ?
                 <p>{article.data}</p>
               :
                 <TableCom data={article.data} />

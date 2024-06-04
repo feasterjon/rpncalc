@@ -8,6 +8,5 @@ beforeAll(() => {
 
 test('renders the RPNCalc Expression', () => {
   render(<App />);
-  const linkElement = screen.getByRole('textbox', {name: /Expression/i});
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByLabelText('Expression')).toBeInTheDocument();
 });

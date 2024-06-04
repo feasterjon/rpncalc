@@ -1,6 +1,8 @@
 'use client';
 
 import { CONFIG } from '../../config';
+import type { Config, Theme } from '@/types/config';
+import type { Button as KeyboardButton, ConfigButton as KeyboardConfigButton } from '@/types/keyboard';
 import { Dialog } from '../Elements/Dialog';
 import { Dropdown } from '../Elements/Dropdown';
 import { Help } from '../Help';
@@ -15,19 +17,48 @@ import { Transition } from '../Elements/Transition';
 import { useEffect, useReducer, useRef } from 'react';
 import { vibrate } from '../../utils/vibrate';
 
-const actions = {
-  setAppHistory: 'SET_APP_HISTORY',
-  setCurrentExpression: 'SET_CURRENT_EXPRESSION',
-  setIsLoading: 'SET_IS_LOADING',
-  setLastAnswer: 'SET_LAST_ANSWER',
-  setPasteEnabled: 'SET_PASTE_ENABLED',
-  setPrefersDark: 'SET_PREFERS_DARK',
-  setTheme: 'SET_THEME',
-  setThemeIndex: 'SET_THEME_INDEX',
-  toggleAppHistoryExtendedVisible: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE',
-  toggleAppHistoryVisible: 'TOGGLE_APP_HISTORY_VISIBLE',
-  toggleDialogVisibleHelp: 'TOGGLE_DIALOG_VISIBLE_HELP',
-  toggleKeyboardVisible: 'TOGGLE_KEYBOARD_VISIBLE'
+type Action =
+  | { type: 'SET_APP_HISTORY'; payload: AppHistoryItem[]; }
+  | { type: 'SET_CURRENT_EXPRESSION'; payload: string; }
+  | { type: 'SET_IS_LOADING'; payload: boolean; }
+  | { type: 'SET_LAST_ANSWER'; payload: string; }
+  | { type: 'SET_PASTE_ENABLED'; payload: boolean | null; }
+  | { type: 'SET_PREFERS_DARK'; payload: boolean | null; }
+  | { type: 'SET_THEME'; payload: string; }
+  | { type: 'SET_THEME_INDEX'; payload: number; }
+  | { type: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE'; }
+  | { type: 'TOGGLE_APP_HISTORY_VISIBLE'; }
+  | { type: 'TOGGLE_DIALOG_VISIBLE_HELP'; }
+  | { type: 'TOGGLE_KEYBOARD_VISIBLE'; };
+
+type AppHistoryFormatted = {
+  [date: string]: AppHistoryItem[];
+};
+
+type AppHistoryItem = {
+  answer: string;
+  date: number;
+  expression: string;
+  id: number;
+};
+
+type AppState = {
+  appHistory: AppHistoryItem[];
+  appHistoryExtendedVisible: boolean;
+  appHistoryVisible: boolean;
+  currentExpression: string;
+  dialogVisibleHelp: boolean;
+  isLoading: boolean;
+  keyboardVisible: boolean;
+  lastAnswer: string;
+  pasteEnabled: boolean | null;
+  prefersDark: boolean | null;
+  theme: string;
+  themeIndex: number;
+};
+
+type RPNCalcProps = {
+  config?: Config;
 };
 
 const initialState = {
@@ -45,99 +76,105 @@ const initialState = {
   themeIndex: 0
 };
 
-const reducer = (state, action) => {
+const reducer = (state: AppState, action: Action) => {
   switch (action.type) {
-    case actions.setAppHistory:
+    case 'SET_APP_HISTORY':
       return { ...state, appHistory: action.payload };
-    case actions.setCurrentExpression:
+    case 'SET_CURRENT_EXPRESSION':
       return { ...state, currentExpression: action.payload };
-    case actions.setIsLoading:
+    case 'SET_IS_LOADING':
       return { ...state, isLoading: action.payload };
-    case actions.setLastAnswer:
+    case 'SET_LAST_ANSWER':
       return { ...state, lastAnswer: action.payload };
-    case actions.setPasteEnabled:
+    case 'SET_PASTE_ENABLED':
       return { ...state, pasteEnabled: action.payload };
-    case actions.setPrefersDark:
+    case 'SET_PREFERS_DARK':
       return { ...state, prefersDark: action.payload };
-    case actions.setTheme:
+    case 'SET_THEME':
       return { ...state, theme: action.payload };
-    case actions.setThemeIndex:
+    case 'SET_THEME_INDEX':
       return { ...state, themeIndex: action.payload };
-    case actions.toggleAppHistoryExtendedVisible:
+    case 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE':
       return { ...state, appHistoryExtendedVisible: !state.appHistoryExtendedVisible };
-    case actions.toggleAppHistoryVisible:
+    case 'TOGGLE_APP_HISTORY_VISIBLE':
       return { ...state, appHistoryVisible: !state.appHistoryVisible };
-    case actions.toggleDialogVisibleHelp:
+    case 'TOGGLE_DIALOG_VISIBLE_HELP':
       return { ...state, dialogVisibleHelp: !state.dialogVisibleHelp };
-    case actions.toggleKeyboardVisible:
+    case 'TOGGLE_KEYBOARD_VISIBLE':
       return { ...state, keyboardVisible: !state.keyboardVisible };
     default:
       return state;
   }
 };
 
-export function RPNCalc(props) {
+export function RPNCalc({ config }: RPNCalcProps) {
 
-  const config = props.config ? Object.assign(CONFIG, props.config) : CONFIG,
-    inputRef = useRef(null),
+  const appConfig = config ? Object.assign(CONFIG, config) : CONFIG,
+    inputRef = useRef<HTMLSpanElement>(null),
     msgError = 'error',
     [state, dispatch] = useReducer(reducer, initialState);
 
-  const help = config.help,
-    themes = config.themes;
+  const help = appConfig.help,
+    themes: Theme[] = appConfig.themes;
 
-  if (config.storage?.prefix) storage.prefix = config.storage?.prefix;
+  if (appConfig.storage?.prefix) storage.prefix = appConfig.storage?.prefix;
 
-  const setAppHistory = (data) => {
-    dispatch({ type: actions.setAppHistory, payload: data });
+  const setAppHistory = (data: AppHistoryItem[]) => {
+    dispatch({ type: 'SET_APP_HISTORY', payload: data });
   },
-  setCurrentExpression = (data) => {
-    dispatch({ type: actions.setCurrentExpression, payload: data });
+  setCurrentExpression = (data: string) => {
+    dispatch({ type: 'SET_CURRENT_EXPRESSION', payload: data });
   },
-  setIsLoading = (data) => {
-    dispatch({ type: actions.setIsLoading, payload: data });
+  setIsLoading = (data: boolean) => {
+    dispatch({ type: 'SET_IS_LOADING', payload: data });
   },
-  setLastAnswer = (data) => {
-    dispatch({ type: actions.setLastAnswer, payload: data });
+  setLastAnswer = (data: string) => {
+    dispatch({ type: 'SET_LAST_ANSWER', payload: data });
   },
-  setPasteEnabled = (data) => {
-    dispatch({ type: actions.setPasteEnabled, payload: data });
+  setPasteEnabled = (data: boolean | null) => {
+    dispatch({ type: 'SET_PASTE_ENABLED', payload: data });
   },
-  setPrefersDark = (data) => {
-    dispatch({ type: actions.setPrefersDark, payload: data });
+  setPrefersDark = (data: boolean | null) => {
+    dispatch({ type: 'SET_PREFERS_DARK', payload: data });
   },
-  setTheme = (data) => {
-    dispatch({ type: actions.setTheme, payload: data });
+  setTheme = (data: string) => {
+    dispatch({ type: 'SET_THEME', payload: data });
   },
-  setThemeIndex = (data) => {
-    dispatch({ type: actions.setThemeIndex, payload: data });
+  setThemeIndex = (data: number) => {
+    dispatch({ type: 'SET_THEME_INDEX', payload: data });
   },
   toggleAppHistoryExtendedVisible = () => {
-    dispatch({ type: actions.toggleAppHistoryExtendedVisible });
+    dispatch({ type: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE' });
   },
   toggleAppHistoryVisible = () => {
-    dispatch({ type: actions.toggleAppHistoryVisible });
+    dispatch({ type: 'TOGGLE_APP_HISTORY_VISIBLE' });
   },
   toggleDialogVisibleHelp = () => {
-    dispatch({ type: actions.toggleDialogVisibleHelp });
+    dispatch({ type: 'TOGGLE_DIALOG_VISIBLE_HELP' });
   },
   toggleKeyboardVisible = () => {
-    dispatch({ type: actions.toggleKeyboardVisible });
+    dispatch({ type: 'TOGGLE_KEYBOARD_VISIBLE' });
   };
 
   useEffect(() => {
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches,
-      savedHistory = storage.getItem('history') || [],
       savedTheme = storage.getItem('theme');
+    let storageHistory = storage.getItem('history');
+    let savedHistory: AppHistoryItem[] = [];
+    (Array.isArray(storageHistory))
+      ? savedHistory = storageHistory
+      : storage.removeItem('history');
     setAppHistory(savedHistory);
     setLastAnswer(savedHistory[savedHistory.length - 1]?.answer || '');
     setPrefersDark(prefersDarkScheme);
-    let selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
+    let selectedIndex = 0;
+    if (savedTheme) selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
+    if (selectedIndex < 0) selectedIndex = 0;
     let selectedTheme = themes[selectedIndex];
-    if (!selectedTheme) selectedIndex = 0;
     if (selectedIndex === 0) {
       const osTheme = prefersDarkScheme ? 'dark' : 'light';
-      selectedTheme = themes.find(theme => theme.name === osTheme);
+      const lookupTheme = themes.find(theme => theme.name === osTheme);
+      selectedTheme = lookupTheme ? lookupTheme : themes[0];
     }
     setTheme(selectedTheme.name);
     setThemeIndex(selectedIndex);
@@ -155,11 +192,11 @@ export function RPNCalc(props) {
   });
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if ((event.ctrlKey && event.key === '/') || event.key === '?') {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey && e.key === '/') || e.key === '?') {
         toggleDialogVisibleHelp();
       }
-      if (!event.ctrlKey && event.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
+      if (!e.ctrlKey && e.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
         toggleAppHistoryVisible();
       }
     };
@@ -169,7 +206,7 @@ export function RPNCalc(props) {
     }
   }, [state.appHistoryVisible, state.dialogVisibleHelp]);
 
-  const appHistoryFormatted = state.appHistory.reduce((accumulator, item) => {
+  const appHistoryFormatted = state.appHistory.reduce((accumulator: AppHistoryFormatted, item: AppHistoryItem) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'long',
@@ -177,11 +214,11 @@ export function RPNCalc(props) {
     });
     accumulator[date] = accumulator[date] || [];
     accumulator[date].push(item);
-    return accumulator
+    return accumulator;
   }, {});
 
   const calc = () => {
-    let out = RPN(formatExpression(state.currentExpression.toString()), msgError).toString();
+    let out = RPN(formatExpression(state.currentExpression), msgError).toString();
     if (out !== msgError) {
       out = formatAnswer(out);
       setLastAnswer(out);
@@ -191,8 +228,8 @@ export function RPNCalc(props) {
     setCurrentExpression(out);
   }
 
-  const formatAnswer = (data, maxDecimals = 10, maxDigits) => {
-    if (!data) return ''
+  const formatAnswer = (data: string, maxDecimals:number = 10, maxDigits: number = 100) => {
+    if (!data) return '';
     const parts = data.split('e');
     const partNumber = parts[0],
       partExponent = parts[1];
@@ -203,32 +240,33 @@ export function RPNCalc(props) {
     if (maxDecimals && partExponent) {
       if ((numberPartsDecimal.length + partExponent.length + 1) > maxDecimals) {
         numberPartsDecimal = `${numberPartsDecimal.slice(0, numberPartsDecimal.length - (partExponent.length + 1))}e${partExponent}`;
-        return `${numberPartsInteger}.${numberPartsDecimal}`
+        return `${numberPartsInteger}.${numberPartsDecimal}`;
       }
       numberPartsDecimal = `${numberPartsDecimal}e${partExponent}`;
     }
-    if (numberPartsDecimal) return `${numberPartsInteger}.${numberPartsDecimal}`
-    return numberPartsInteger
+    if (numberPartsDecimal) return `${numberPartsInteger}.${numberPartsDecimal}`;
+    return numberPartsInteger;
   }
 
-  const formatExpression = (expression) => {
-    if (!expression) return
-    const buttonsFormat = inputConfig.buttons?.data?.filter(button =>
+  const formatExpression = (expression: string) => {
+    if (!expression) return '';
+    const buttons = inputConfig.buttons.data || [];
+    const buttonsFormat = buttons.filter((button: KeyboardConfigButton) =>
       button.type === 'fn' || button.type === 'operator'
     );
     let out = expression.toString();
     out = out.replace(new RegExp(',', 'g'), ''); // remove commas
     if (buttonsFormat.length) {
-      buttonsFormat.forEach(button => {
-        let buttonValue = button.valueMath || button.value;
+      buttonsFormat.forEach((button: KeyboardConfigButton) => {
+        let buttonValue = button.valueMath ? button.valueMath.toString() : button.value;
         out = out.replace(new RegExp(`${button.label}`, 'g'), buttonValue);
-        // out = out.replaceAll(button.label, buttonValue); // 2024-02-07: eventually do this (too new)
+        // out = out.replaceAll(`${button.label}`, buttonValue); // 2024-05-31: eventually do this
       });
     }
-    return out
+    return out;
   }
 
-  const formatNumbers = (expression) => {
+  const formatNumbers = (expression: string) => {
     let out = '';
     expression = expression.toString();
     let numbers = expression.split(' ');
@@ -237,17 +275,17 @@ export function RPNCalc(props) {
       numFragments[0] = numFragments[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
       out = `${out} ${numFragments.join('.')}`;
     });
-    return out
+    return out;
   }
 
-  const handleInsert = (data) => {
-    if (!data) return
-    if (!validateNumbers(data)) return
+  const handleInsert = (data: string) => {
+    if (!data) return '';
+    if (!validateNumbers(data)) return;
     setCurrentExpression(`${state.currentExpression}${data} `);
   };
 
-  const handleKeyboardInput = (data) => {
-    if (!data) return
+  const handleKeyboardInput = (data: KeyboardButton) => {
+    if (!data) return;
     switch (data.value) {
       case 'a':
         setCurrentExpression(`${state.currentExpression}${state.lastAnswer} `);
@@ -274,16 +312,17 @@ export function RPNCalc(props) {
   };
 
   const inputConfig = {
-    buttons: config.input?.buttons,
-    setCurrentInput: handleKeyboardInput
+    buttons: appConfig.input.buttons,
+    setCurrentInput: handleKeyboardInput,
+    vibrateEnabled: appConfig.input?.vibrateEnabled || false
   };
 
   const handlePaste = async () => {
     vibrate();
     const text = await navigator.clipboard.readText();
     if (inputRef.current) inputRef.current.focus();
-    if (!text) return
-    if (!validateNumbers(text)) return
+    if (!text) return;
+    if (!validateNumbers(text)) return;
     setCurrentExpression(`${state.currentExpression}${text} `);
   };
 
@@ -292,10 +331,10 @@ export function RPNCalc(props) {
     storage.removeItem('history');
   };
 
-  const historyUpdate = (expression, answer, lengthMax = 100) => {
-    if (!expression || !answer) return
+  const historyUpdate = (expression: string, answer: string, lengthMax = 100) => {
+    if (!expression || !answer) return;
     const lastHistory = state.appHistory[state.appHistory.length - 1];
-    if (lastHistory?.expression === expression && lastHistory?.answer === answer) return // prevent duplicate history
+    if (lastHistory?.expression === expression && lastHistory?.answer === answer) return; // prevent duplicate history
     if (state.appHistory.length >= lengthMax) state.appHistory.splice(0, state.appHistory.length - lengthMax + 1);
     state.appHistory.push({
       answer: answer,
@@ -313,7 +352,8 @@ export function RPNCalc(props) {
     if (!selectedTheme) selectedIndex = 0;
     if (selectedIndex === 0) {
       const osTheme = state.prefersDark ? 'dark' : 'light';
-      selectedTheme = themes.find(theme => theme.name === osTheme);
+      const lookupTheme = themes.find(theme => theme.name === osTheme);
+      selectedTheme = lookupTheme ? lookupTheme : themes[0];
       selectedThemeName = themes[selectedIndex].name;
     }
     if (!selectedThemeName) selectedThemeName = selectedTheme.name;
@@ -322,22 +362,22 @@ export function RPNCalc(props) {
     setThemeIndex(selectedIndex);
   };
 
-  const validateNumbers = (expression, maxDecimals, maxDigits) => {
-    if (!expression || (!maxDecimals && !maxDigits)) return true
+  const validateNumbers = (expression: string, maxDecimals = 100, maxDigits = 100) => {
+    if (!expression || (!maxDecimals && !maxDigits)) return true;
     expression = expression.toString();
     let numbers = expression.split(' ');
     for (const number of numbers) {
       let numFragments = number.split('.');
       if (numFragments?.[0]?.length > maxDigits) {
         alert(`Maximum number of digits (${maxDigits}) exceeded.`);
-        return false
+        return false;
       }
       if (numFragments?.[1]?.length > maxDecimals) {
         alert(`Maximum number of digits after decimal point (${maxDecimals}) exceeded.`);
-        return false
+        return false;
       }
     }
-    return true
+    return true;
   }
 
   return (
@@ -350,11 +390,11 @@ export function RPNCalc(props) {
           flex-col
           h-full
           w-full
-          ${config.hScreen !== false ? 'h-screen' : ''}
-        `} data-mode={state.theme}>
-          <div className="bg-neutral-300 dark:bg-neutral-700" data-name="history">
+          ${appConfig.hScreen !== false ? 'h-screen' : ''}
+        `} data-mode={state.theme} data-testid="main">
+          <div className="bg-neutral-300 dark:bg-neutral-700" data-testid="history">
             <Transition show={state.appHistoryVisible}>
-              <div className="flex p-4" data-name="history-title">
+              <div className="flex p-4" data-testid="history-title">
                 <div className="
                   dark:text-rpncalc-primary-light
                   flex select-none
@@ -406,7 +446,7 @@ export function RPNCalc(props) {
               ">
                 {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
                   <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? state.appHistoryExtendedVisible : true} key={index}>
-                    <div className="border-neutral-900 border-t dark:border-neutral-100 p-4">
+                    <div className="border-neutral-900 border-t dark:border-neutral-100 p-4" data-testid={(index < Object.entries(appHistoryFormatted).length - 1) ? `history-extended-${index}` : 'history-extended-last'}>
                       <div className="flex mb-4">
                         <div className="flex grow">
                           <h2 className="cursor-pointer select-all text-left" id={`history-${index}`}>{date}</h2>
@@ -432,7 +472,7 @@ export function RPNCalc(props) {
                         </div>
                       </div>
                       <ul className="list-none" aria-labelledby={`history-${index}`}>
-                        {entries.map((entry) => (
+                        {((entries as AppHistoryItem[]) || []).map((entry) => (
                           <li className="py-2" key={`history-${entry.id}`}>
                             <span className="
                               cursor-pointer
@@ -457,7 +497,7 @@ export function RPNCalc(props) {
             bg-neutral-200
             dark:bg-neutral-800
             ${state.keyboardVisible ? '' : 'grow'}
-          `} data-name="terminal">
+          `} data-testid="terminal">
             <div className="flex items-end justify-end p-4">
               <Dropdown config={
                 {
@@ -514,6 +554,7 @@ export function RPNCalc(props) {
                 ref={inputRef}
                 role="textbox"
                 tabIndex={0}
+                data-testid="expression"
               >
                 {formatNumbers(state.currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
               </span>
@@ -541,19 +582,18 @@ export function RPNCalc(props) {
             lg:items-center
             rpncalc-tall:items-center
             ${state.keyboardVisible ? 'grow' : 'hidden'}
-          `} data-name="interface">
+          `} data-testid="interface">
             <Keyboard config={inputConfig} />
           </div>
           <Transition show={state.dialogVisibleHelp}>
             <Dialog
-              body={
-                <Help config={help} />
-              }
               close={() => toggleDialogVisibleHelp()}
               darkMode={(state.theme === 'dark') ? true : false}
               footer={help.footer}
               title={help.title}
-            />
+            >
+              <Help config={help} />
+            </Dialog>
           </Transition>
         </div>
       )}

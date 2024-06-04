@@ -1,10 +1,17 @@
-export const storage = {
+type Storage = {
+  getItem: (keyName: string) => string | object | null;
+  prefix: string;
+  removeItem: (keyName: string) => void;
+  setItem: (keyName: string, keyValue: string | object) => void;
+};
+
+export const storage: Storage = {
   getItem: (keyName) => {
     const keyValue = window.localStorage.getItem(`${storage.prefix}${keyName}`);
     try {
-      return JSON.parse(keyValue)
+      return JSON.parse(keyValue!);
     } catch (error) {
-      return keyValue
+      return keyValue;
     }
   },
   prefix: '',
