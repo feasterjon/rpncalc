@@ -2,7 +2,14 @@
 
 ## Unreleased
 
+- In Progess
+
+## 1.1.0 - 2024-06-04
+
+### Changed
+
 - Enabled TypeScript
+- Increased Help size
 
 ## 1.0.3 - 2024-03-29
 
