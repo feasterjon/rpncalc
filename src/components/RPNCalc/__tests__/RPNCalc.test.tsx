@@ -1,5 +1,5 @@
 import { mockMatchMedia } from '../../../__mocks__/matchMedia';
-import { render, screen, fireEvent, getByAttribute } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { RPNCalc } from '../RPNCalc';
 
 beforeAll(() => {
