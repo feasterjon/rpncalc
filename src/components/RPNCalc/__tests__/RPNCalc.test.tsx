@@ -664,7 +664,7 @@ describe('RPNCalc Component', () => {
     expect(expressionElement.textContent).toBe(' 71.4352853987 |');
   });
 
-  test('It calculates the Expression 3 5 ^ 21 * s when key is pressed', () => {
+  test('It calculates the Expression 3 5 ^ 21 * s 100000000 * when key is pressed formats the numbers', () => {
     render(<RPNCalc />);
     const expressionElement = screen.getByTestId('expression');
     fireEvent.keyDown(window, { key: '3', code: 'Digit3' });
@@ -679,9 +679,21 @@ describe('RPNCalc Component', () => {
     fireEvent.keyDown(window, { key: '*', code: 'Digit8' });
     fireEvent.keyDown(window, { key: ' ', code: 'Space' });
     fireEvent.keyDown(window, { key: 's', code: 'KeyS' });
-    expect(expressionElement.textContent).toBe(' 3 5 ^ 21 \u00D7 \u221a|');
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '1', code: 'Digit1' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: '0', code: 'Digit0' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '*', code: 'Digit8' });
+    expect(expressionElement.textContent).toBe(' 3 5 ^ 21 \u00D7 \u221a 100,000,000 \u00D7|');
     fireEvent.keyDown(window, { key: 'Enter', code: 'Enter' });
-    expect(expressionElement.textContent).toBe(' 71.4352853987 |');
+    expect(expressionElement.textContent).toBe(' 7,143,528,539.874394 |');
   });
 
   test('It stores the last calculation', () => {
