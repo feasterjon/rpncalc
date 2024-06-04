@@ -391,7 +391,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
           h-full
           w-full
           ${appConfig.hScreen !== false ? 'h-screen' : ''}
-        `} data-mode={state.theme}>
+        `} data-mode={state.theme} data-testid="main">
           <div className="bg-neutral-300 dark:bg-neutral-700" data-testid="history">
             <Transition show={state.appHistoryVisible}>
               <div className="flex p-4" data-testid="history-title">

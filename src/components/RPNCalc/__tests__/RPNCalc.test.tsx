@@ -1,5 +1,5 @@
 import { mockMatchMedia } from '../../../__mocks__/matchMedia';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, getByAttribute } from '@testing-library/react';
 import { RPNCalc } from '../RPNCalc';
 
 beforeAll(() => {
@@ -51,6 +51,18 @@ describe('RPNCalc Component', () => {
     expect(expressionElement.textContent).toBe(' 3 5 ^ 21 \u00D7 \u221a|');
     fireEvent.keyDown(window, { key: 'Enter', code: 'Enter' });
     expect(expressionElement.textContent).toBe(' 71.4352853987 |');
+  });
+
+  test('It cycles themes when clicking Theme dropdown item', () => {
+    render(<RPNCalc />);
+    expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('light');
+    fireEvent.click(screen.getByLabelText('Settings'));
+    fireEvent.click(screen.getByRole('option', { name: /Theme/i }));
+    expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('light');
+    fireEvent.click(screen.getByRole('option', { name: /Theme/i }));
+    expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('dark');
+    fireEvent.click(screen.getByRole('option', { name: /Theme/i }));
+    expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('light');
   });
 
   test('It toggles History visibility when clicking History dropdown item', () => {
