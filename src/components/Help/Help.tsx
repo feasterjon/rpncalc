@@ -1,9 +1,9 @@
-import type { Help } from '@/types/help';
+import type { Help as HelpType } from '@/types/help';
 import styles from './Help.module.css';
 import { Table as TableCom } from '../Elements/Table';
 
 type HelpProps = {
-  config: Help;
+  config: HelpType;
 };
 
 export function Help({ config }: HelpProps) {

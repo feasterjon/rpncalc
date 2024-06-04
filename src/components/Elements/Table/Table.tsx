@@ -1,8 +1,8 @@
 import styles from './Table.module.css';
-import type { Table } from '@/types/table';
+import type { Table as TableType } from '@/types/table';
 
 type TableProps = {
-  data: Table;
+  data: TableType;
 };
 
 export function Table({ data }: TableProps) {

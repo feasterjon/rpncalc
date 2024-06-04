@@ -1,10 +1,10 @@
-import type { Button, ConfigButton, Keyboard } from '@/types/keyboard';
+import type { Button, ConfigButton, Keyboard as KeyboardType } from '@/types/keyboard';
 import { Icon } from '../Icon';
 import { useEffect, useState } from 'react';
 import { vibrate } from '../../../utils/vibrate';
 
 type KeyboardProps = {
-  config: Keyboard & {
+  config: KeyboardType & {
     setCurrentInput: (input: Button) => void;
   };
 };
