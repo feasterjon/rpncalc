@@ -446,7 +446,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
               ">
                 {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
                   <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? state.appHistoryExtendedVisible : true} key={index}>
-                    <div className="border-neutral-900 border-t dark:border-neutral-100 p-4">
+                    <div className="border-neutral-900 border-t dark:border-neutral-100 p-4" data-testid={(index < Object.entries(appHistoryFormatted).length - 1) ? `history-extended-${index}` : 'history-extended-last'}>
                       <div className="flex mb-4">
                         <div className="flex grow">
                           <h2 className="cursor-pointer select-all text-left" id={`history-${index}`}>{date}</h2>
