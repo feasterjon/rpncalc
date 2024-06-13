@@ -13,7 +13,7 @@ export function Keyboard({ config }: KeyboardProps) {
 
   const configButtons: ConfigButton[] = config.buttons?.data || [],
     configButtonsStyles: Record<string, { active: string; etc: string; main?: string }> = config.buttons?.styles || {},
-    [dynamicStyles, setDynamicStyles] = useState<string>(''),
+    [dynamicStyles, setDynamicStyles] = useState(''),
     [pressedKey, setPressedKey] = useState<number | null>(null),
     setCurrentInput = config.setCurrentInput,
     vibrateEnabled: boolean = config?.vibrateEnabled || false;

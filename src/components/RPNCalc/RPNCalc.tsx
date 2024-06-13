@@ -203,7 +203,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
     window.addEventListener('keydown', handleKeyDown);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
-    }
+    };
   }, [state.appHistoryVisible, state.dialogVisibleHelp]);
 
   const appHistoryFormatted = state.appHistory.reduce((accumulator: AppHistoryFormatted, item: AppHistoryItem) => {
