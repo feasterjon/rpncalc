@@ -226,7 +226,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
       out = `${out} `;
     }
     setCurrentExpression(out);
-  }
+  };
 
   const formatAnswer = (data: string, maxDecimals:number = 10, maxDigits: number = 100) => {
     if (!data) return '';
@@ -246,7 +246,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
     }
     if (numberPartsDecimal) return `${numberPartsInteger}.${numberPartsDecimal}`;
     return numberPartsInteger;
-  }
+  };
 
   const formatExpression = (expression: string) => {
     if (!expression) return '';
@@ -264,7 +264,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
       });
     }
     return out;
-  }
+  };
 
   const formatNumbers = (expression: string) => {
     let out = '';
@@ -276,7 +276,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
       out = `${out} ${numFragments.join('.')}`;
     });
     return out;
-  }
+  };
 
   const handleInsert = (data: string) => {
     if (!data) return '';
@@ -378,7 +378,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
       }
     }
     return true;
-  }
+  };
 
   return (
     <>
