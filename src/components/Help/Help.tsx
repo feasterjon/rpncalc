@@ -49,35 +49,35 @@ export function Help({ config, darkMode }: HelpProps) {
   }, [config]);
 
   return (
-      <LoadingMessage darkMode={darkMode} loading={loading}>
-        {data?.title && (
-          <div className={styles.header}>
-            <div className={styles.title}>
-              {data.title}
+    <LoadingMessage darkMode={darkMode} loading={loading}>
+      {data?.title && (
+        <div className={styles.header}>
+          <div className={styles.title}>
+            {data.title}
+          </div>
+        </div>
+      )}
+      {data?.sections?.map((section) =>
+        <div key={`section-${section.id}`}>
+          {section.heading && (
+            <div className={styles.heading}>{section.heading}</div>
+          )}
+          {section.data?.map((article, index) =>
+            <div key={`article-${index}`}>
+              {typeof article.data === 'string' ?
+                <p>{article.data}</p>
+                :
+                <TableCom data={article.data} />
+              }
             </div>
-          </div>
-        )}
-        {data?.sections?.map((section) =>
-          <div key={`section-${section.id}`}>
-            {section.heading && (
-              <div className={styles.heading}>{section.heading}</div>
-            )}
-            {section.data?.map((article, index) =>
-              <div key={`article-${index}`}>
-                {typeof article.data === 'string' ?
-                  <p>{article.data}</p>
-                  :
-                  <TableCom data={article.data} />
-                }
-              </div>
-            )}
-          </div>
-        )}
-        {data?.footer && (
-          <div className={styles.footer}>
-            <div className={styles.content}>{data.footer}</div>
-          </div>
-        )}
-      </LoadingMessage>
+          )}
+        </div>
+      )}
+      {data?.footer && (
+        <div className={styles.footer}>
+          <div className={styles.content}>{data.footer}</div>
+        </div>
+      )}
+    </LoadingMessage>
   );
 }

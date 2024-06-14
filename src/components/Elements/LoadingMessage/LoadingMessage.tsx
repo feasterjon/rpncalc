@@ -7,6 +7,7 @@ type LoadingMessageProps = {
   darkMode?: boolean;
   loading: boolean;
   message?: string;
+  spinnerVisible?: boolean;
 };
 
 export function LoadingMessage({
@@ -14,7 +15,8 @@ export function LoadingMessage({
   children,
   darkMode = false,
   loading = true,
-  message
+  message,
+  spinnerVisible = true
 }: LoadingMessageProps) {
   return (
     <>
@@ -25,9 +27,11 @@ export function LoadingMessage({
           ${adaptive ? styles.mainAdaptive : ''}
           ${styles.vars}
         `} data-testid="loading-message">
-          <div>
-            <Spinner adaptive={adaptive} darkMode={darkMode} />
-          </div>
+          {spinnerVisible && (
+            <div>
+              <Spinner adaptive={adaptive} darkMode={darkMode} />
+            </div>
+          )}
           {message && (
             <div>
               {message}

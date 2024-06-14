@@ -7,6 +7,7 @@ type LoadingScreenProps = {
   darkMode?: boolean;
   loading?: boolean;
   message?: string;
+  spinnerVisible?: boolean;
 };
 
 export function LoadingScreen({
@@ -14,7 +15,8 @@ export function LoadingScreen({
   children,
   darkMode = false,
   loading = true,
-  message
+  message,
+  spinnerVisible = true
 }: LoadingScreenProps) {
   return (
     <>
@@ -25,9 +27,11 @@ export function LoadingScreen({
           ${adaptive ? styles.mainAdaptive : ''}
           ${styles.vars}
         `} data-testid="loading-screen">
-          <div>
-            <Spinner adaptive={adaptive} darkMode={darkMode} />
-          </div>
+          {spinnerVisible && (
+            <div>
+              <Spinner adaptive={adaptive} darkMode={darkMode} />
+            </div>
+          )}
           {message && (
             <div>
               {message}
