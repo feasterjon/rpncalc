@@ -35,7 +35,7 @@ export function Help({ config, darkMode }: HelpProps) {
         const response = await axios.get(resource, {
           signal: controller.signal
         });
-        setData(response.data as HelpType);
+        setData(response.data.attributes as HelpType);
         setLoading(false);
       } catch (error) {
         if (!axios.isCancel(error)) {
