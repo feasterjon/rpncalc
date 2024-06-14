@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import type { Help as HelpType, Section as SectionType } from '@/types/help';
 import { LoadingMessage } from '../Elements/LoadingMessage';
 import styles from './Help.module.css';

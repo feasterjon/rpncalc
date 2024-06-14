@@ -1,5 +1,6 @@
 'use client';
 
+import React, { useEffect, useReducer, useRef } from 'react';
 import { CONFIG } from '../../config';
 import type { Config, Theme } from '@/types/config';
 import type { Button as KeyboardButton, ConfigButton as KeyboardConfigButton } from '@/types/keyboard';
@@ -14,7 +15,7 @@ import { randomId } from '../../utils/randomId';
 import { storage } from '../../utils/storage';
 import styles from './RPNCalc.module.css';
 import { Transition } from '../Elements/Transition';
-import { useEffect, useReducer, useRef } from 'react';
+import { usePasteEnabled } from '../../hooks/usePasteEnabled';
 import { vibrate } from '../../utils/vibrate';
 
 type Action =
@@ -22,7 +23,6 @@ type Action =
   | { type: 'SET_CURRENT_EXPRESSION'; payload: string; }
   | { type: 'SET_LOADING'; payload: boolean; }
   | { type: 'SET_LAST_ANSWER'; payload: string; }
-  | { type: 'SET_PASTE_ENABLED'; payload: boolean | null; }
   | { type: 'SET_PREFERS_DARK'; payload: boolean | null; }
   | { type: 'SET_THEME'; payload: string; }
   | { type: 'SET_THEME_INDEX'; payload: number; }
@@ -51,7 +51,6 @@ type AppState = {
   loading: boolean;
   keyboardVisible: boolean;
   lastAnswer: string;
-  pasteEnabled: boolean | null;
   prefersDark: boolean | null;
   theme: string;
   themeIndex: number;
@@ -70,7 +69,6 @@ const initialState = {
   loading: true,
   keyboardVisible: true,
   lastAnswer: '',
-  pasteEnabled: null,
   prefersDark: null,
   theme: 'light',
   themeIndex: 0
@@ -86,8 +84,6 @@ const reducer = (state: AppState, action: Action) => {
       return { ...state, loading: action.payload };
     case 'SET_LAST_ANSWER':
       return { ...state, lastAnswer: action.payload };
-    case 'SET_PASTE_ENABLED':
-      return { ...state, pasteEnabled: action.payload };
     case 'SET_PREFERS_DARK':
       return { ...state, prefersDark: action.payload };
     case 'SET_THEME':
@@ -130,9 +126,6 @@ export function RPNCalc({ config }: RPNCalcProps) {
   },
   setLastAnswer = (data: string) => {
     dispatch({ type: 'SET_LAST_ANSWER', payload: data });
-  },
-  setPasteEnabled = (data: boolean | null) => {
-    dispatch({ type: 'SET_PASTE_ENABLED', payload: data });
   },
   setPrefersDark = (data: boolean | null) => {
     dispatch({ type: 'SET_PREFERS_DARK', payload: data });
@@ -181,15 +174,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
     setLoading(false);
   }, [themes]);
 
-  const checkPasteEnabled = async () => {
-    try {
-      await navigator.clipboard.readText();
-      setPasteEnabled(true);
-    } catch (error) {}
-  }
-  useEffect(() => {
-    checkPasteEnabled();
-  });
+  const pasteEnabled = usePasteEnabled();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -319,11 +304,13 @@ export function RPNCalc({ config }: RPNCalcProps) {
 
   const handlePaste = async () => {
     vibrate();
-    const text = await navigator.clipboard.readText();
-    if (inputRef.current) inputRef.current.focus();
-    if (!text) return;
-    if (!validateNumbers(text)) return;
-    setCurrentExpression(`${state.currentExpression}${text} `);
+    try {
+      const text = await navigator.clipboard.readText();
+      if (inputRef.current) inputRef.current.focus();
+      if (!text) return;
+      if (!validateNumbers(text)) return;
+      setCurrentExpression(`${state.currentExpression}${text} `);
+    } catch (error) {}
   };
 
   const historyRemove = () => {
@@ -555,7 +542,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
             >
               {formatNumbers(state.currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
             </span>
-            {state.pasteEnabled && <button className="
+            {pasteEnabled && <button className="
                 cursor-pointer
                 dark:hover:bg-neutral-700
                 dark:text-neutral-100
