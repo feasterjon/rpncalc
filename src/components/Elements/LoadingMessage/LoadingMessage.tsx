@@ -1,24 +1,26 @@
 import { Spinner } from '../Spinner';
-import styles from './LoadingScreen.module.css';
+import styles from './LoadingMessage.module.css';
 
-type LoadingScreenProps = {
+type LoadingMessageProps = {
   adaptive?: boolean;
   children?: React.ReactNode;
-  loading?: boolean;
+  darkMode?: boolean;
+  loading: boolean;
   message?: string;
 };
 
-export function LoadingScreen({ adaptive = false, children, loading = true, message }: LoadingScreenProps) {
+export function LoadingMessage({ adaptive = false, children, darkMode, loading = true, message }: LoadingMessageProps) {
   return (
     <>
       {loading ? (
         <div className={`
           ${styles.main}
+          ${darkMode ? styles.mainDark : styles.mainLight}
           ${adaptive ? styles.mainAdaptive : ''}
           ${styles.vars}
-        `}>
+        `} data-testid="loading-message">
           <div>
-            <Spinner adaptive={adaptive} />
+            <Spinner adaptive={adaptive} darkMode={darkMode} />
           </div>
           {message && (
             <div>

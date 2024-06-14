@@ -20,7 +20,7 @@ import { vibrate } from '../../utils/vibrate';
 type Action =
   | { type: 'SET_APP_HISTORY'; payload: AppHistoryItem[]; }
   | { type: 'SET_CURRENT_EXPRESSION'; payload: string; }
-  | { type: 'SET_IS_LOADING'; payload: boolean; }
+  | { type: 'SET_LOADING'; payload: boolean; }
   | { type: 'SET_LAST_ANSWER'; payload: string; }
   | { type: 'SET_PASTE_ENABLED'; payload: boolean | null; }
   | { type: 'SET_PREFERS_DARK'; payload: boolean | null; }
@@ -48,7 +48,7 @@ type AppState = {
   appHistoryVisible: boolean;
   currentExpression: string;
   dialogVisibleHelp: boolean;
-  isLoading: boolean;
+  loading: boolean;
   keyboardVisible: boolean;
   lastAnswer: string;
   pasteEnabled: boolean | null;
@@ -67,7 +67,7 @@ const initialState = {
   appHistoryVisible: false,
   currentExpression: '',
   dialogVisibleHelp: false,
-  isLoading: true,
+  loading: true,
   keyboardVisible: true,
   lastAnswer: '',
   pasteEnabled: null,
@@ -82,8 +82,8 @@ const reducer = (state: AppState, action: Action) => {
       return { ...state, appHistory: action.payload };
     case 'SET_CURRENT_EXPRESSION':
       return { ...state, currentExpression: action.payload };
-    case 'SET_IS_LOADING':
-      return { ...state, isLoading: action.payload };
+    case 'SET_LOADING':
+      return { ...state, loading: action.payload };
     case 'SET_LAST_ANSWER':
       return { ...state, lastAnswer: action.payload };
     case 'SET_PASTE_ENABLED':
@@ -125,8 +125,8 @@ export function RPNCalc({ config }: RPNCalcProps) {
   setCurrentExpression = (data: string) => {
     dispatch({ type: 'SET_CURRENT_EXPRESSION', payload: data });
   },
-  setIsLoading = (data: boolean) => {
-    dispatch({ type: 'SET_IS_LOADING', payload: data });
+  setLoading = (data: boolean) => {
+    dispatch({ type: 'SET_LOADING', payload: data });
   },
   setLastAnswer = (data: string) => {
     dispatch({ type: 'SET_LAST_ANSWER', payload: data });
@@ -178,7 +178,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
     }
     setTheme(selectedTheme.name);
     setThemeIndex(selectedIndex);
-    setIsLoading(false);
+    setLoading(false);
   }, [themes]);
 
   const checkPasteEnabled = async () => {
@@ -381,33 +381,30 @@ export function RPNCalc({ config }: RPNCalcProps) {
   };
 
   return (
-    <>
-      {state.isLoading ? (
-        <LoadingScreen message="Loading..." />
-      ) : (
-        <div className={`
+    <LoadingScreen adaptive={true} loading={state.loading} message="Loading...">
+      <div className={`
           flex
           flex-col
           h-full
           w-full
           ${appConfig.hScreen !== false ? 'h-screen' : ''}
         `} data-mode={state.theme} data-testid="main">
-          <div className="bg-neutral-300 dark:bg-neutral-700" data-testid="history">
-            <Transition show={state.appHistoryVisible}>
-              <div className="flex p-4" data-testid="history-title">
-                <div className="
+        <div className="bg-neutral-300 dark:bg-neutral-700" data-testid="history">
+          <Transition show={state.appHistoryVisible}>
+            <div className="flex p-4" data-testid="history-title">
+              <div className="
                   dark:text-rpncalc-primary-light
                   flex select-none
                   text-3xl
                   text-rpncalc-primary-dark
                 ">
-                  <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>
-                    <Icon id="arrow-left" styles="h-8 w-8" />
-                  </button>
-                  <button className="cursor-pointer ml-2" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>History</button>
-                </div>
-                <div className="flex grow items-end justify-end">
-                  <button className="
+                <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>
+                  <Icon id="arrow-left" styles="h-8 w-8" />
+                </button>
+                <button className="cursor-pointer ml-2" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>History</button>
+              </div>
+              <div className="flex grow items-end justify-end">
+                <button className="
                     cursor-pointer
                     dark:hover:bg-neutral-600
                     dark:text-neutral-100
@@ -417,10 +414,10 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     rounded-full
                     select-none
                     text-neutral-900
-                  " aria-label="Clear History" onClick={() => {historyRemove(); toggleAppHistoryVisible();}}>
-                    <Icon id="trash" />
-                  </button>
-                  <button className="
+                  " aria-label="Clear History" onClick={() => { historyRemove(); toggleAppHistoryVisible(); }}>
+                  <Icon id="trash" />
+                </button>
+                <button className="
                     cursor-pointer
                     dark:hover:bg-neutral-600
                     dark:text-neutral-100
@@ -431,11 +428,11 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     select-none
                     text-neutral-900
                   " aria-label="Toggle History" onClick={toggleAppHistoryVisible}>
-                    <Icon id="x-mark" />
-                  </button>
-                </div>
+                  <Icon id="x-mark" />
+                </button>
               </div>
-              <div className="
+            </div>
+            <div className="
                 break-all
                 dark:text-neutral-100
                 items-end
@@ -444,16 +441,16 @@ export function RPNCalc({ config }: RPNCalcProps) {
                 text-right
                 text-neutral-900
               ">
-                {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
-                  <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? state.appHistoryExtendedVisible : true} key={index}>
-                    <div className="border-neutral-900 border-t dark:border-neutral-100 p-4" data-testid={(index < Object.entries(appHistoryFormatted).length - 1) ? `history-extended-${index}` : 'history-extended-last'}>
-                      <div className="flex mb-4">
-                        <div className="flex grow">
-                          <h2 className="cursor-pointer select-all text-left" id={`history-${index}`}>{date}</h2>
-                        </div>
-                        <div className="flex items-end justify-end my-auto">
-                          {(Object.entries(appHistoryFormatted).length > 1) && (
-                            <button className="
+              {Object.entries(appHistoryFormatted).map(([date, entries], index) => (
+                <Transition show={(index < Object.entries(appHistoryFormatted).length - 1) ? state.appHistoryExtendedVisible : true} key={index}>
+                  <div className="border-neutral-900 border-t dark:border-neutral-100 p-4" data-testid={(index < Object.entries(appHistoryFormatted).length - 1) ? `history-extended-${index}` : 'history-extended-last'}>
+                    <div className="flex mb-4">
+                      <div className="flex grow">
+                        <h2 className="cursor-pointer select-all text-left" id={`history-${index}`}>{date}</h2>
+                      </div>
+                      <div className="flex items-end justify-end my-auto">
+                        {(Object.entries(appHistoryFormatted).length > 1) && (
+                          <button className="
                               bg-neutral-400
                               cursor-pointer
                               dark:bg-neutral-600
@@ -466,82 +463,82 @@ export function RPNCalc({ config }: RPNCalcProps) {
                               select-none
                               text-neutral-900
                             " aria-label="Toggle Extended History" onClick={toggleAppHistoryExtendedVisible}>
-                              {state.appHistoryExtendedVisible ? (<Icon id="chevron-down" />): <Icon id="chevron-up" />}
-                            </button>
-                          )}
-                        </div>
+                            {state.appHistoryExtendedVisible ? (<Icon id="chevron-down" />) : <Icon id="chevron-up" />}
+                          </button>
+                        )}
                       </div>
-                      <ul className="list-none" aria-labelledby={`history-${index}`}>
-                        {((entries as AppHistoryItem[]) || []).map((entry) => (
-                          <li className="py-2" key={`history-${entry.id}`}>
-                            <span className="
+                    </div>
+                    <ul className="list-none" aria-labelledby={`history-${index}`}>
+                      {((entries as AppHistoryItem[]) || []).map((entry) => (
+                        <li className="py-2" key={`history-${entry.id}`}>
+                          <span className="
                               cursor-pointer
                               select-all
-                            " onClick={() => {handleInsert(entry.expression);}}>{formatNumbers(entry.expression)}</span><br />
-                            <span className="
+                            " onClick={() => { handleInsert(entry.expression); }}>{formatNumbers(entry.expression)}</span><br />
+                          <span className="
                               cursor-pointer
                               dark:text-rpncalc-primary-light
                               select-all
                               text-rpncalc-primary-dark
-                            " onClick={() => {handleInsert(entry.answer);}}>{formatNumbers(entry.answer)}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </Transition>
-                ))}
-              </div>
-            </Transition>
-          </div>
-          <div className={`
+                            " onClick={() => { handleInsert(entry.answer); }}>{formatNumbers(entry.answer)}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </Transition>
+              ))}
+            </div>
+          </Transition>
+        </div>
+        <div className={`
             bg-neutral-200
             dark:bg-neutral-800
             ${state.keyboardVisible ? '' : 'grow'}
           `} data-testid="terminal">
-            <div className="flex items-end justify-end p-4">
-              <Dropdown config={
-                {
-                  data: [
-                    {
-                      icon: themes[state.themeIndex].icon,
-                      id: 1,
-                      label: 'Theme',
-                      onClick: toggleTheme,
-                      persist: true
-                    },
-                    {
-                      icon: 'clock',
-                      id: 2,
-                      label: 'History',
-                      onClick: toggleAppHistoryVisible
-                    },
-                    {
-                      icon: state.keyboardVisible ? 'eye' : 'eye-slash',
-                      id: 3,
-                      label: 'Keypad',
-                      onClick: toggleKeyboardVisible,
-                      persist: true,
-                      styles: 'hidden lg:flex'
-                    },
-                    {
-                      icon: 'question-mark-circle',
-                      id: 4,
-                      label: 'Help',
-                      onClick: () => { toggleDialogVisibleHelp() }
-                    }
-                  ],
-                  icon: 'ellipsis-vertical',
-                  label: 'Settings',
-                  styles: {
-                    data: 'dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 p-3 text-neutral-900 text-xl',
-                    main: 'bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 ml-2 p-2 rounded-full text-neutral-900',
-                    menu: 'bg-neutral-300 dark:bg-neutral-700'
+          <div className="flex items-end justify-end p-4">
+            <Dropdown config={
+              {
+                data: [
+                  {
+                    icon: themes[state.themeIndex].icon,
+                    id: 1,
+                    label: 'Theme',
+                    onClick: toggleTheme,
+                    persist: true
+                  },
+                  {
+                    icon: 'clock',
+                    id: 2,
+                    label: 'History',
+                    onClick: toggleAppHistoryVisible
+                  },
+                  {
+                    icon: state.keyboardVisible ? 'eye' : 'eye-slash',
+                    id: 3,
+                    label: 'Keypad',
+                    onClick: toggleKeyboardVisible,
+                    persist: true,
+                    styles: 'hidden lg:flex'
+                  },
+                  {
+                    icon: 'question-mark-circle',
+                    id: 4,
+                    label: 'Help',
+                    onClick: () => { toggleDialogVisibleHelp() }
                   }
+                ],
+                icon: 'ellipsis-vertical',
+                label: 'Settings',
+                styles: {
+                  data: 'dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 p-3 text-neutral-900 text-xl',
+                  main: 'bg-neutral-300 dark:bg-neutral-700 dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 ml-2 p-2 rounded-full text-neutral-900',
+                  menu: 'bg-neutral-300 dark:bg-neutral-700'
                 }
-              } />
-            </div>
-            <div className="flex items-end justify-end p-4">
-              <span className={`
+              }
+            } />
+          </div>
+          <div className="flex items-end justify-end p-4">
+            <span className={`
                 break-all
                 dark:text-rpncalc-primary-light
                 text-rpncalc-primary-dark
@@ -550,15 +547,15 @@ export function RPNCalc({ config }: RPNCalcProps) {
                 ${(formatNumbers(state.currentExpression).length < 20) ? 'md:text-6xl' : 'md:text-5xl'}
                 ${(formatNumbers(state.currentExpression).length < 10) ? 'text-6xl' : 'text-5xl'}
               `}
-                aria-label="Expression"
-                ref={inputRef}
-                role="textbox"
-                tabIndex={0}
-                data-testid="expression"
-              >
-                {formatNumbers(state.currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
-              </span>
-              {state.pasteEnabled && <button className="
+              aria-label="Expression"
+              ref={inputRef}
+              role="textbox"
+              tabIndex={0}
+              data-testid="expression"
+            >
+              {formatNumbers(state.currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
+            </span>
+            {state.pasteEnabled && <button className="
                 cursor-pointer
                 dark:hover:bg-neutral-700
                 dark:text-neutral-100
@@ -569,12 +566,12 @@ export function RPNCalc({ config }: RPNCalcProps) {
                 select-none
                 text-neutral-900
               "
-                aria-label="Paste"
-                onClick={handlePaste}
-              ><Icon id="clipboard" /></button>}
-            </div>
+              aria-label="Paste"
+              onClick={handlePaste}
+            ><Icon id="clipboard" /></button>}
           </div>
-          <div className={`
+        </div>
+        <div className={`
             bg-neutral-100
             dark:bg-neutral-900
             flex
@@ -583,20 +580,22 @@ export function RPNCalc({ config }: RPNCalcProps) {
             rpncalc-tall:items-center
             ${state.keyboardVisible ? 'grow' : 'hidden'}
           `} data-testid="interface">
-            <Keyboard config={inputConfig} />
-          </div>
-          <Transition show={state.dialogVisibleHelp}>
-            <Dialog
-              close={() => toggleDialogVisibleHelp()}
-              darkMode={(state.theme === 'dark') ? true : false}
-              footer={help.footer}
-              title={help.title}
-            >
-              <Help config={help} />
-            </Dialog>
-          </Transition>
+          <Keyboard config={inputConfig} />
         </div>
-      )}
-    </>
+        <Transition show={state.dialogVisibleHelp}>
+          <Dialog
+            close={() => toggleDialogVisibleHelp()}
+            darkMode={(state.theme === 'dark') ? true : false}
+            footer={help.footer}
+            title={help.title}
+          >
+            <Help
+              darkMode={(state.theme === 'dark') ? true : false}
+              config={help}
+            />
+          </Dialog>
+        </Transition>
+      </div>
+    </LoadingScreen>
   );
 }
