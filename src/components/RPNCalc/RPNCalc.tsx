@@ -30,7 +30,8 @@ type Action =
   | { type: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE'; }
   | { type: 'TOGGLE_APP_HISTORY_VISIBLE'; }
   | { type: 'TOGGLE_DIALOG_VISIBLE_HELP'; }
-  | { type: 'TOGGLE_KEYBOARD_VISIBLE'; };
+  | { type: 'TOGGLE_KEYBOARD_VISIBLE'; }
+  | { type: 'TOGGLE_SPACES_VISIBLE'; };
 
 type AppHistoryFormatted = {
   [date: string]: AppHistoryItem[];
@@ -53,6 +54,7 @@ type AppState = {
   keyboardVisible: boolean;
   lastAnswer: string;
   prefersDark: boolean | null;
+  spacesVisible: boolean;
   theme: string;
   themeIndex: number;
 };
@@ -71,6 +73,7 @@ const initialState = {
   keyboardVisible: true,
   lastAnswer: '',
   prefersDark: null,
+  spacesVisible: false,
   theme: 'light',
   themeIndex: 0
 };
@@ -99,6 +102,8 @@ const reducer = (state: AppState, action: Action) => {
       return { ...state, dialogVisibleHelp: !state.dialogVisibleHelp };
     case 'TOGGLE_KEYBOARD_VISIBLE':
       return { ...state, keyboardVisible: !state.keyboardVisible };
+    case 'TOGGLE_SPACES_VISIBLE':
+      return { ...state, spacesVisible: !state.spacesVisible };
     default:
       return state;
   }
@@ -149,6 +154,9 @@ export function RPNCalc({ config }: RPNCalcProps) {
   },
   toggleKeyboardVisible = () => {
     dispatch({ type: 'TOGGLE_KEYBOARD_VISIBLE' });
+  },
+  toggleSpacesVisible = () => {
+    dispatch({ type: 'TOGGLE_SPACES_VISIBLE' });
   };
 
   useEffect(() => {
@@ -324,6 +332,32 @@ export function RPNCalc({ config }: RPNCalcProps) {
     storage.setItem('history', state.appHistory);
   };
 
+  const styleExpression = (expression: string, callback?: (data: string) => string) => {
+    if (!expression) return '';
+    const processedExpression = callback ? callback(expression) : expression;
+    const characters = processedExpression.split('');
+    return characters.map((char, index) => {
+      if (char === ' ' && index > 0) {
+        return <span key={index} className={`
+          dark:decoration-neutral-400
+          decoration-1
+          decoration-dashed
+          decoration-neutral-600
+          lg:decoration-2
+          underline
+          xl:decoration-4
+        `}>{' '}</span>;
+      }
+      return <React.Fragment key={index}>{char}</React.Fragment>;
+    });
+  };
+
+  const toggleSpaces = () => {
+    const spaces = !state.spacesVisible;
+    storage.setItem('spaces', spaces.toString());
+    toggleSpacesVisible();
+  };
+
   const toggleTheme = () => {
     let selectedIndex = state.themeIndex + 1;
     let selectedTheme = themes[selectedIndex],
@@ -492,8 +526,15 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     onClick: toggleAppHistoryVisible
                   },
                   {
-                    icon: state.keyboardVisible ? 'eye' : 'eye-slash',
+                    icon: state.spacesVisible ? 'eye' : 'eye-slash',
                     id: 3,
+                    label: 'Spaces',
+                    onClick: toggleSpaces,
+                    persist: true
+                  },
+                  {
+                    icon: state.keyboardVisible ? 'eye' : 'eye-slash',
+                    id: 4,
                     label: 'Keypad',
                     onClick: toggleKeyboardVisible,
                     persist: true,
@@ -501,7 +542,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                   },
                   {
                     icon: 'question-mark-circle',
-                    id: 4,
+                    id: 5,
                     label: 'Help',
                     onClick: () => { toggleDialogVisibleHelp() }
                   }
@@ -532,7 +573,8 @@ export function RPNCalc({ config }: RPNCalcProps) {
               tabIndex={0}
               data-testid="expression"
             >
-              {formatNumbers(state.currentExpression)}<span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
+              {state.spacesVisible ? styleExpression(state.currentExpression, formatNumbers) : formatNumbers(state.currentExpression)}
+              <span className={`${styles.cursor} dark:text-neutral-100 text-neutral-900`} aria-hidden="true">|</span>
             </span>
             {pasteEnabled && <button className="
                 cursor-pointer
