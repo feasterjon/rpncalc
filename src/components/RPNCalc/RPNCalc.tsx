@@ -160,8 +160,6 @@ export function RPNCalc({ config }: RPNCalcProps) {
   };
 
   useEffect(() => {
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches,
-      savedTheme = storage.getItem('theme');
     let storageHistory = storage.getItem('history');
     let savedHistory: AppHistoryItem[] = [];
     (Array.isArray(storageHistory))
@@ -169,6 +167,9 @@ export function RPNCalc({ config }: RPNCalcProps) {
       : storage.removeItem('history');
     setAppHistory(savedHistory);
     setLastAnswer(savedHistory[savedHistory.length - 1]?.answer || '');
+
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches,
+      savedTheme = storage.getItem('theme');
     setPrefersDark(prefersDarkScheme);
     let selectedIndex = 0;
     if (savedTheme) selectedIndex = themes.findIndex(theme => theme.name === savedTheme);
@@ -352,12 +353,6 @@ export function RPNCalc({ config }: RPNCalcProps) {
     });
   };
 
-  const toggleSpaces = () => {
-    const spaces = !state.spacesVisible;
-    storage.setItem('spaces', spaces.toString());
-    toggleSpacesVisible();
-  };
-
   const toggleTheme = () => {
     let selectedIndex = state.themeIndex + 1;
     let selectedTheme = themes[selectedIndex],
@@ -529,7 +524,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     icon: state.spacesVisible ? 'eye' : 'eye-slash',
                     id: 3,
                     label: 'Spaces',
-                    onClick: toggleSpaces,
+                    onClick: toggleSpacesVisible,
                     persist: true
                   },
                   {
