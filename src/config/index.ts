@@ -2,7 +2,7 @@ import type { Config } from '@/types/config';
 
 export const CONFIG: Config = {
   help: {
-    api: `${process.env.PUBLIC_URL}/api/help.json`,
+    api: `${process.env.PUBLIC_URL || ''}/api/help.json`,
     footer: `${process.env.REACT_APP_VERSION ? `RPNCalc ${process.env.REACT_APP_VERSION} | ` : ''}JonFeaster.com`,
     title: 'Help'
   },
