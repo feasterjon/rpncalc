@@ -381,7 +381,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
   };
 
   return (
-    <LoadingScreen adaptive={true} loading={state.loading} message="Loading...">
+    <LoadingScreen adaptive={true} darkMode={false} loading={state.loading} message="Loading...">
       <div className={`
           flex
           flex-col

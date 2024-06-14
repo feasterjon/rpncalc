@@ -5,7 +5,7 @@ type SpinnerProps = {
   darkMode?: boolean;
 };
 
-export function Spinner({ adaptive = false, darkMode }: SpinnerProps) {
+export function Spinner({ adaptive = false, darkMode = false }: SpinnerProps) {
   return (
     <div className={`
       ${styles.spinner}

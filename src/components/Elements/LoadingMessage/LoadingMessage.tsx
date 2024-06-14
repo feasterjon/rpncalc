@@ -9,7 +9,13 @@ type LoadingMessageProps = {
   message?: string;
 };
 
-export function LoadingMessage({ adaptive = false, children, darkMode, loading = true, message }: LoadingMessageProps) {
+export function LoadingMessage({
+  adaptive = false,
+  children,
+  darkMode = false,
+  loading = true,
+  message
+}: LoadingMessageProps) {
   return (
     <>
       {loading ? (
