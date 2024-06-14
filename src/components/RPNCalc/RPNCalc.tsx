@@ -15,6 +15,7 @@ import { randomId } from '../../utils/randomId';
 import { storage } from '../../utils/storage';
 import styles from './RPNCalc.module.css';
 import { Transition } from '../Elements/Transition';
+import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 import { usePasteEnabled } from '../../hooks/usePasteEnabled';
 import { vibrate } from '../../utils/vibrate';
 
@@ -175,20 +176,12 @@ export function RPNCalc({ config }: RPNCalcProps) {
     setLoading(false);
   }, [themes]);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey && e.key === '/') || e.key === '?') {
-        toggleDialogVisibleHelp();
-      }
-      if (!e.ctrlKey && e.key === 'h') { // exclude ctrlKey as browsers may access browser history via Ctrl + h
-        toggleAppHistoryVisible();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [state.appHistoryVisible, state.dialogVisibleHelp]);
+  useKeyboardShortcuts(
+    toggleDialogVisibleHelp,
+    toggleAppHistoryVisible,
+    state.appHistoryVisible,
+    state.dialogVisibleHelp
+  );
 
   const appHistoryFormatted = state.appHistory.reduce((accumulator: AppHistoryFormatted, item: AppHistoryItem) => {
     const date = new Date(item.date).toLocaleDateString('en-US', {
