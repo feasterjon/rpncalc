@@ -17,14 +17,22 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid var(--dark);
   border-radius: 50%;
   animation: spinner 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+.spinnerDark div {
+  border: 8px solid var(--light);
+  border-color: var(--light) transparent transparent transparent;
+}
+
+.spinnerLight div {
+  border: 8px solid var(--dark);
   border-color: var(--dark) transparent transparent transparent;
 }
 
 @media (prefers-color-scheme: dark) {
-  .spinner div {
+  .spinnerAdaptive div {
     border: 8px solid var(--light);
     border-color: var(--light) transparent transparent transparent;
   }

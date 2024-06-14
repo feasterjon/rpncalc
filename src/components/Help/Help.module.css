@@ -1,3 +1,24 @@
+.footer {
+  margin-top: 1rem;
+}
+
+.footer .content {
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+.header {
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header .title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1.75rem;
+}
+
 .heading {
   font-size: 1.125rem;
   font-weight: bold;

@@ -1,6 +1,6 @@
 {
   "name": "rpncalc",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "private": true,
   "homepage": "http://feasterjon.github.io/rpncalc/",
   "dependencies": {
@@ -11,6 +11,7 @@
     "@types/node": "^17.0.45",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
+    "axios": "^1.7.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
@@ -58,5 +59,10 @@
   "devDependencies": {
     "gh-pages": "^6.1.1",
     "tailwindcss": "^3.4.3"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   }
 }

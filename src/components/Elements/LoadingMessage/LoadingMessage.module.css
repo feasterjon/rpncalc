@@ -8,27 +8,21 @@
   display: flex;
   flex-direction: column;
   font-family: sans-serif;
-  height: 100%;
   justify-content: center;
-  left: 0;
-  position: fixed;
-  top: 0;
+  text-align: center;
   width: 100%;
 }
 
 .mainDark {
-  background-color: var(--dark);
   color: var(--light);
 }
 
 .mainLight {
-  background-color: var(--light);
   color: var(--dark);
 }
 
 @media (prefers-color-scheme: dark) {
   .mainAdaptive {
-    background-color: var(--dark);
     color: var(--light);
   }
 }

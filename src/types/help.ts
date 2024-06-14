@@ -1,11 +1,14 @@
 import type { Table } from './table';
 
 export type Help = {
-  footer?: string;
-  sections: {
-    data: { data: string | Table }[];
-    heading?: string;
-    id: number;
-  }[];
+  api?: string | null;
+  footer?: string | null;
+  sections?: Section[];
   title?: string;
+};
+
+export type Section = {
+  data?: { data: string | Table }[];
+  heading?: string;
+  id?: number;
 };

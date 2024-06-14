@@ -30,7 +30,7 @@ export function Dropdown({ config }: DropdownProps) {
 
   const { data = [], icon, label, styles: configStyles = {}, vibrateEnabled = false } = config,
     [selected, setSelected] = useState<string | null>(null),
-    [visible, setVisible] = useState<boolean>(false);
+    [visible, setVisible] = useState(false);
 
   const handleClickOutside = (e: MouseEvent) => {
     const target = e.target as HTMLElement;

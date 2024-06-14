@@ -4,6 +4,20 @@
 
 - In Progess
 
+## 1.1.1 - 2024-06-14
+
+### Added
+
+- Enabled Space Visibility toggle feature
+
+### Changed
+
+- Help content is now in JSON format
+
+### Fixed
+
+- Fix paste error when Clipboard access isn't allowed
+
 ## 1.1.0 - 2024-06-04
 
 ### Changed
