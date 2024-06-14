@@ -108,6 +108,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
   const appConfig = config ? Object.assign(CONFIG, config) : CONFIG,
     inputRef = useRef<HTMLSpanElement>(null),
     msgError = 'error',
+    pasteEnabled = usePasteEnabled(),
     [state, dispatch] = useReducer(reducer, initialState);
 
   const help = appConfig.help,
@@ -173,8 +174,6 @@ export function RPNCalc({ config }: RPNCalcProps) {
     setThemeIndex(selectedIndex);
     setLoading(false);
   }, [themes]);
-
-  const pasteEnabled = usePasteEnabled();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
