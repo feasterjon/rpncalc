@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useReducer, useRef } from 'react';
+import React, { useCallback, useEffect, useReducer, useRef } from 'react';
 import { CONFIG } from '../../config';
 import type { Config, Theme } from '@/types/config';
 import type { Button as KeyboardButton, ConfigButton as KeyboardConfigButton } from '@/types/keyboard';
@@ -146,12 +146,12 @@ export function RPNCalc({ config }: RPNCalcProps) {
   toggleAppHistoryExtendedVisible = () => {
     dispatch({ type: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE' });
   },
-  toggleAppHistoryVisible = () => {
+  toggleAppHistoryVisible = useCallback(() => {
     dispatch({ type: 'TOGGLE_APP_HISTORY_VISIBLE' });
-  },
-  toggleDialogVisibleHelp = () => {
+  }, []),
+  toggleDialogVisibleHelp = useCallback(() => {
     dispatch({ type: 'TOGGLE_DIALOG_VISIBLE_HELP' });
-  },
+  }, []),
   toggleKeyboardVisible = () => {
     dispatch({ type: 'TOGGLE_KEYBOARD_VISIBLE' });
   },
@@ -186,8 +186,8 @@ export function RPNCalc({ config }: RPNCalcProps) {
   }, [themes]);
 
   useKeyboardShortcuts(
-    toggleDialogVisibleHelp,
     toggleAppHistoryVisible,
+    toggleDialogVisibleHelp,
     state.appHistoryVisible,
     state.dialogVisibleHelp
   );
