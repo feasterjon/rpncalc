@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 export const useKeyboardShortcuts = (
-  toggleDialogVisibleHelp: () => void,
   toggleAppHistoryVisible: () => void,
+  toggleDialogVisibleHelp: () => void,
   appHistoryVisible: boolean,
   dialogVisibleHelp: boolean
 ) => {
@@ -21,5 +21,10 @@ export const useKeyboardShortcuts = (
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [appHistoryVisible, dialogVisibleHelp]);
+  }, [
+    toggleAppHistoryVisible,
+    toggleDialogVisibleHelp,
+    appHistoryVisible,
+    dialogVisibleHelp
+  ]);
 }

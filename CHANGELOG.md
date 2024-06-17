@@ -4,6 +4,13 @@
 
 - In Progess
 
+## 1.1.2 - 2024-06-17
+
+### Changed
+
+- Added form_factor wide screenshot
+- Memoized toggleAppHistoryVisible and toggleDialogVisibleHelp dependencies for useKeyboardShortcuts hook
+
 ## 1.1.1 - 2024-06-14
 
 ### Added
