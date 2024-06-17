@@ -39,7 +39,15 @@
       "src": "screenshot-640x360.png",
       "sizes": "640x360",
       "type": "image/png",
-      "label": "RPN Calculator"
+      "label": "RPN Calculator",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "screenshot-640x360.png",
+      "sizes": "640x360",
+      "type": "image/png",
+      "label": "RPN Calculator",
+      "form_factor": "wide"
     }
   ],
   "start_url": ".",
