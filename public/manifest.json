@@ -36,14 +36,14 @@
   ],
   "screenshots": [
     {
-      "src": "screenshot-640x360.png",
+      "src": "screenshot-640x360-narrow.png",
       "sizes": "640x360",
       "type": "image/png",
       "label": "RPN Calculator",
       "form_factor": "narrow"
     },
     {
-      "src": "screenshot-640x360.png",
+      "src": "screenshot-640x360-wide.png",
       "sizes": "640x360",
       "type": "image/png",
       "label": "RPN Calculator",
