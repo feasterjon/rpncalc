@@ -4,6 +4,12 @@
 
 - In Progess
 
+## 1.2.0 - 2024-06-20
+
+### Changed
+
+- Migrated to Vite
+
 ## 1.1.2 - 2024-06-17
 
 ### Changed

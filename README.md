@@ -1,4 +1,4 @@
-[![RPNCalc](public/logo.png "Reverse Polish Notation (RPN) Calculator")](https://feasterjon.github.io/rpncalc/)
+[![RPNCalc](public/images/logo.png "Reverse Polish Notation (RPN) Calculator")](https://feasterjon.github.io/rpncalc/)
 
 A Reverse Polish Notation (RPN) calculator Progressive Web App (PWA) produced with [React](https://react.dev/) and [Tailwind CSS](https://tailwindcss.com/)
 
@@ -31,7 +31,7 @@ RPN Calculator is a **Progressive Web App (PWA)** that provides a user experienc
 
 1. Clone this repo.
 2. Install dependencies: `npm install`
-3. Start a local server and follow the prompts to view the code running in a browser: `npm start`
+3. Start a local server and follow the prompts to view the code running in a browser: `npm run dev`
 
 ## Examples
 
@@ -63,7 +63,7 @@ RPN Calculator is a **Progressive Web App (PWA)** that provides a user experienc
 
 The custom color palette is primarily customized using CSS custom properties (variables) in `src/index.css`. Essentially, two colors (`primary`, `secondary`) are all that need to be changed as they are referenced thereafter. These values are hue and saturation values (hence the `hs` suffix).
 
-``` index.css
+```css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -83,10 +83,9 @@ The custom color palette is primarily customized using CSS custom properties (va
 
 The custom color palette is configured in the `tailwind.config.js` file in the namespace `rpncalc`.
 
-``` tailwind.config.js
+```javascript
 /** @type {import('tailwindcss').Config} */
-const colors = require('tailwindcss/colors')
-module.exports = {
+export default {
   ...
   darkMode: ['class', '[data-mode="dark"]'],
   theme: {

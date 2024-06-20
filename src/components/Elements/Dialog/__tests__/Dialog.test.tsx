@@ -1,14 +1,15 @@
+import { vi, describe, expect, test } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Dialog } from '../Dialog';
-import { vibrate } from '../../../../utils/vibrate';
+import { vibrate } from '../../../../utils/vibrate';  
 
-jest.mock('../../../../utils/vibrate', () => ({
-  vibrate: jest.fn()
+vi.mock('../../../../utils/vibrate', () => ({
+  vibrate: vi.fn()
 }));
 
 describe('Dialog Component', () => {
   test('renders dialog with title content, and footer', () => {
-    const closeMock = jest.fn();
+    const closeMock = vi.fn();
     render(
       <Dialog title="Test Dialog" close={closeMock} footer="Test Footer">
         <div>Test Content</div>
@@ -21,7 +22,7 @@ describe('Dialog Component', () => {
   });
 
   test('It does not close dialog when clicking inside if cancelable', () => {
-    const closeMock = jest.fn();
+    const closeMock = vi.fn();
     render(
       <Dialog title="Test Dialog" close={closeMock} cancelable>
         <div data-testid="dialog-content">Test Content</div>
@@ -33,7 +34,7 @@ describe('Dialog Component', () => {
   });
 
   test('It closes dialog when clicking outside if cancelable', () => {
-    const closeMock = jest.fn();
+    const closeMock = vi.fn();
     render(
       <Dialog title="Test Dialog" close={closeMock} cancelable>
         <div data-testid="dialog-content">Test Content</div>
@@ -45,7 +46,7 @@ describe('Dialog Component', () => {
   });
 
   test('It does not close dialog when clicking outside if not cancelable', () => {
-    const closeMock = jest.fn();
+    const closeMock = vi.fn();
     render(
       <Dialog title="Test Dialog" close={closeMock} cancelable={false}>
         <div data-testid="dialog-content">Test Content</div>
@@ -57,7 +58,7 @@ describe('Dialog Component', () => {
   });
 
   test('It closes dialog when close button is clicked', () => {
-    const closeMock = jest.fn();
+    const closeMock = vi.fn();
     render(
       <Dialog title="Test Dialog" close={closeMock}>
         <div>Test Content</div>
@@ -69,7 +70,7 @@ describe('Dialog Component', () => {
   });
 
   test('It calls vibrate function when vibrateEnabled is true', () => {
-    const closeMock = jest.fn();
+    const closeMock = vi.fn();
     render(
       <Dialog title="Test Dialog" close={closeMock} vibrateEnabled>
         <div>Test Content</div>

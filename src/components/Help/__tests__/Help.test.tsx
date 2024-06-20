@@ -1,8 +1,9 @@
+import { vi, describe, expect, test, afterEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { Help } from '../Help';
 import axios from 'axios';
 
-jest.mock('axios');
+vi.mock('axios');
 
 const mockConfig = {
   attributes: {
@@ -65,7 +66,7 @@ const mockConfig = {
 };
 
 afterEach(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 describe('Help Component', () => {

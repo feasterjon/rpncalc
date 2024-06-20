@@ -1,3 +1,4 @@
+import { vi, describe, expect, test } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Keyboard } from '../Keyboard';
 
@@ -76,7 +77,7 @@ const mockConfig = {
       }
     }
   },
-  setCurrentInput: jest.fn(),
+  setCurrentInput: vi.fn(),
   vibrateEnabled: false
 };
 

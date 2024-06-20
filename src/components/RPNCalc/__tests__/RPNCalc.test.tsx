@@ -1,8 +1,10 @@
+import { afterEach, beforeAll, describe, expect, test } from 'vitest';
 import { CONFIG } from '../../../config';
 import { mockLocalStorage } from '../../../__mocks__/localStorage';
 import { mockMatchMedia } from '../../../__mocks__/matchMedia';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { RPNCalc } from '../RPNCalc';
+import styles from '../RPNCalc.module.css';
 
 const mockStoragePrefix = CONFIG.storage.prefix;
 
@@ -770,30 +772,30 @@ describe('RPNCalc Component', () => {
 
   test('It toggles History visibility when clicking History dropdown item', () => {
     render(<RPNCalc />);
-    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('history').firstChild).toHaveClass(styles.fadeHidden);
     fireEvent.click(screen.getByLabelText('Settings'));
     fireEvent.click(screen.getByRole('option', { name: /History/i }));
-    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeVisible');
+    expect(screen.getByTestId('history').firstChild).toHaveClass(styles.fadeVisible);
     fireEvent.click(screen.getAllByLabelText('Toggle History')[0]);
-    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('history').firstChild).toHaveClass(styles.fadeHidden);
   });
 
   test('It toggles History visibility when h key is pressed', () => {
     render(<RPNCalc />);
-    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('history').firstChild).toHaveClass(styles.fadeHidden);
     fireEvent.keyDown(window, { key: 'h', code: 'KeyH' });
-    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeVisible');
+    expect(screen.getByTestId('history').firstChild).toHaveClass(styles.fadeVisible);
     fireEvent.keyDown(window, { key: 'h', code: 'KeyH' });
-    expect(screen.getByTestId('history').firstChild).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('history').firstChild).toHaveClass(styles.fadeHidden);
   });
 
   test('It toggles Extended History visibility when clicking Toggle Extended History button is clicked', () => {
     setMockLocalStorageData();
     render(<RPNCalc />);
-    expect(screen.getByTestId('history-extended-last').parentElement).toHaveClass('fadeVisible');
-    expect(screen.getByTestId('history-extended-0').parentElement).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('history-extended-last').parentElement).toHaveClass(styles.fadeVisible);
+    expect(screen.getByTestId('history-extended-0').parentElement).toHaveClass(styles.fadeHidden);
     fireEvent.click(screen.getAllByLabelText('Toggle Extended History')[0]);
-    expect(screen.getByTestId('history-extended-0').parentElement).toHaveClass('fadeVisible');
+    expect(screen.getByTestId('history-extended-0').parentElement).toHaveClass(styles.fadeVisible);
   });
 
   test('It clears stored history items when button is clicked', () => {
@@ -808,37 +810,37 @@ describe('RPNCalc Component', () => {
 
   test('It toggles Keypad visibility when clicking Keypad dropdown item', () => {
     render(<RPNCalc />);
-    expect(screen.getByTestId('interface')).not.toHaveClass('hidden');
+    expect(screen.getByTestId('interface')).not.toHaveClass(styles.hidden);
     fireEvent.click(screen.getByLabelText('Settings'));
     fireEvent.click(screen.getByRole('option', { name: /Keypad/i }));
-    expect(screen.getByTestId('interface')).toHaveClass('hidden');
+    expect(screen.getByTestId('interface')).toHaveClass(styles.hidden);
     fireEvent.click(screen.getByRole('option', { name: /Keypad/i }));
-    expect(screen.getByTestId('interface')).not.toHaveClass('hidden');
+    expect(screen.getByTestId('interface')).not.toHaveClass(styles.hidden);
   });
 
   test('It toggles Help visibility when clicking Help dropdown item', () => {
     render(<RPNCalc />);
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeHidden);
     fireEvent.click(screen.getByLabelText('Settings'));
     fireEvent.click(screen.getByRole('option', { name: /Help/i }));
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeVisible');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeVisible);
   });
 
   test('It toggles Help visibility when ? key is pressed', () => {
     render(<RPNCalc />);
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeHidden);
     fireEvent.keyDown(window, { key: '?', code: 'Slash' });
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeVisible');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeVisible);
     fireEvent.keyDown(window, { key: '?', code: 'Slash' });
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeHidden);
   });
 
   test('It toggles Help visibility when Ctrl + / key is pressed', () => {
     render(<RPNCalc />);
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeHidden);
     fireEvent.keyDown(window, { key: '/', ctrlKey: true });
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeVisible');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeVisible);
     fireEvent.keyDown(window, { key: '/', ctrlKey: true });
-    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass('fadeHidden');
+    expect(screen.getByTestId('dialog-mask').parentElement).toHaveClass(styles.fadeHidden);
   });
 });
