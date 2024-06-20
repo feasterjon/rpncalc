@@ -4,6 +4,12 @@
 
 - In Progess
 
+## 1.2.1 - 2024-06-20
+
+### Added
+
+- Added GitHub deployment workflow
+
 ## 1.2.0 - 2024-06-20
 
 ### Changed
