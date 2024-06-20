@@ -1,11 +1,12 @@
+import { vi, describe, expect, test } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Dropdown } from '../Dropdown';
 
 const mockConfig = {
   data: [
-    { icon: 'eye', id: 1, label: 'Option 1', onClick: jest.fn() },
-    { icon: 'clock', id: 2, label: 'Option 2', onClick: jest.fn(), persist: true },
-    { icon: 'question-mark-circle', id: 3, label: 'Option 3', onClick: jest.fn() }
+    { icon: 'eye', id: 1, label: 'Option 1', onClick: vi.fn() },
+    { icon: 'clock', id: 2, label: 'Option 2', onClick: vi.fn(), persist: true },
+    { icon: 'question-mark-circle', id: 3, label: 'Option 3', onClick: vi.fn() }
   ],
   icon: 'info',
   label: 'Dropdown',

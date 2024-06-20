@@ -1,5 +1,4 @@
-import React from 'react';
-import './App.css';
+import './App.css'
 import { RPNCalc } from './components/RPNCalc';
 
 function App() {
@@ -7,7 +6,7 @@ function App() {
     <>
       <RPNCalc />
     </>
-  );
+  )
 }
 
-export default App;
+export default App
