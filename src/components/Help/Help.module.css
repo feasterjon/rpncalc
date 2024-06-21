@@ -31,6 +31,7 @@
 .logo {
   display: block;
   height: auto;
+  min-width: 100px;
 }
 
 .spaceLeft {
