@@ -10,7 +10,7 @@ const mockConfig = {
     footer: 'Help Footer',
     logo: {
       alt: 'My Logo',
-      src: '/images/logo.png',
+      src: 'images/logo.png',
       width: 50
     },
     sections: [
@@ -97,7 +97,7 @@ describe('Help Component', () => {
 
       const logo = screen.getByAltText('My Logo');
 
-      expect(logo).toHaveAttribute('src', '/images/logo.png');
+      expect(logo).toHaveAttribute('src', 'images/logo.png');
       expect(logo).toHaveStyle({ width: '50%' });
       expect(screen.getByText(mockConfig.attributes.title)).toBeInTheDocument();
       expect(screen.getByText('Section 1')).toBeInTheDocument();
