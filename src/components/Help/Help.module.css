@@ -10,6 +10,7 @@
 
 .header {
   align-items: center;
+  display: flex;
   margin-bottom: 1rem;
 }
 
@@ -25,4 +26,13 @@
   line-height: 1.75rem;
   margin-bottom: 1rem;
   margin-top: 1rem;
+}
+
+.logo {
+  display: block;
+  height: auto;
+}
+
+.spaceLeft {
+  margin-left: 1rem;
 }

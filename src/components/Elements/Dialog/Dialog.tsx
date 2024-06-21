@@ -42,22 +42,22 @@ export function Dialog({
         `}
         style={{maxHeight: `${maxHeight}%`, maxWidth: `${maxWidth}%`}}
       >
-        {title && (
-          <div className={styles.header}>
+        <div className={styles.header}>
+          {title && (
             <div className={styles.title}>
               {title}
             </div>
-            <div className={styles.controls}>
-              <button className={`
+          )}
+          <div className={styles.controls}>
+            <button className={`
                 ${styles.button}
                 ${styles.rounded}
                 ${darkMode ? styles.bgTransparentDark : styles.bgTransparentLight}
               `} onClick={vibrateEnabled ? () => { vibrate(); close(); } : () => { close(); }}>
-                <Icon id="x-mark" />
-              </button>
-            </div>
+              <Icon id="x-mark" />
+            </button>
           </div>
-        )}
+        </div>
         <div className={styles.body}>
           {children}
         </div>

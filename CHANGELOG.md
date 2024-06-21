@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- In Progess
+- Added Help Logo
 
 ## 1.2.1 - 2024-06-20
 
