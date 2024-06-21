@@ -50,11 +50,29 @@ export function Help({ config, darkMode }: HelpProps) {
 
   return (
     <LoadingMessage darkMode={darkMode} loading={loading}>
-      {data?.title && (
+      {(data?.title || data?.logo?.src) && (
         <div className={styles.header}>
-          <div className={styles.title}>
-            {data.title}
-          </div>
+          {data?.logo && (
+            <div>
+              <img
+                alt={data.logo.alt}
+                className={styles.logo}
+                loading="lazy"
+                src={data.logo.src}
+                style={{
+                  width: data.logo.width ? `${data.logo.width}%` : `100%`
+                }}
+              />
+            </div>
+          )}
+          {data?.title && (
+            <div className={`
+              ${styles.title}
+              ${data?.logo?.src ? styles.spaceLeft : ''}
+            `}>
+              {data.title}
+            </div>
+          )}
         </div>
       )}
       {data?.sections?.map((section) =>

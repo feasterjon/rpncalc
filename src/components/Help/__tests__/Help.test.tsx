@@ -8,6 +8,11 @@ vi.mock('axios');
 const mockConfig = {
   attributes: {
     footer: 'Help Footer',
+    logo: {
+      alt: 'My Logo',
+      src: 'images/logo.png',
+      width: 50
+    },
     sections: [
       {
         data: [
@@ -89,6 +94,11 @@ describe('Help Component', () => {
     render(<Help config={{ api: '/help', sections: [] }} />);
 
     await waitFor(() => {
+
+      const logo = screen.getByAltText('My Logo');
+
+      expect(logo).toHaveAttribute('src', 'images/logo.png');
+      expect(logo).toHaveStyle({ width: '50%' });
       expect(screen.getByText(mockConfig.attributes.title)).toBeInTheDocument();
       expect(screen.getByText('Section 1')).toBeInTheDocument();
       expect(screen.getByText('Article 1')).toBeInTheDocument();

@@ -1,9 +1,12 @@
 import type { Config } from '@/types/config';
 
+const appAuthor ='JonFeaster.com',
+  appShortName = 'RPNCalc';
+
 export const CONFIG: Config = {
   help: {
     api: `${import.meta.env.BASE_URL}api/help.json`,
-    footer: `${import.meta.env.VITE_APP_VERSION ? `RPNCalc ${import.meta.env.VITE_APP_VERSION} | ` : ''}JonFeaster.com`,
+    footer: `${appShortName}${import.meta.env.VITE_APP_VERSION ? ` ${import.meta.env.VITE_APP_VERSION}` : ''} | ${appAuthor}`,
     title: 'Help'
   },
   input: {
@@ -239,7 +242,7 @@ export const CONFIG: Config = {
     vibrateEnabled: true
   },
   storage: {
-    prefix: 'RPNCalc-'
+    prefix: `${appShortName}-`
   },
   themes: [
     {
