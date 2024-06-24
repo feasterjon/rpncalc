@@ -4,6 +4,15 @@ const appAuthor ='JonFeaster.com',
   appShortName = 'RPNCalc';
 
 export const CONFIG: Config = {
+  brand: {
+    logo: {
+      colors: {
+        dark: 'hsl(var(--rpncalc-color-primary))',
+        main: 'hsl(var(--rpncalc-color-primary-dark))'
+      },
+      width: 20
+    }
+  },
   help: {
     api: `${import.meta.env.BASE_URL}api/help.json`,
     footer: `${appShortName}${import.meta.env.VITE_APP_VERSION ? ` ${import.meta.env.VITE_APP_VERSION}` : ''} | ${appAuthor}`,

@@ -11,6 +11,7 @@ import { Icon } from '../Elements/Icon';
 import { JRPNCalc as RPN } from './JRPNCalc';
 import { Keyboard } from '../Elements/Keyboard';
 import { LoadingScreen } from '../Elements/LoadingScreen';
+import { Logo } from '../Logo';
 import { randomId } from '../../utils/randomId';
 import { storage } from '../../utils/storage';
 import styles from './RPNCalc.module.css';
@@ -117,7 +118,8 @@ export function RPNCalc({ config }: RPNCalcProps) {
     pasteEnabled = usePasteEnabled(),
     [state, dispatch] = useReducer(reducer, initialState);
 
-  const help = appConfig.help,
+  const brand = appConfig.brand,
+    help = appConfig.help,
     themes: Theme[] = appConfig.themes;
 
   if (appConfig.storage?.prefix) storage.prefix = appConfig.storage?.prefix;
@@ -615,6 +617,12 @@ export function RPNCalc({ config }: RPNCalcProps) {
             footer={help.footer}
             title={help.title}
           >
+            <Logo style={{
+              color: (brand?.logo?.colors?.dark && state.theme === 'dark')
+                ? brand.logo.colors.dark
+                : brand?.logo?.colors?.main,
+              width: (brand?.logo?.width) ? `${brand.logo.width}%` : `100%`
+            }} />
             <Help
               darkMode={(state.theme === 'dark') ? true : false}
               config={help}
