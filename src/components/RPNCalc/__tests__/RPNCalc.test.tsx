@@ -611,6 +611,7 @@ const mockLocalStorageData = {
       "id": 9487980791
     }
   ]`,
+  spaces: 'true',
   theme: 'dark'
 }
 
@@ -620,6 +621,7 @@ Object.defineProperty(window, 'localStorage', {
 
 const setMockLocalStorageData = () => {
   localStorage.setItem(`${mockStoragePrefix}history`, mockLocalStorageData.history);
+  localStorage.setItem(`${mockStoragePrefix}spaces`, mockLocalStorageData.spaces);
   localStorage.setItem(`${mockStoragePrefix}theme`, mockLocalStorageData.theme);
 };
 
@@ -707,6 +709,10 @@ describe('RPNCalc Component', () => {
     fireEvent.click(screen.getByLabelText('+'));
     fireEvent.keyDown(window, { key: 'Enter', code: 'Enter' });
     expect(screen.getByTestId('history-extended-last').textContent).toBe(`${getMockDate()} 5 8 + 13`);
+    const storageHistory = localStorage.getItem(`${mockStoragePrefix}history`);
+    const history = storageHistory ? JSON.parse(storageHistory) : [];
+    expect(history[0].answer).toBe('13');
+    expect(history[0].expression).toBe('5 8 +');
   });
 
   test('It applies the correct stored last answer when button is clicked', () => {
@@ -725,16 +731,19 @@ describe('RPNCalc Component', () => {
     expect(expressionElement.textContent).toBe(' 28.1780056072 |');
   });
 
-  test('It cycles themes when clicking Theme dropdown item', () => {
+  test('It cycles themes when clicking Theme dropdown item and stores the theme', () => {
     render(<RPNCalc />);
     expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('light');
     fireEvent.click(screen.getByLabelText('Settings'));
     fireEvent.click(screen.getByRole('option', { name: /Theme/i }));
     expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('light');
+    expect(localStorage.getItem(`${mockStoragePrefix}theme`)).toBe('light');
     fireEvent.click(screen.getByRole('option', { name: /Theme/i }));
     expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('dark');
+    expect(localStorage.getItem(`${mockStoragePrefix}theme`)).toBe('dark');
     fireEvent.click(screen.getByRole('option', { name: /Theme/i }));
     expect(screen.getByTestId('main').getAttribute('data-mode')).toBe('light');
+    expect(localStorage.getItem(`${mockStoragePrefix}theme`)).toBe('os-default');
   });
 
   test('It applies the correct stored theme os-default and cycles themes when clicking Theme dropdown item', () => {
@@ -806,6 +815,65 @@ describe('RPNCalc Component', () => {
     fireEvent.click(screen.getByLabelText('Clear History'));
     expect(screen.queryByTestId('history-extended-last')).toBeNull();
     expect(screen.queryByTestId('history-extended-3')).toBeNull();
+  });
+
+  test('It toggles Spaces visibility when clicking Spaces dropdown item and stores the setting', () => {
+    render(<RPNCalc />);
+    const expressionElement = screen.getByTestId('expression');
+    fireEvent.keyDown(window, { key: '1', code: 'Digit3' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '2', code: 'Digit5' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '+', code: 'Equal' });
+    const spans = expressionElement.querySelectorAll('.underline');
+    expect(spans.length).toBe(0);
+    fireEvent.click(screen.getByLabelText('Settings'));
+    fireEvent.click(screen.getByRole('option', { name: /Spaces/i }));
+    const spansOn = expressionElement.querySelectorAll('.underline');
+    expect(spansOn.length).toBe(2);
+    expect(localStorage.getItem(`${mockStoragePrefix}spaces`)).toBe('true');
+    fireEvent.click(screen.getByRole('option', { name: /Spaces/i }));
+    const spansOff = expressionElement.querySelectorAll('.underline');
+    expect(spansOff.length).toBe(0);
+    expect(localStorage.getItem(`${mockStoragePrefix}spaces`)).toBe('false');
+  });
+
+  test('It applies the correct stored spaces setting (undefined)', () => {
+    render(<RPNCalc />);
+    const expressionElement = screen.getByTestId('expression');
+    fireEvent.keyDown(window, { key: '1', code: 'Digit3' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '2', code: 'Digit5' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '+', code: 'Equal' });
+    const spans = expressionElement.querySelectorAll('.underline');
+    expect(spans.length).toBe(0);
+  });
+
+  test('It applies the correct stored spaces setting (true)', () => {
+    setMockLocalStorageData();
+    render(<RPNCalc />);
+    const expressionElement = screen.getByTestId('expression');
+    fireEvent.keyDown(window, { key: '1', code: 'Digit3' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '2', code: 'Digit5' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '+', code: 'Equal' });
+    const spans = expressionElement.querySelectorAll('.underline');
+    expect(spans.length).toBe(2);
+  });
+
+  test('It applies the correct stored spaces setting (false)', () => {
+    localStorage.setItem(`${mockStoragePrefix}spaces`, 'false');
+    render(<RPNCalc />);
+    const expressionElement = screen.getByTestId('expression');
+    fireEvent.keyDown(window, { key: '1', code: 'Digit3' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '2', code: 'Digit5' });
+    fireEvent.keyDown(window, { key: ' ', code: 'Space' });
+    fireEvent.keyDown(window, { key: '+', code: 'Equal' });
+    const spans = expressionElement.querySelectorAll('.underline');
+    expect(spans.length).toBe(0);
   });
 
   test('It toggles Keypad visibility when clicking Keypad dropdown item', () => {
