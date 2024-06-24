@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- In Progress
+- Enabled Space Visibility Setting Persistence
 
 ## 1.2.2 - 2024-06-21
 

@@ -25,13 +25,13 @@ type Action =
   | { type: 'SET_LOADING'; payload: boolean; }
   | { type: 'SET_LAST_ANSWER'; payload: string; }
   | { type: 'SET_PREFERS_DARK'; payload: boolean | null; }
+  | { type: 'SET_SPACES_VISIBLE'; payload: boolean; }
   | { type: 'SET_THEME'; payload: string; }
   | { type: 'SET_THEME_INDEX'; payload: number; }
   | { type: 'TOGGLE_APP_HISTORY_EXTENDED_VISIBLE'; }
   | { type: 'TOGGLE_APP_HISTORY_VISIBLE'; }
   | { type: 'TOGGLE_DIALOG_VISIBLE_HELP'; }
-  | { type: 'TOGGLE_KEYBOARD_VISIBLE'; }
-  | { type: 'TOGGLE_SPACES_VISIBLE'; };
+  | { type: 'TOGGLE_KEYBOARD_VISIBLE'; };
 
 type AppHistoryFormatted = {
   [date: string]: AppHistoryItem[];
@@ -90,6 +90,8 @@ const reducer = (state: AppState, action: Action) => {
       return { ...state, lastAnswer: action.payload };
     case 'SET_PREFERS_DARK':
       return { ...state, prefersDark: action.payload };
+    case 'SET_SPACES_VISIBLE':
+      return { ...state, spacesVisible: action.payload };
     case 'SET_THEME':
       return { ...state, theme: action.payload };
     case 'SET_THEME_INDEX':
@@ -102,8 +104,6 @@ const reducer = (state: AppState, action: Action) => {
       return { ...state, dialogVisibleHelp: !state.dialogVisibleHelp };
     case 'TOGGLE_KEYBOARD_VISIBLE':
       return { ...state, keyboardVisible: !state.keyboardVisible };
-    case 'TOGGLE_SPACES_VISIBLE':
-      return { ...state, spacesVisible: !state.spacesVisible };
     default:
       return state;
   }
@@ -137,6 +137,9 @@ export function RPNCalc({ config }: RPNCalcProps) {
   setPrefersDark = (data: boolean | null) => {
     dispatch({ type: 'SET_PREFERS_DARK', payload: data });
   },
+  setSpacesVisible = (data: boolean) => {
+    dispatch({ type: 'SET_SPACES_VISIBLE', payload: data });
+  },
   setTheme = (data: string) => {
     dispatch({ type: 'SET_THEME', payload: data });
   },
@@ -154,13 +157,10 @@ export function RPNCalc({ config }: RPNCalcProps) {
   }, []),
   toggleKeyboardVisible = () => {
     dispatch({ type: 'TOGGLE_KEYBOARD_VISIBLE' });
-  },
-  toggleSpacesVisible = () => {
-    dispatch({ type: 'TOGGLE_SPACES_VISIBLE' });
   };
 
   useEffect(() => {
-    let storageHistory = storage.getItem('history');
+    const storageHistory = storage.getItem('history');
     let savedHistory: AppHistoryItem[] = [];
     (Array.isArray(storageHistory))
       ? savedHistory = storageHistory
@@ -182,6 +182,10 @@ export function RPNCalc({ config }: RPNCalcProps) {
     }
     setTheme(selectedTheme.name);
     setThemeIndex(selectedIndex);
+
+    const storageSpaces = storage.getItem('spaces');
+    if (typeof storageSpaces === 'boolean') setSpacesVisible(storageSpaces);
+
     setLoading(false);
   }, [themes]);
 
@@ -317,6 +321,12 @@ export function RPNCalc({ config }: RPNCalcProps) {
   const historyRemove = () => {
     state.appHistory.length = 0;
     storage.removeItem('history');
+  };
+
+  const handleSpacesVisible = () => {
+    let mySpacesVisible = !state.spacesVisible;
+    setSpacesVisible(mySpacesVisible);
+    storage.setItem('spaces', mySpacesVisible.toString());
   };
 
   const historyUpdate = (expression: string, answer: string, lengthMax = 100) => {
@@ -524,7 +534,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     icon: state.spacesVisible ? 'eye' : 'eye-slash',
                     id: 3,
                     label: 'Spaces',
-                    onClick: toggleSpacesVisible,
+                    onClick: handleSpacesVisible,
                     persist: true
                   },
                   {
@@ -539,7 +549,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     icon: 'question-mark-circle',
                     id: 5,
                     label: 'Help',
-                    onClick: () => { toggleDialogVisibleHelp() }
+                    onClick: toggleDialogVisibleHelp
                   }
                 ],
                 icon: 'ellipsis-vertical',

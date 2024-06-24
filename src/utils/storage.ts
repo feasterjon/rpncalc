@@ -1,5 +1,5 @@
 type Storage = {
-  getItem: (keyName: string) => string | object | null;
+  getItem: (keyName: string) => string | boolean | object | null;
   prefix: string;
   removeItem: (keyName: string) => void;
   setItem: (keyName: string, keyValue: string | object) => void;
