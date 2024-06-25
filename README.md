@@ -1,6 +1,6 @@
 <p>
   <a href="https://app.jonfeaster.com/rpncalc/" target="_blank">
-    <img alt="RPN Calculator" src="https://raw.githubusercontent.com/feasterjon/rpncalc/wip-2024-06-25/public/images/logo.svg" width="60%" />
+    <img alt="RPN Calculator" src="https://raw.githubusercontent.com/feasterjon/rpncalc/main/public/images/logo.svg" width="60%" />
   </a>
 </p>
 
