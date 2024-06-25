@@ -10,7 +10,7 @@
 
 - Enabled Space Visibility setting persistence
 - Expanded Branding options
-- Added logo component 
+- Added logo component
 
 ## 1.2.2 - 2024-06-21
 
