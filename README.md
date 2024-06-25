@@ -1,4 +1,4 @@
-[![RPN Calculator](https://raw.githubusercontent.com/feasterjon/rpncalc/main/public/images/logo.svg "RPN Calculator")](https://app.jonfeaster.com/rpncalc/)
+[![RPN Calculator](https://raw.githubusercontent.com/feasterjon/rpncalc/wip-2024-06-25/public/images/logo.svg "RPN Calculator")](https://app.jonfeaster.com/rpncalc/)
 
 A Reverse Polish Notation (RPN) calculator Progressive Web App (PWA) produced with [React](https://react.dev/) and [Tailwind CSS](https://tailwindcss.com/)
 
