@@ -14,7 +14,7 @@ export const CONFIG: Config = {
     }
   },
   help: {
-    api: `${import.meta.env.BASE_URL}api/help.json`,
+    api: 'api/help.json',
     footer: `${appShortName}${import.meta.env.VITE_APP_VERSION ? ` ${import.meta.env.VITE_APP_VERSION}` : ''} | ${appAuthor}`,
     title: 'Help'
   },
