@@ -4,6 +4,16 @@
 
 - In Progress
 
+## 1.2.4 - 2024-06-27
+
+### Changed
+
+- Updated Help Header style
+
+### Fixed
+
+- Enabled Help API offline availability
+
 ## 1.2.3 - 2024-06-24
 
 ### Added
