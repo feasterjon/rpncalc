@@ -617,12 +617,20 @@ export function RPNCalc({ config }: RPNCalcProps) {
             footer={help.footer}
             title={help.title}
           >
-            <Logo style={{
-              color: (brand?.logo?.colors?.dark && state.theme === 'dark')
-                ? brand.logo.colors.dark
-                : brand?.logo?.colors?.main,
-              width: (brand?.logo?.width) ? `${brand.logo.width}%` : `100%`
-            }} />
+            <div className="
+              border-b
+              border-neutral-900
+              dark:border-neutral-100
+              mb-4
+              pb-3
+            ">
+              <Logo style={{
+                color: (brand?.logo?.colors?.dark && state.theme === 'dark')
+                  ? brand.logo.colors.dark
+                  : brand?.logo?.colors?.main,
+                width: (brand?.logo?.width) ? `${brand.logo.width}%` : `100%`
+              }} />
+            </div>
             <Help
               darkMode={(state.theme === 'dark') ? true : false}
               config={help}

@@ -9,9 +9,11 @@
 }
 
 .header {
+  border-bottom: 0.0625rem solid;
   align-items: center;
   display: flex;
   margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
 }
 
 .header .title {
@@ -28,7 +30,7 @@
   margin-top: 1rem;
 }
 
-.logo {
+.logo img {
   display: block;
   height: auto;
   min-width: 100px;

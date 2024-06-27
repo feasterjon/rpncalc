@@ -53,10 +53,9 @@ export function Help({ config, darkMode }: HelpProps) {
       {(data?.title || data?.logo?.src) && (
         <div className={styles.header}>
           {data?.logo && (
-            <div>
+            <div className={styles.logo}>
               <img
                 alt={data.logo.alt}
-                className={styles.logo}
                 loading="lazy"
                 src={data.logo.src}
                 style={{
