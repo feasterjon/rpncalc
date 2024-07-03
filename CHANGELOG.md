@@ -9,6 +9,7 @@
 ### Changed
 
 - Enabled analytics environment control
+- Enabled Help data to be saved to Local Storage for offline availability
 
 ## 1.2.4 - 2024-06-27
 

@@ -3,6 +3,10 @@ import type { Config } from '@/types/config';
 const appAuthor ='JonFeaster.com',
   appShortName = 'RPNCalc';
 
+const storageConfig = {
+  prefix: `${appShortName}-`
+}
+
 export const CONFIG: Config = {
   brand: {
     logo: {
@@ -16,6 +20,7 @@ export const CONFIG: Config = {
   help: {
     api: 'api/help.json',
     footer: `${appShortName}${import.meta.env.VITE_APP_VERSION ? ` ${import.meta.env.VITE_APP_VERSION}` : ''} | ${appAuthor}`,
+    storage: storageConfig,
     title: 'Help'
   },
   input: {
@@ -250,9 +255,7 @@ export const CONFIG: Config = {
     },
     vibrateEnabled: true
   },
-  storage: {
-    prefix: `${appShortName}-`
-  },
+  storage: storageConfig,
   themes: [
     {
       icon: 'circle-half-stroke',

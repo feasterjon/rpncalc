@@ -9,7 +9,7 @@ import styles from '../RPNCalc.module.css';
 const mockStoragePrefix = CONFIG.storage.prefix;
 
 const mockLocalStorageData = {
-  history: `[
+  history: [
     {
       "answer": "8000",
       "date": 1708621952626,
@@ -610,8 +610,8 @@ const mockLocalStorageData = {
       "expression": "794 √",
       "id": 9487980791
     }
-  ]`,
-  spaces: 'true',
+  ],
+  spaces: true,
   theme: 'dark'
 }
 
@@ -620,8 +620,8 @@ Object.defineProperty(window, 'localStorage', {
 });
 
 const setMockLocalStorageData = () => {
-  localStorage.setItem(`${mockStoragePrefix}history`, mockLocalStorageData.history);
-  localStorage.setItem(`${mockStoragePrefix}spaces`, mockLocalStorageData.spaces);
+  localStorage.setItem(`${mockStoragePrefix}history`, JSON.stringify(mockLocalStorageData.history));
+  localStorage.setItem(`${mockStoragePrefix}spaces`, JSON.stringify(mockLocalStorageData.spaces));
   localStorage.setItem(`${mockStoragePrefix}theme`, mockLocalStorageData.theme);
 };
 
