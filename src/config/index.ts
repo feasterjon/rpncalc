@@ -5,7 +5,7 @@ const appAuthor ='JonFeaster.com',
 
 const storageConfig = {
   prefix: `${appShortName}-`
-}
+};
 
 export const CONFIG: Config = {
   brand: {
