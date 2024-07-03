@@ -39,6 +39,7 @@ jobs:
         run: npm ci
       - name: Build
         env:
+          VITE_APP_GA_ID: ${{ vars.VITE_APP_GA_ID }}
           VITE_APP_VERSION: ${{ vars.VITE_APP_VERSION }}
         run: npm run build
       - name: Setup Pages
