@@ -5,6 +5,7 @@ export type Help = {
   footer?: string;
   logo?: Logo | null;
   sections?: Section[];
+  storage?: { prefix?: string };
   title?: string;
 };
 

@@ -1,14 +1,25 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KL6NX2FN5"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <script type="module">
+      // Google tag (gtag.js)
+      const gaID = import.meta.env.VITE_APP_GA_ID,
+        modeDev = import.meta.env.DEV;
+      if (gaID) {
+        const gtagScript = document.createElement('script');
+        gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaID}`;
+        gtagScript.async = true;
+        document.head.insertBefore(gtagScript, document.head.firstChild);
 
-      gtag('config', 'G-9KL6NX2FN5');
+        gtagScript.onload = () => {
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', gaID);
+        };
+        if (modeDev) console.log(`Analytics (GA_ID: ${gaID}) enabled in development.`);
+      }
     </script>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.ico" />

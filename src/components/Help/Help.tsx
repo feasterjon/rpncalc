@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { Help as HelpType, Section as SectionType } from '@/types/help';
 import { LoadingMessage } from '../Elements/LoadingMessage';
+import { storage } from '../../utils/storage';
 import styles from './Help.module.css';
 import { Table as TableCom } from '../Elements/Table';
 import axios from 'axios';
@@ -15,6 +16,8 @@ export function Help({ config, darkMode }: HelpProps) {
   const [data, setData] = useState<HelpType | null>(null);
   const [loading, setLoading] = useState(true);
 
+  if (config.storage?.prefix) storage.prefix = config.storage?.prefix;
+
   useEffect(() => {
 
     const resource = config.api || '';
@@ -28,6 +31,16 @@ export function Help({ config, darkMode }: HelpProps) {
       return;
     }
 
+    if (!navigator.onLine) {
+      const storageHelp = storage.getItem('help');
+      if (!storageHelp) return;
+      if (storageHelp && typeof storageHelp === 'object' && !Array.isArray(storageHelp)) {
+        setData(storageHelp);
+        setLoading(false);
+        return;
+      }
+    }
+
     const controller = new AbortController();
 
     const fetchData = async () => {
@@ -35,7 +48,9 @@ export function Help({ config, darkMode }: HelpProps) {
         const response = await axios.get(resource, {
           signal: controller.signal
         });
-        setData(response.data.attributes as HelpType);
+        const dataAttributes: HelpType = response.data.attributes;
+        setData(dataAttributes);
+        storage.setItem('help', dataAttributes);
         setLoading(false);
       } catch (error) {
         if (!axios.isCancel(error)) {
