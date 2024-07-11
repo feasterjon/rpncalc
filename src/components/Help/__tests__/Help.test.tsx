@@ -139,11 +139,12 @@ const mockConfig = {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  localStorage.clear();
+  setNavigatorOnline(true);
 });
 
 afterEach(() => {
   vi.clearAllMocks();
-  localStorage.clear();
 });
 
 describe('Help Component', () => {
