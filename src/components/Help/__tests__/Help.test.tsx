@@ -139,11 +139,12 @@ const mockConfig = {
 
 beforeEach(() => {
   vi.clearAllMocks();
+  localStorage.clear();
+  setNavigatorOnline(true);
 });
 
 afterEach(() => {
   vi.clearAllMocks();
-  localStorage.clear();
 });
 
 describe('Help Component', () => {
@@ -207,9 +208,11 @@ describe('Help Component', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('loading-message')).toBeInTheDocument();
-      expect(screen.queryByText(mockLocalStorageData.title)).toBeNull();
-      expect(screen.queryByText('Section')).toBeNull();
     });
+
+    expect(screen.queryByText(mockLocalStorageData.title)).toBeNull();
+    expect(screen.queryByText('Section 1')).toBeNull();
+    expect(screen.queryByText('Saved Section 1')).toBeNull();
   });
 
   test('It renders correctly when offline and with saved data', async () => {
@@ -234,5 +237,52 @@ describe('Help Component', () => {
       expect(screen.getByText('Saved Article 2')).toBeInTheDocument();
       expect(screen.getByText(mockLocalStorageData.footer)).toBeInTheDocument();
     });
+  });
+
+  test('It renders loading message when the API fails and no saved data', async () => {
+    // Mock console.error to suppress error message(s)
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('API Error'));
+
+    render(<Help config={{ api: '/help', sections: [] }} />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('loading-message')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByText(mockLocalStorageData.title)).toBeNull();
+    expect(screen.queryByText('Section 1')).toBeNull();
+    expect(screen.queryByText('Saved Section 1')).toBeNull();
+
+    // Restore console.error
+    consoleErrorSpy.mockRestore();
+  });
+
+  test('It renders correctly when the API fails and with saved data', async () => {
+    // Mock console.error to suppress error message(s)
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    vi.spyOn(axios, 'get').mockRejectedValue(new Error('API Error'));
+    setMockLocalStorageData();
+
+    render(<Help config={{ api: '/help', sections: [] }} />);
+
+    await waitFor(() => {
+
+      const logo = screen.getByAltText('Saved My Logo');
+
+      expect(logo).toHaveAttribute('src', 'images/saved-logo.png');
+      expect(logo).toHaveStyle({ width: '80%' });
+      expect(screen.getByText(mockLocalStorageData.title)).toBeInTheDocument();
+      expect(screen.getByText('Saved Section 1')).toBeInTheDocument();
+      expect(screen.getByText('Saved Article 1')).toBeInTheDocument();
+      expect(screen.getByText('Saved Data 1')).toBeInTheDocument();
+      expect(screen.getByText('Saved Heading 2')).toBeInTheDocument();
+      expect(screen.getByText('Saved Section 2')).toBeInTheDocument();
+      expect(screen.getByText('Saved Article 2')).toBeInTheDocument();
+      expect(screen.getByText(mockLocalStorageData.footer)).toBeInTheDocument();
+    });
+
+    // Restore console.error
+    consoleErrorSpy.mockRestore();
   });
 });

@@ -22,6 +22,14 @@ export function Help({ config, darkMode }: HelpProps) {
 
     const resource = config.api || '';
 
+    const setStorageHelp = () => {
+      const storageHelp = storage.getItem('help');
+      if (storageHelp && typeof storageHelp === 'object' && !Array.isArray(storageHelp)) {
+        setData(storageHelp);
+        setLoading(false);
+      }
+    };
+
     if (!resource) {
       const sections: SectionType[] = config.sections || [];
       setData({
@@ -32,13 +40,8 @@ export function Help({ config, darkMode }: HelpProps) {
     }
 
     if (!navigator.onLine) {
-      const storageHelp = storage.getItem('help');
-      if (!storageHelp) return;
-      if (storageHelp && typeof storageHelp === 'object' && !Array.isArray(storageHelp)) {
-        setData(storageHelp);
-        setLoading(false);
-        return;
-      }
+      setStorageHelp();
+      return;
     }
 
     const controller = new AbortController();
@@ -49,13 +52,19 @@ export function Help({ config, darkMode }: HelpProps) {
           signal: controller.signal
         });
         const dataAttributes: HelpType = response.data.attributes;
-        setData(dataAttributes);
-        storage.setItem('help', dataAttributes);
-        setLoading(false);
+        if (dataAttributes) {
+          setData(dataAttributes);
+          storage.setItem('help', dataAttributes);
+          setLoading(false);
+        }
+        else {
+          setStorageHelp();
+        }
       } catch (error) {
         if (!axios.isCancel(error)) {
           console.error('Error fetching data:', error);
         }
+        setStorageHelp();
       }
     };
 
