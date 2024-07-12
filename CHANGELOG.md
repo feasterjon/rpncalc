@@ -4,6 +4,12 @@
 
 - In Progress
 
+## 1.2.6 - 2024-07-12
+
+### Changed
+
+- Enabled use of Local Storage Help data for API failure cases
+
 ## 1.2.5 - 2024-07-03
 
 ### Changed
