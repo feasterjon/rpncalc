@@ -42,12 +42,12 @@ export function LoadingScreen({
           }}
         data-testid="loading-screen">
           {spinnerVisible && (
-            <div>
+            <div data-testid="spinner">
               <Spinner adaptive={adaptive} darkMode={darkMode} />
             </div>
           )}
           {message && (
-            <div>
+            <div data-testid="message">
               {message}
             </div>
           )}
