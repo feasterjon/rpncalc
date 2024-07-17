@@ -405,7 +405,6 @@ export function RPNCalc({ config }: RPNCalcProps) {
       adaptive={true}
       bg="waves"
       bgColor="hsl(var(--rpncalc-color-primary-dark))"
-      darkMode={false}
       loading={state.loading}
       message="Loading..."
     >
