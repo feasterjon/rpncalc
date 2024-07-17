@@ -25,6 +25,7 @@ describe('LoadingScreen Component', () => {
     expect(screen.queryByTestId('mock-children')).toBeNull();
     expect(loadingScreenElement).toHaveClass(styles.mainLight);
     expect(loadingScreenElement).not.toHaveClass(styles.waves);
+    expect(loadingScreenElement).not.toHaveClass(styles.wavesGradient);
     expect(loadingScreenElement).not.toHaveClass(styles.gradient);
     expect(loadingScreenElement).not.toHaveClass(styles.mainAdaptive);
     expect(loadingScreenElement).not.toHaveStyle({ backgroundColor: bgColor });
@@ -94,6 +95,22 @@ describe('LoadingScreen Component', () => {
     expect(screen.queryByTestId('message')).toBeNull();
     expect(screen.queryByTestId('mock-children')).toBeNull();
     expect(loadingScreenElement).toHaveClass(styles.waves);
+    expect(loadingScreenElement).not.toHaveClass(styles.wavesGradient);
+    expect(loadingScreenElement).not.toHaveClass(styles.gradient);
+  });
+
+  test('It renders loading screen with background (bg) waves and bgGradient', () => {
+    render(<LoadingScreen bg="waves" bgGradient={true}>{mockChildren}</LoadingScreen>);
+
+    const loadingScreenElement = screen.getByTestId('loading-screen');
+
+    expect(loadingScreenElement).toBeInTheDocument();
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+    expect(screen.queryByTestId('message')).toBeNull();
+    expect(screen.queryByTestId('mock-children')).toBeNull();
+    expect(loadingScreenElement).toHaveClass(styles.wavesGradient);
+    expect(loadingScreenElement).not.toHaveClass(styles.waves);
+    expect(loadingScreenElement).not.toHaveClass(styles.gradient);
   });
 
   test('It renders loading screen with background (bg) set to an invalid value', () => {

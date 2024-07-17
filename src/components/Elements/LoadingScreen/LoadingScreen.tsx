@@ -29,8 +29,8 @@ export function LoadingScreen({
       {loading ? (
         <div
           className={`
-            ${bg === 'waves' ? styles.waves : ''}
-            ${bgGradient ? styles.gradient : ''}
+            ${(bg === 'waves' && bgGradient) ? styles.wavesGradient : (bg === 'waves') ? styles.waves : ''}
+            ${(!bg && bgGradient) ? styles.gradient : ''}
             ${styles.main}
             ${darkMode ? styles.mainDark : styles.mainLight}
             ${adaptive ? styles.mainAdaptive : ''}

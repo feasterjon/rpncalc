@@ -5,18 +5,20 @@
   --light: hsl(var(--light-hsl));
 
   --bg-attachment: fixed;
-  --bg-size: 100% 291px, 100% 214px, var(--gradient-size);
-  --gradient-dark: linear-gradient(to bottom, hsla(var(--dark-hsl) / var(--gradient-opacity)), hsla(var(--dark-hsl) / 0%)) no-repeat top;
-  --gradient-light: linear-gradient(to bottom, hsla(var(--light-hsl) / 0%), hsla(var(--light-hsl) / var(--gradient-opacity))) no-repeat top;
-  --gradient-size: 100%;
-  --gradient-opacity: 80%;
+  --bg-size: 100% 291px, 100% 214px, var(--bg-gradient-size);
+  --bg-gradient-dark: linear-gradient(to bottom, hsla(var(--dark-hsl) / var(--bg-gradient-opacity)), hsla(var(--dark-hsl) / 0%)) no-repeat top;
+  --bg-gradient-light: linear-gradient(to bottom, hsla(var(--light-hsl) / 0%), hsla(var(--light-hsl) / var(--bg-gradient-opacity))) no-repeat top;
+  --bg-gradient-size: 100%;
+  --bg-gradient-opacity: 80%;
+  --bg-gradient-opacity-light: calc(var(--bg-gradient-opacity) * 0.8);
+  --bg-overlay-light: linear-gradient(to bottom, hsla(var(--light-hsl) / var(--bg-gradient-opacity-light)), hsla(var(--light-hsl) / var(--bg-gradient-opacity-light))) no-repeat top;
   --waves-bottom: url("./assets/waves-bottom.svg") no-repeat bottom;
   --waves-top: url("./assets/waves-top.svg") no-repeat top;
 }
 
 .gradient {
   background:
-    var(--gradient-light);
+    var(--bg-gradient-light);
   background-attachment: var(--bg-attachment);
   background-size: var(--gradint-size);
 }
@@ -48,7 +50,16 @@
   background:
     var(--waves-top),
     var(--waves-bottom),
-    var(--gradient-light);
+    var(--bg-overlay-light);
+  background-attachment: var(--bg-attachment);
+  background-size: var(--bg-size);
+}
+
+.wavesGradient {
+  background:
+    var(--waves-top),
+    var(--waves-bottom),
+    var(--bg-gradient-light);
   background-attachment: var(--bg-attachment);
   background-size: var(--bg-size);
 }
@@ -56,9 +67,9 @@
 @media (prefers-color-scheme: dark) {
   .gradient {
     background:
-      var(--gradient-dark);
+      var(--bg-gradient-dark);
     background-attachment: var(--bg-attachment);
-    background-size: var(--gradient-size);
+    background-size: var(--bg-gradient-size);
   }
 
   .mainAdaptive {
@@ -69,8 +80,16 @@
   .waves {
     background:
       var(--waves-top),
+      var(--waves-bottom);
+    background-attachment: var(--bg-attachment);
+    background-size: var(--bg-size);
+  }
+
+  .wavesGradient {
+    background:
+      var(--waves-top),
       var(--waves-bottom),
-      var(--gradient-dark);
+      var(--bg-gradient-dark);
     background-attachment: var(--bg-attachment);
     background-size: var(--bg-size);
   }
