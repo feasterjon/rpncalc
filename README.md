@@ -75,9 +75,9 @@ The custom color palette is primarily customized using CSS custom properties (va
 @layer base {
   :root {
     ...
-    --rpncalc-color-primary-hs: 207 73%;
+    --rpncalc-color-primary-hs: 207deg 73%;
     ...
-    --rpncalc-color-secondary-hs: 12 72%;
+    --rpncalc-color-secondary-hs: 12deg 72%;
     ...
   }
 }
@@ -85,11 +85,12 @@ The custom color palette is primarily customized using CSS custom properties (va
 
 #### Tailwind CSS
 
-The custom color palette is configured in the `tailwind.config.js` file in the namespace `rpncalc`.
+The custom color palette is configured in the `tailwind.config.ts` file in the field `rpncalc`.
 
-```javascript
-/** @type {import('tailwindcss').Config} */
-export default {
+```typescript
+import type { Config } from "tailwindcss";
+
+const config: Config = {
   ...
   darkMode: ['class', '[data-mode="dark"]'],
   theme: {
@@ -116,5 +117,6 @@ export default {
     },
   },
   ...
-}
+};
+...
 ```
