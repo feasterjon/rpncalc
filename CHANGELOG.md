@@ -4,6 +4,13 @@
 
 - In Progress
 
+## 1.2.8 - 2024-08-20
+
+### Changed
+
+- Updated meta tags
+- Updated project structure
+
 ## 1.2.7 - 2024-07-17
 
 ### Changed
