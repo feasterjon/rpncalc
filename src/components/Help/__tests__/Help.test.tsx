@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
-import { mockLocalStorage } from '../../../__mocks__/localStorage';
-import { setNavigatorOnline } from '../../../__mocks__/navigator';
+import { mockLocalStorage } from '../../../testing/mocks/localStorage';
+import { setNavigatorOnline } from '../../../testing/mocks/navigator';
 import { Help } from '../Help';
 import axios from 'axios';
 

@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, test } from 'vitest';
-import { mockMatchMedia } from '../../../../__mocks__/matchMedia';
+import { mockMatchMedia } from '../../../../testing/mocks/matchMedia';
 import { render, screen } from '@testing-library/react';
 import styles from '../LoadingScreen.module.css';
 import { LoadingScreen } from '../LoadingScreen';

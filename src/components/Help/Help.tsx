@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { Help as HelpType, Section as SectionType } from '@/types/help';
-import { LoadingMessage } from '../Elements/LoadingMessage';
+import { LoadingMessage } from '../ui/LoadingMessage';
 import { storage } from '../../utils/storage';
 import styles from './Help.module.css';
-import { Table as TableCom } from '../Elements/Table';
+import { Table as TableCom } from '../ui/Table';
 import axios from 'axios';
 
 type HelpProps = {

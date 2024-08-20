@@ -18,7 +18,7 @@ export const CONFIG: Config = {
     }
   },
   help: {
-    api: 'api/help.json',
+    api: 'api2/help.json',
     footer: `${appShortName}${import.meta.env.VITE_APP_VERSION ? ` ${import.meta.env.VITE_APP_VERSION}` : ''} | ${appAuthor}`,
     storage: storageConfig,
     title: 'Help'

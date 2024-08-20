@@ -1,7 +1,7 @@
 import { afterEach, beforeAll, describe, expect, test } from 'vitest';
 import { CONFIG } from '../../../config';
-import { mockLocalStorage } from '../../../__mocks__/localStorage';
-import { mockMatchMedia } from '../../../__mocks__/matchMedia';
+import { mockLocalStorage } from '../../../testing/mocks/localStorage';
+import { mockMatchMedia } from '../../../testing/mocks/matchMedia';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { RPNCalc } from '../RPNCalc';
 import styles from '../RPNCalc.module.css';
