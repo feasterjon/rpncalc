@@ -1,12 +1,20 @@
+import type { API } from './api';
 import type { Table } from './table';
 
-export type Help = {
-  api?: string;
+type Attributes = Config & {
+  sections: Section[];
+};
+
+type Config = {
   footer?: string;
   logo?: Logo | null;
-  sections?: Section[];
-  storage?: { prefix?: string };
   title?: string;
+};
+
+export type Help = Config & {
+  data?: API & {
+    attributes: Attributes;
+  };
 };
 
 type Logo = {
@@ -15,7 +23,7 @@ type Logo = {
   width?: number;
 };
 
-export type Section = {
+type Section = {
   data?: { data: string | Table }[];
   heading?: string;
   id?: number;

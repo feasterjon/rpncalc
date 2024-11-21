@@ -1,0 +1,70 @@
+{
+  "attributes": {
+    "footer": "Help Footer",
+    "logo": {
+      "alt": "My Logo",
+      "src": "images/logo.png",
+      "width": 50
+    },
+    "sections": [
+      {
+        "data": [
+          {
+            "id": 1,
+            "data": "Article 1"
+          },
+          {
+            "id": 2,
+            "data": "Article 2"
+          }
+        ],
+        "heading": "Section 1",
+        "id": 1
+      },
+      {
+        "data": [
+          {
+            "data": {
+              "data": [
+                {
+                  "data": [
+                    "Data 1",
+                    "Data 2"
+                  ],
+                  "id": 1
+                },
+                {
+                  "data": [
+                    "Data 3",
+                    "Data 4"
+                  ],
+                  "id": 2
+                }
+              ],
+              "headings": [
+                {
+                  "id": 1,
+                  "name": "Heading 1"
+                },
+                {
+                  "id": 2,
+                  "name": "Heading 2"
+                }
+              ],
+              "type": "c"
+            }
+          }
+        ],
+        "heading": "Section 2",
+        "id": 2
+      }
+    ],
+    "title": "Help Title"
+  },
+  "id": "2",
+  "meta": {
+    "name": "Help Test",
+    "update": "2024-11-20"
+  },
+  "type": "help"
+}

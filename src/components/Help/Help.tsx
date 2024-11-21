@@ -1,76 +1,20 @@
-import { useEffect, useState } from 'react';
-import type { Help as HelpType, Section as SectionType } from '@/types/help';
+import type { Help as HelpType } from '@/types/help';
 import { LoadingMessage } from '../ui/LoadingMessage';
-import { storage } from '../../utils/storage';
 import styles from './Help.module.css';
 import { Table as TableCom } from '../ui/Table';
-import axios from 'axios';
 
 type HelpProps = {
-  config: HelpType;
+  config?: HelpType;
   darkMode?: boolean;
 };
 
 export function Help({ config, darkMode }: HelpProps) {
 
-  const [data, setData] = useState<HelpType | null>(null);
-  const [loading, setLoading] = useState(true);
+  let loading = true;
 
-  if (config.storage?.prefix) storage.prefix = config.storage?.prefix;
+  const data = config?.data?.attributes;
 
-  useEffect(() => {
-
-    const resource = config.api || '';
-
-    const setStorageHelp = () => {
-      const storageHelp = storage.getItem('help');
-      if (storageHelp && typeof storageHelp === 'object' && !Array.isArray(storageHelp)) {
-        setData(storageHelp);
-        setLoading(false);
-      }
-    };
-
-    if (!resource) {
-      const sections: SectionType[] = config.sections || [];
-      setData({
-        sections: sections
-      });
-      setLoading(false);
-      return;
-    }
-
-    if (!navigator.onLine) {
-      setStorageHelp();
-      return;
-    }
-
-    const controller = new AbortController();
-
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(resource, {
-          signal: controller.signal
-        });
-        const dataAttributes: HelpType = response.data.attributes;
-        if (dataAttributes) {
-          setData(dataAttributes);
-          storage.setItem('help', dataAttributes);
-          setLoading(false);
-        }
-        else {
-          setStorageHelp();
-        }
-      } catch (error) {
-        if (!axios.isCancel(error)) {
-          console.error('Error fetching data:', error);
-        }
-        setStorageHelp();
-      }
-    };
-
-    fetchData();
-    return () => controller.abort();
-  }, [config]);
+  if (typeof data === 'object') loading = false;
 
   return (
     <LoadingMessage darkMode={darkMode} loading={loading}>

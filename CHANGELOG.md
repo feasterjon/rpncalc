@@ -4,6 +4,13 @@
 
 - In Progress
 
+## 1.2.9 - 2024-11-21
+
+### Changed
+
+- Statically import Help configurations
+- Refactored Icon component
+
 ## 1.2.8 - 2024-08-20
 
 ### Changed
