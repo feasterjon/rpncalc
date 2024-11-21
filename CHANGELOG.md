@@ -4,6 +4,12 @@
 
 - In Progress
 
+## 1.3.0 - 2024-11-21
+
+### Changed
+
+- Statically import Help configurations
+
 ## 1.2.8 - 2024-08-20
 
 ### Changed
