@@ -9,6 +9,7 @@
 ### Changed
 
 - Statically import Help configurations
+- Refactored Icon component
 
 ## 1.2.8 - 2024-08-20
 

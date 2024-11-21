@@ -54,7 +54,7 @@ export function Dialog({
                 ${styles.rounded}
                 ${darkMode ? styles.bgTransparentDark : styles.bgTransparentLight}
               `} onClick={vibrateEnabled ? () => { vibrate(); close(); } : () => { close(); }}>
-              <Icon id="x-mark" />
+              <Icon id="XMark" />
             </button>
           </div>
         </div>

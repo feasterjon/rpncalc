@@ -425,7 +425,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                   text-rpncalc-primary-dark
                 ">
                 <button className="cursor-pointer my-auto" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>
-                  <Icon id="arrow-left" styles="h-8 w-8" />
+                  <Icon id="ArrowLeft" styles="h-8 w-8" />
                 </button>
                 <button className="cursor-pointer ml-2" aria-label="Toggle History" onClick={toggleAppHistoryVisible}>History</button>
               </div>
@@ -441,7 +441,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     select-none
                     text-neutral-900
                   " aria-label="Clear History" onClick={() => { historyRemove(); toggleAppHistoryVisible(); }}>
-                  <Icon id="trash" />
+                  <Icon id="Trash" />
                 </button>
                 <button className="
                     cursor-pointer
@@ -454,7 +454,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     select-none
                     text-neutral-900
                   " aria-label="Toggle History" onClick={toggleAppHistoryVisible}>
-                  <Icon id="x-mark" />
+                  <Icon id="XMark" />
                 </button>
               </div>
             </div>
@@ -489,7 +489,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
                               select-none
                               text-neutral-900
                             " aria-label="Toggle Extended History" onClick={toggleAppHistoryExtendedVisible}>
-                            {state.appHistoryExtendedVisible ? (<Icon id="chevron-down" />) : <Icon id="chevron-up" />}
+                            {state.appHistoryExtendedVisible ? (<Icon id="ChevronDown" />) : <Icon id="ChevronUp" />}
                           </button>
                         )}
                       </div>
@@ -533,20 +533,20 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     persist: true
                   },
                   {
-                    icon: 'clock',
+                    icon: 'Clock',
                     id: 2,
                     label: 'History',
                     onClick: toggleAppHistoryVisible
                   },
                   {
-                    icon: state.spacesVisible ? 'eye' : 'eye-slash',
+                    icon: state.spacesVisible ? 'Eye' : 'EyeSlash',
                     id: 3,
                     label: 'Spaces',
                     onClick: handleSpacesVisible,
                     persist: true
                   },
                   {
-                    icon: state.keyboardVisible ? 'eye' : 'eye-slash',
+                    icon: state.keyboardVisible ? 'Eye' : 'EyeSlash',
                     id: 4,
                     label: 'Keypad',
                     onClick: toggleKeyboardVisible,
@@ -554,13 +554,13 @@ export function RPNCalc({ config }: RPNCalcProps) {
                     styles: 'hidden lg:flex'
                   },
                   {
-                    icon: 'question-mark-circle',
+                    icon: 'QuestionMarkCircle',
                     id: 5,
                     label: 'Help',
                     onClick: toggleDialogVisibleHelp
                   }
                 ],
-                icon: 'ellipsis-vertical',
+                icon: 'EllipsisVertical',
                 label: 'Settings',
                 styles: {
                   data: 'dark:hover:bg-neutral-600 dark:text-neutral-100 hover:bg-neutral-400 p-3 text-neutral-900 text-xl',
@@ -602,7 +602,7 @@ export function RPNCalc({ config }: RPNCalcProps) {
               "
               aria-label="Paste"
               onClick={handlePaste}
-            ><Icon id="clipboard" /></button>}
+            ><Icon id="Clipboard" /></button>}
           </div>
         </div>
         <div className={`

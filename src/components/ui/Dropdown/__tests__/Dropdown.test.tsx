@@ -4,9 +4,9 @@ import { Dropdown } from '../Dropdown';
 
 const mockConfig = {
   data: [
-    { icon: 'eye', id: 1, label: 'Option 1', onClick: vi.fn() },
-    { icon: 'clock', id: 2, label: 'Option 2', onClick: vi.fn(), persist: true },
-    { icon: 'question-mark-circle', id: 3, label: 'Option 3', onClick: vi.fn() }
+    { icon: 'Eye', id: 1, label: 'Option 1', onClick: vi.fn() },
+    { icon: 'Clock', id: 2, label: 'Option 2', onClick: vi.fn(), persist: true },
+    { icon: 'QuestionMarkCircle', id: 3, label: 'Option 3', onClick: vi.fn() }
   ],
   icon: 'info',
   label: 'Dropdown',

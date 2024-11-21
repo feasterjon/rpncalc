@@ -28,7 +28,7 @@ export const CONFIG: Config = {
       data: [
         {
           icon: {
-            id: 'square-root-variable'
+            id: 'SquareRootVariable'
           },
           id: 1,
           label: '\u221a',
@@ -38,7 +38,7 @@ export const CONFIG: Config = {
         },
         {
           icon: {
-            id: 'angle-up'
+            id: 'AngleUp'
           },
           id: 2,
           order: 'sm:order-[6]',
@@ -48,7 +48,7 @@ export const CONFIG: Config = {
         {
           aria: 'Pi',
           icon: {
-            id: 'pi'
+            id: 'Pi'
           },
           id: 3,
           label: '\u03C0',
@@ -61,7 +61,7 @@ export const CONFIG: Config = {
         {
           aria: 'e',
           icon: {
-            id: 'epsilon'
+            id: 'Epsilon'
           },
           id: 4,
           label: '\u2107',
@@ -74,7 +74,7 @@ export const CONFIG: Config = {
         {
           aria: 'Phi',
           icon: {
-            id: 'phi'
+            id: 'Phi'
           },
           id: 5,
           label: '\u03C6',
@@ -95,7 +95,7 @@ export const CONFIG: Config = {
         {
           aria: 'Backspace',
           icon: {
-            id: 'delete-left'
+            id: 'DeleteLeft'
           },
           id: 7,
           label: '\u232B',
@@ -113,7 +113,7 @@ export const CONFIG: Config = {
         },
         {
           icon: {
-            id: 'divide'
+            id: 'Divide'
           },
           id: 9,
           label: '\u00F7',
@@ -138,7 +138,7 @@ export const CONFIG: Config = {
         },
         {
           icon: {
-            id: 'multiply'
+            id: 'Multiply'
           },
           id: 13,
           label: '\u00D7',
@@ -163,7 +163,7 @@ export const CONFIG: Config = {
         },
         {
           icon: {
-            id: 'minus'
+            id: 'Minus'
           },
           id: 17,
           order: 'sm:order-[15]',
@@ -190,7 +190,7 @@ export const CONFIG: Config = {
         },
         {
           icon: {
-            id: 'plus'
+            id: 'Plus'
           },
           id: 21,
           order: 'sm:order-[20]',
@@ -218,7 +218,7 @@ export const CONFIG: Config = {
         {
           aria: 'Enter',
           icon: {
-            id: 'corner-down-left'
+            id: 'CornerDownLeft'
           },
           id: 25,
           label: '\u23ce',
@@ -258,19 +258,19 @@ export const CONFIG: Config = {
   storage: storageConfig,
   themes: [
     {
-      icon: 'circle-half-stroke',
+      icon: 'CircleHalfStroke',
       id: 1,
       label: 'System',
       name: "os-default"
     },
     {
-      icon: 'sun',
+      icon: 'Sun',
       id: 2,
       label: 'Light',
       name: "light"
     },
     {
-      icon: 'moon',
+      icon: 'Moon',
       id: 3,
       label: 'Dark',
       name: "dark"
